@@ -23,26 +23,26 @@
     />
     <style>
       :root {
-        --bg-canvas: #fffdf7;
+        --bg-canvas: #faf6fc;
         --bg-surface: #ffffff;
-        --bg-warm: #fff8e9;
-        --bg-soft-sky: #eaf5fb;
-        --bg-soft-blush: #fde8e8;
+        --bg-warm: #fff6ec;
+        --bg-soft-sky: #efeafd;
+        --bg-soft-blush: #fce7f0;
         --bg-soft-mint: #e8f8ef;
-        --bg-soft-lavender: #f1ecfe;
-        --ink-primary: #3b332f;
-        --ink-secondary: #6b5e57;
-        --ink-muted: #8c7e76;
-        --border-hairline: #ede4d3;
-        --border-strong: #dfd3be;
-        --accent-coral: #e06d7d;
-        --accent-coral-deep: #b84a5b;
-        --accent-sky: #4b9cd3;
-        --accent-amber: #d9822b;
-        --accent-mint: #2f9e66;
-        --accent-lavender: #7c5cd6;
-        --shadow-sm: 0 2px 8px rgba(74, 63, 58, 0.05);
-        --shadow-md: 0 8px 24px rgba(74, 63, 58, 0.08);
+        --bg-soft-lavender: #f0e9fc;
+        --ink-primary: #2d2a52;
+        --ink-secondary: #5c5780;
+        --ink-muted: #7f789e;
+        --border-hairline: #e7dff1;
+        --border-strong: #d4c7e5;
+        --accent-coral: #d95a88;
+        --accent-coral-deep: #b33b68;
+        --accent-sky: #6563b5;
+        --accent-amber: #e2873a;
+        --accent-mint: #3b9c6e;
+        --accent-lavender: #8c6fd1;
+        --shadow-sm: 0 2px 10px rgba(45, 42, 82, 0.06);
+        --shadow-md: 0 10px 26px rgba(45, 42, 82, 0.1);
         --radius-sm: 10px;
         --radius-md: 16px;
         --radius-lg: 24px;
@@ -64,6 +64,9 @@
       body {
         margin: 0;
         background-color: var(--bg-canvas);
+        background-image:
+          radial-gradient(circle at 10% 0%, rgba(155, 134, 202, 0.16), transparent 36%),
+          radial-gradient(circle at 90% 4%, rgba(244, 143, 177, 0.14), transparent 34%);
         color: var(--ink-primary);
         font-family: var(--font-body);
         font-size: 15px;
@@ -90,14 +93,14 @@
         font-variant-numeric: tabular-nums;
       }
 
-      /* Top Header Bar (3-zone contract) */
+      /* Top Header Bar (3-zone contract — Twilight Indigo Theme) */
       .site-header {
         position: sticky;
         top: 0;
         z-index: 50;
-        background: rgba(255, 253, 247, 0.94);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid var(--border-hairline);
+        background: rgba(54, 51, 102, 0.94);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
       }
 
       .header-inner {
@@ -118,7 +121,7 @@
         border: none;
         padding: 4px 6px;
         border-radius: 12px;
-        color: var(--ink-primary);
+        color: #fff9f3;
         font-family: var(--font-display);
         font-weight: 800;
         font-size: 1.125rem;
@@ -141,7 +144,7 @@
       .nav-link {
         border: none;
         background: transparent;
-        color: var(--ink-secondary);
+        color: #ded9f2;
         font-size: 0.9375rem;
         font-weight: 600;
         padding: 8px 16px;
@@ -156,14 +159,14 @@
       }
 
       .nav-link:hover {
-        background-color: #f6efe2;
-        color: var(--ink-primary);
+        background-color: rgba(255, 255, 255, 0.12);
+        color: #ffffff;
       }
 
       .nav-link.active {
-        background-color: var(--bg-soft-blush);
-        color: var(--accent-coral-deep);
-        box-shadow: inset 0 0 0 1px rgba(224, 109, 125, 0.25);
+        background-color: rgba(244, 143, 177, 0.24);
+        color: #ffe2ee;
+        box-shadow: inset 0 0 0 1px rgba(244, 143, 177, 0.48);
       }
 
       /* Main Layout */
@@ -202,21 +205,31 @@
         }
       }
 
-      /* Hero Banner (Matching Panel 1 of reference) */
+      /* Hero Banner (Twilight Sunset Island & Campfire Theme from image.png) */
       .hero-banner {
         position: relative;
         overflow: hidden;
         border-radius: var(--radius-lg);
-        border: 1px solid #d9eaf4;
-        background: linear-gradient(180deg, #dff2fc 0%, #bfe4f7 52%, #9ad1ec 52.5%, #b9e2f5 68%, #e4f3cb 69%, #cbe8a6 100%);
-        min-height: 430px;
+        border: 1px solid #6b63a8;
+        background: linear-gradient(
+          180deg,
+          #434284 0%,
+          #5e549e 28%,
+          #9b5fa6 48%,
+          #de6ca0 63%,
+          #f6a488 76%,
+          #fce096 86%,
+          #dfb48c 87%,
+          #9d86c9 100%
+        );
+        min-height: 460px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         text-align: center;
-        padding: 48px 24px 128px;
-        box-shadow: var(--shadow-sm);
+        padding: 50px 24px 168px;
+        box-shadow: var(--shadow-md);
         margin-bottom: 32px;
       }
 
@@ -238,13 +251,13 @@
         display: inline-block;
         font-size: 0.875rem;
         font-weight: 700;
-        color: #5c4b43;
-        background: rgba(255, 249, 232, 0.92);
-        border: 1px solid #eadcbe;
+        color: #363366;
+        background: rgba(255, 245, 232, 0.94);
+        border: 1px solid rgba(252, 224, 150, 0.85);
         padding: 6px 18px;
         border-radius: 999px;
         margin-bottom: 16px;
-        box-shadow: 0 2px 8px rgba(60, 50, 40, 0.06);
+        box-shadow: 0 4px 14px rgba(34, 28, 72, 0.22);
       }
 
       .hero-title {
@@ -254,7 +267,8 @@
         font-weight: 800;
         line-height: 1.18;
         letter-spacing: -0.025em;
-        color: #2f2825;
+        color: #fff9f2;
+        text-shadow: 0 3px 18px rgba(34, 28, 72, 0.45);
         text-wrap: balance;
       }
 
@@ -262,8 +276,9 @@
         margin: 0 auto 26px;
         max-width: 560px;
         font-size: 1.03rem;
-        color: #463d38;
+        color: #fcecf4;
         font-weight: 500;
+        text-shadow: 0 2px 12px rgba(34, 28, 72, 0.42);
       }
 
       .hero-actions {
@@ -281,18 +296,18 @@
         padding: 11px 22px;
         min-height: 44px;
         border-radius: 999px;
-        border: 1px solid #d45b6c;
-        background: var(--accent-coral);
+        border: 1px solid rgba(255, 224, 198, 0.45);
+        background: linear-gradient(135deg, #de5c89 0%, #ea8452 100%);
         color: #ffffff;
         font-weight: 700;
         font-size: 0.9375rem;
         white-space: nowrap;
-        box-shadow: 0 4px 12px rgba(224, 109, 125, 0.25);
-        transition: transform 0.16s ease, background-color 0.16s ease;
+        box-shadow: 0 6px 18px rgba(217, 90, 136, 0.3);
+        transition: transform 0.16s ease, filter 0.16s ease;
       }
 
       .btn-primary:hover {
-        background: var(--accent-coral-deep);
+        filter: brightness(0.95);
         transform: translateY(-1px);
       }
 
@@ -304,8 +319,8 @@
         padding: 11px 22px;
         min-height: 44px;
         border-radius: 999px;
-        border: 1px solid #dfd3be;
-        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid #dfd2eb;
+        background: rgba(255, 250, 246, 0.96);
         color: var(--ink-primary);
         font-weight: 700;
         font-size: 0.9375rem;
@@ -315,7 +330,7 @@
       }
 
       .btn-secondary:hover {
-        background: #fff8e9;
+        background: #fff4e8;
         transform: translateY(-1px);
       }
 
@@ -359,8 +374,8 @@
         width: 148px;
         height: 148px;
         border-radius: 50%;
-        background: #fff4cc;
-        border: 4px solid #f5e5b5;
+        background: linear-gradient(180deg, #4e4a8e 0%, #b768a4 56%, #f8bc84 100%);
+        border: 4px solid #e6d7f3;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -399,8 +414,8 @@
       }
 
       .contact-card {
-        background: var(--bg-warm);
-        border: 1px solid #efe3c8;
+        background: linear-gradient(160deg, #fff7ee 0%, #fcf1fa 100%);
+        border: 1px solid #eddcf0;
         border-radius: var(--radius-md);
         padding: 20px;
       }
@@ -426,14 +441,14 @@
         gap: 8px;
         padding: 8px 10px;
         border-radius: 10px;
-        background: rgba(255, 255, 255, 0.78);
-        border: 1px solid #efe6d4;
+        background: rgba(255, 255, 255, 0.85);
+        border: 1px solid #eadff2;
         font-size: 0.875rem;
         transition: border-color 0.15s ease, background-color 0.15s ease;
       }
 
       .contact-row:hover {
-        border-color: #dec9a4;
+        border-color: #d6bfe6;
         background: #ffffff;
       }
 
@@ -454,7 +469,7 @@
       }
 
       .copy-btn {
-        border: 1px solid #dfd3be;
+        border: 1px solid #d9cce8;
         background: #ffffff;
         color: var(--ink-secondary);
         border-radius: 8px;
@@ -468,7 +483,7 @@
       .copy-btn:hover {
         background: var(--bg-soft-blush);
         color: var(--accent-coral-deep);
-        border-color: rgba(224, 109, 125, 0.4);
+        border-color: rgba(217, 90, 136, 0.4);
       }
 
       /* 3-Column Bento Info Cards */
@@ -528,7 +543,7 @@
       .timeline-item {
         padding: 16px 18px;
         border-radius: var(--radius-md);
-        background: #fffcf5;
+        background: #fcf9fe;
         border: 1px solid var(--border-hairline);
       }
 
@@ -649,11 +664,11 @@
       .project-meta-line {
         font-size: 0.8rem;
         color: var(--ink-muted);
-        border-top: 1px solid #f4ede0;
+        border-top: 1px solid #f0eaf7;
         padding-top: 10px;
       }
 
-      /* Project Detail View (Matching Panel 4) */
+      /* Project Detail View */
       .detail-back-btn {
         display: inline-flex;
         align-items: center;
@@ -669,7 +684,7 @@
       }
 
       .detail-back-btn:hover {
-        background: var(--bg-warm);
+        background: var(--bg-soft-lavender);
         color: var(--ink-primary);
       }
 
@@ -702,7 +717,7 @@
       }
 
       .detail-card-warm {
-        background: #fffcf3;
+        background: #fdf8fe;
       }
 
       .detail-card h3 {
@@ -718,7 +733,7 @@
         align-items: baseline;
         gap: 8px;
         padding: 8px 0;
-        border-bottom: 1px dashed #ede4d3;
+        border-bottom: 1px dashed #e6dcf0;
         font-size: 0.9rem;
       }
 
@@ -727,7 +742,7 @@
       }
 
       .source-link-item a {
-        color: #2f73a8;
+        color: #544ea3;
         font-weight: 600;
         text-decoration: underline;
         text-underline-offset: 3px;
@@ -783,7 +798,7 @@
         padding: 9px 12px;
         border-radius: 10px;
         border: 1px solid var(--border-strong);
-        background: #fffdf9;
+        background: #fcfafe;
         color: var(--ink-primary);
         font-size: 0.875rem;
         font-family: inherit;
@@ -829,7 +844,7 @@
       }
 
       .check-row:hover {
-        background: #faf5eb;
+        background: #f5effa;
       }
 
       .check-left {
@@ -878,7 +893,7 @@
       /* Graph Canvas */
       .graph-stage {
         position: relative;
-        background: #fffef9;
+        background: radial-gradient(circle at 50% 18%, #fdfaff 0%, #f8f4fc 100%);
         border: 1px solid var(--border-hairline);
         border-radius: var(--radius-md);
         height: 650px;
@@ -925,7 +940,7 @@
       }
 
       .graph-ctrl-btn:hover {
-        background: var(--bg-warm);
+        background: var(--bg-soft-lavender);
       }
 
       .graph-status-bar {
@@ -945,7 +960,7 @@
         position: absolute;
         pointer-events: none;
         z-index: 20;
-        background: rgba(59, 51, 47, 0.94);
+        background: rgba(45, 42, 82, 0.95);
         color: #ffffff;
         padding: 7px 11px;
         border-radius: 8px;
@@ -962,7 +977,7 @@
         grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 4px;
         padding: 4px;
-        background: #f6f0e4;
+        background: #f2ecf8;
         border-radius: 10px;
         margin-bottom: 14px;
       }
@@ -982,7 +997,7 @@
       .inspector-tab.active {
         background: #ffffff;
         color: var(--ink-primary);
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 1px 3px rgba(45, 42, 82, 0.1);
       }
 
       .kpi-row {
@@ -996,7 +1011,7 @@
         padding: 12px 8px;
         border-radius: 12px;
         text-align: center;
-        border: 1px solid rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(45, 42, 82, 0.06);
       }
 
       .kpi-label {
@@ -1017,7 +1032,7 @@
         margin-bottom: 16px;
         padding: 12px;
         border-radius: 12px;
-        background: #fffcf6;
+        background: #fcf9fe;
         border: 1px solid var(--border-hairline);
       }
 
@@ -1052,7 +1067,7 @@
       .bar-track {
         height: 8px;
         border-radius: 999px;
-        background: #efe8da;
+        background: #ebe4f4;
         overflow: hidden;
       }
 
@@ -1077,7 +1092,7 @@
       .prop-table th,
       .prop-table td {
         padding: 6px 8px;
-        border-bottom: 1px solid #f1e9da;
+        border-bottom: 1px solid #ede6f5;
         text-align: left;
         vertical-align: top;
       }
@@ -1112,7 +1127,7 @@
         padding: 7px 10px;
         border-radius: 9px;
         border: 1px solid var(--border-hairline);
-        background: #fffcf6;
+        background: #fcf9fe;
         text-align: left;
         font-size: 0.8rem;
         transition: background-color 0.14s ease;
@@ -1120,7 +1135,7 @@
 
       .edge-chip-btn:hover {
         background: var(--bg-soft-blush);
-        border-color: rgba(224, 109, 125, 0.35);
+        border-color: rgba(217, 90, 136, 0.35);
       }
 
       .edge-rel-tag {
@@ -1136,14 +1151,14 @@
         padding: 11px 12px;
         border-radius: 10px;
         border: 1px solid var(--border-hairline);
-        background: #fffcf6;
+        background: #fcf9fe;
         margin-bottom: 8px;
         transition: border-color 0.14s ease, background-color 0.14s ease;
       }
 
       .preset-btn:hover {
-        background: var(--bg-warm);
-        border-color: #d7c3a0;
+        background: var(--bg-soft-lavender);
+        border-color: #c8b6e2;
       }
 
       .preset-btn strong {
@@ -1158,14 +1173,14 @@
         color: var(--ink-secondary);
       }
 
-      /* Footer */
+      /* Footer (Twilight Indigo matching Header) */
       .site-footer {
-        border-top: 1px solid var(--border-hairline);
-        background: #faf5ea;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        background: #363366;
         padding: 24px;
         text-align: center;
         font-size: 0.84rem;
-        color: var(--ink-muted);
+        color: #dbd5ef;
       }
 
       /* Responsive Breakpoints */
@@ -1235,15 +1250,19 @@
     <header class="site-header">
       <div class="header-inner">
         <button type="button" class="brand-btn" id="homeBtn" aria-label="첫 화면으로 돌아가기">
-          <svg width="28" height="28" viewBox="0 0 36 36" aria-hidden="true">
-            <circle cx="10" cy="9" r="4.5" fill="#FFFFFF" stroke="#3B332F" stroke-width="2.2" />
-            <circle cx="26" cy="9" r="4.5" fill="#FFFFFF" stroke="#3B332F" stroke-width="2.2" />
-            <ellipse cx="18" cy="20" rx="13" ry="11.5" fill="#FFFFFF" stroke="#3B332F" stroke-width="2.2" />
-            <circle cx="13.5" cy="18.5" r="1.5" fill="#3B332F" />
-            <circle cx="22.5" cy="18.5" r="1.5" fill="#3B332F" />
-            <ellipse cx="10.5" cy="21.5" rx="2.3" ry="1.4" fill="#F9B4C0" />
-            <ellipse cx="25.5" cy="21.5" rx="2.3" ry="1.4" fill="#F9B4C0" />
-            <path d="M15.8 22.5 Q18 24.5 20.2 22.5" fill="none" stroke="#3B332F" stroke-width="1.8" stroke-linecap="round" />
+          <svg width="30" height="30" viewBox="0 0 36 36" aria-hidden="true">
+            <circle cx="10" cy="11" r="4.3" fill="#FFFDF8" stroke="#2D2A52" stroke-width="2" />
+            <circle cx="26" cy="11" r="4.3" fill="#FFFDF8" stroke="#2D2A52" stroke-width="2" />
+            <ellipse cx="18" cy="21" rx="12.5" ry="11" fill="#FFFDF8" stroke="#2D2A52" stroke-width="2" />
+            <!-- 작은 화관 -->
+            <circle cx="12.5" cy="11.5" r="2.2" fill="#F8C8DC" stroke="#2D2A52" stroke-width="1" />
+            <circle cx="18" cy="10.5" r="2.3" fill="#FFE79A" stroke="#2D2A52" stroke-width="1" />
+            <circle cx="23.5" cy="11.5" r="2.2" fill="#CBECC8" stroke="#2D2A52" stroke-width="1" />
+            <circle cx="13.5" cy="19.5" r="1.4" fill="#2D2A52" />
+            <circle cx="22.5" cy="19.5" r="1.4" fill="#2D2A52" />
+            <ellipse cx="10.5" cy="22.5" rx="2.3" ry="1.3" fill="#F39BB5" />
+            <ellipse cx="25.5" cy="22.5" rx="2.3" ry="1.3" fill="#F39BB5" />
+            <path d="M15.8 23.5 Q18 25.4 20.2 23.5" fill="none" stroke="#2D2A52" stroke-width="1.7" stroke-linecap="round" />
           </svg>
           <span id="brandTitleText">석예린 · Yerin</span>
         </button>
@@ -1262,78 +1281,152 @@
            =================================================================== -->
       <section id="view-about" class="view-section active" aria-labelledby="heroHeadline">
         <div class="hero-banner">
-          <!-- 일러스트 배경 SVG (외부 이미지 의존성 없이 단일 index.html로 동작) -->
+          <!-- 황혼빛 열대 섬 & 모닥불 일러스트 SVG (image.png 디자인 반영) -->
           <svg class="hero-scenery-svg" viewBox="0 0 1200 460" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-            <!-- 구름 -->
-            <g fill="#FFFFFF" opacity="0.88">
-              <ellipse cx="160" cy="86" rx="58" ry="22" />
-              <ellipse cx="195" cy="76" rx="40" ry="24" />
-              <ellipse cx="1020" cy="96" rx="68" ry="24" />
-              <ellipse cx="1065" cy="84" rx="42" ry="26" />
-              <ellipse cx="620" cy="60" rx="50" ry="18" opacity="0.65" />
+            <defs>
+              <linearGradient id="sunsetSea" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#6B5EA8" />
+                <stop offset="38%" stop-color="#EA8EB4" />
+                <stop offset="76%" stop-color="#FAD48B" />
+                <stop offset="100%" stop-color="#FFE9B5" />
+              </linearGradient>
+              <linearGradient id="tidePool" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#B99CE0" />
+                <stop offset="100%" stop-color="#7B73BA" />
+              </linearGradient>
+            </defs>
+
+            <!-- 밤하늘 구름과 별빛 -->
+            <g fill="#7A6CB5" opacity="0.48">
+              <ellipse cx="185" cy="94" rx="76" ry="20" />
+              <ellipse cx="235" cy="84" rx="46" ry="22" />
+              <ellipse cx="1010" cy="108" rx="72" ry="18" />
+              <ellipse cx="965" cy="96" rx="44" ry="20" />
             </g>
-            <!-- 바다 물결 -->
-            <path d="M0 296 Q300 282 600 296 T1200 296 L1200 340 L0 340 Z" fill="#8CCAE8" opacity="0.55" />
-            <path d="M0 318 Q180 312 360 320 T720 318 T1200 318" stroke="#FFFFFF" stroke-width="3" fill="none" opacity="0.55" />
-            <!-- 초원 언덕 -->
-            <path d="M0 326 Q340 292 700 324 T1200 316 L1200 460 L0 460 Z" fill="#BCE396" />
-            <path d="M0 364 Q420 336 860 366 T1200 356 L1200 460 L0 460 Z" fill="#A6D67B" />
-            <!-- 작은 들꽃 -->
-            <g transform="translate(120,404)">
-              <circle cx="0" cy="-7" r="4" fill="#FFFFFF" />
-              <circle cx="6" cy="-2" r="4" fill="#FFFFFF" />
-              <circle cx="4" cy="5" r="4" fill="#FFFFFF" />
-              <circle cx="-4" cy="5" r="4" fill="#FFFFFF" />
-              <circle cx="-6" cy="-2" r="4" fill="#FFFFFF" />
-              <circle cx="0" cy="0" r="3.2" fill="#F6C84C" />
+            <!-- 중앙 4각 반짝임 별 (image.png 상단 별 모티브) -->
+            <path d="M980 42 Q983 68 1008 70 Q983 72 980 98 Q977 72 952 70 Q977 68 980 42 Z" fill="#F7EEFF" opacity="0.9" />
+            <g fill="#FFF9F0" opacity="0.88">
+              <circle cx="110" cy="48" r="2.2" />
+              <circle cx="245" cy="36" r="1.8" />
+              <circle cx="330" cy="64" r="2.4" />
+              <circle cx="480" cy="30" r="1.7" />
+              <circle cx="715" cy="42" r="2.1" />
+              <circle cx="850" cy="58" r="1.8" />
+              <circle cx="1095" cy="48" r="2.5" />
+              <circle cx="1140" cy="112" r="1.8" />
+              <circle cx="62" cy="138" r="2" />
             </g>
-            <g transform="translate(1080,396)">
-              <circle cx="0" cy="-7" r="4" fill="#FFE2EC" />
-              <circle cx="6" cy="-2" r="4" fill="#FFE2EC" />
-              <circle cx="4" cy="5" r="4" fill="#FFE2EC" />
-              <circle cx="-4" cy="5" r="4" fill="#FFE2EC" />
-              <circle cx="-6" cy="-2" r="4" fill="#FFE2EC" />
-              <circle cx="0" cy="0" r="3.2" fill="#F6C84C" />
+
+            <!-- 지평선 해 & 노을 바다 -->
+            <circle cx="255" cy="272" r="15" fill="#FFF2B8" opacity="0.95" />
+            <rect x="0" y="282" width="1200" height="58" fill="url(#sunsetSea)" />
+            <path d="M0 318 Q240 310 480 318 T960 316 T1200 320" stroke="#FFF4D6" stroke-width="3" fill="none" opacity="0.85" />
+
+            <!-- 모래사장 & 보랏빛 얕은 물가 -->
+            <path d="M0 336 Q420 326 840 334 T1200 332 L1200 460 L0 460 Z" fill="#DFB68E" />
+            <path d="M0 402 Q260 390 520 408 T1040 402 L1200 408 L1200 460 L0 460 Z" fill="url(#tidePool)" />
+            <path d="M120 404 Q420 392 740 406 T1120 404" stroke="#F8E7DF" stroke-width="3" fill="none" opacity="0.72" />
+
+            <!-- 좌우 야자수 실루엣 -->
+            <g fill="#393D6B" opacity="0.92">
+              <path d="M-10 385 Q24 270 18 195 L38 195 Q42 275 18 385 Z" />
+              <path d="M26 198 Q-25 168 -45 192 Q-5 196 26 206 Z" />
+              <path d="M26 196 Q58 156 105 170 Q64 186 28 205 Z" />
+              <path d="M26 198 Q78 190 112 222 Q68 214 26 206 Z" />
+              <path d="M26 196 Q8 145 48 124 Q42 162 28 198 Z" />
+
+              <path d="M1210 385 Q1172 268 1178 188 L1158 188 Q1152 272 1182 385 Z" />
+              <path d="M1168 190 Q1120 156 1072 174 Q1116 184 1166 200 Z" />
+              <path d="M1168 192 Q1218 164 1242 192 Q1205 194 1168 202 Z" />
+              <path d="M1168 194 Q1112 198 1084 230 Q1128 216 1168 204 Z" />
+              <path d="M1168 190 Q1185 138 1142 118 Q1150 158 1166 192 Z" />
             </g>
-            <!-- 세 마리 캐릭터 일러스트 (하단 중앙 배치) -->
-            <g transform="translate(430, 326)">
-              <!-- 왼쪽 파란 고양이 친구 -->
-              <g transform="translate(0, 12)">
-                <polygon points="18,18 28,2 40,16" fill="#89BFE8" stroke="#3B332F" stroke-width="2.5" stroke-linejoin="round" />
-                <polygon points="72,18 62,2 50,16" fill="#89BFE8" stroke="#3B332F" stroke-width="2.5" stroke-linejoin="round" />
-                <ellipse cx="45" cy="48" rx="34" ry="31" fill="#FFFFFF" stroke="#3B332F" stroke-width="2.5" />
-                <path d="M19 30 Q45 14 71 30 L64 20 Q45 11 26 20 Z" fill="#89BFE8" />
-                <circle cx="33" cy="46" r="3" fill="#3B332F" />
-                <circle cx="57" cy="46" r="3" fill="#3B332F" />
-                <ellipse cx="24" cy="54" rx="5" ry="3" fill="#F9B4C0" />
-                <ellipse cx="66" cy="54" rx="5" ry="3" fill="#F9B4C0" />
-                <path d="M41 53 Q45 58 49 53" fill="none" stroke="#3B332F" stroke-width="2.2" stroke-linecap="round" />
+
+            <!-- 하단 좌우 열대 잎사귀 실루엣 -->
+            <g fill="#353866" opacity="0.94">
+              <ellipse cx="44" cy="436" rx="68" ry="26" transform="rotate(-18 44 436)" />
+              <ellipse cx="108" cy="452" rx="54" ry="22" transform="rotate(-8 108 452)" />
+              <ellipse cx="1152" cy="436" rx="68" ry="26" transform="rotate(18 1152 436)" />
+              <ellipse cx="1090" cy="452" rx="54" ry="22" transform="rotate(8 1090 452)" />
+            </g>
+            <g fill="#5B578F" opacity="0.72">
+              <ellipse cx="160" cy="448" rx="44" ry="15" transform="rotate(-24 160 448)" />
+              <ellipse cx="1038" cy="448" rx="44" ry="15" transform="rotate(24 1038 448)" />
+            </g>
+
+            <!-- 모닥불 & 화관·풀치마를 입은 세 친구 (image.png 중심 모티브) -->
+            <g transform="translate(415, 294)">
+              <!-- 왼쪽 하얀 친구 (화관 + 풀치마) -->
+              <g transform="translate(0, 26)">
+                <rect x="20" y="76" width="52" height="14" rx="4" fill="#6F9A4E" stroke="#322C3E" stroke-width="2.2" />
+                <line x1="30" y1="77" x2="30" y2="90" stroke="#322C3E" stroke-width="1.4" />
+                <line x1="40" y1="77" x2="40" y2="90" stroke="#322C3E" stroke-width="1.4" />
+                <line x1="50" y1="77" x2="50" y2="90" stroke="#322C3E" stroke-width="1.4" />
+                <line x1="60" y1="77" x2="60" y2="90" stroke="#322C3E" stroke-width="1.4" />
+                <circle cx="20" cy="20" r="9" fill="#FFFDF8" stroke="#322C3E" stroke-width="2.4" />
+                <circle cx="72" cy="20" r="9" fill="#FFFDF8" stroke="#322C3E" stroke-width="2.4" />
+                <ellipse cx="46" cy="50" rx="35" ry="31" fill="#FFFDF8" stroke="#322C3E" stroke-width="2.4" />
+                <!-- 화관 -->
+                <circle cx="27" cy="22" r="5" fill="#FCE0B8" stroke="#322C3E" stroke-width="1.4" />
+                <circle cx="37" cy="19" r="5" fill="#F8C6D8" stroke="#322C3E" stroke-width="1.4" />
+                <circle cx="47" cy="18" r="5" fill="#FFF2B8" stroke="#322C3E" stroke-width="1.4" />
+                <circle cx="57" cy="19" r="5" fill="#F8C6D8" stroke="#322C3E" stroke-width="1.4" />
+                <circle cx="65" cy="22" r="5" fill="#CBECC8" stroke="#322C3E" stroke-width="1.4" />
+                <circle cx="34" cy="48" r="3.2" fill="#322C3E" />
+                <circle cx="58" cy="48" r="3.2" fill="#322C3E" />
+                <ellipse cx="24" cy="56" rx="5.5" ry="3" fill="#F49DB8" />
+                <ellipse cx="68" cy="56" rx="5.5" ry="3" fill="#F49DB8" />
+                <path d="M41 55 Q46 61 51 55" fill="none" stroke="#322C3E" stroke-width="2.1" stroke-linecap="round" />
               </g>
-              <!-- 가운데 하얀 주인공 친구 -->
-              <g transform="translate(122, 0)">
-                <circle cx="18" cy="14" r="10" fill="#FFFFFF" stroke="#3B332F" stroke-width="2.5" />
-                <circle cx="78" cy="14" r="10" fill="#FFFFFF" stroke="#3B332F" stroke-width="2.5" />
-                <ellipse cx="48" cy="52" rx="40" ry="36" fill="#FFFFFF" stroke="#3B332F" stroke-width="2.5" />
-                <circle cx="34" cy="48" r="3.4" fill="#3B332F" />
-                <circle cx="62" cy="48" r="3.4" fill="#3B332F" />
-                <circle cx="33" cy="47" r="1" fill="#FFFFFF" />
-                <circle cx="61" cy="47" r="1" fill="#FFFFFF" />
-                <ellipse cx="23" cy="56" rx="6" ry="3.4" fill="#F9B4C0" />
-                <ellipse cx="73" cy="56" rx="6" ry="3.4" fill="#F9B4C0" />
-                <path d="M43 56 Q48 61 53 56" fill="none" stroke="#3B332F" stroke-width="2.2" stroke-linecap="round" />
+
+              <!-- 가운데 뒤 파란 고양이 친구 (화관 + 풀치마) -->
+              <g transform="translate(86, 4)">
+                <rect x="20" y="72" width="48" height="13" rx="4" fill="#6F9A4E" stroke="#322C3E" stroke-width="2.2" />
+                <polygon points="18,22 26,5 38,18" fill="#84B1D9" stroke="#322C3E" stroke-width="2.3" stroke-linejoin="round" />
+                <polygon points="70,22 62,5 50,18" fill="#84B1D9" stroke="#322C3E" stroke-width="2.3" stroke-linejoin="round" />
+                <ellipse cx="44" cy="46" rx="32" ry="29" fill="#FFFDF8" stroke="#322C3E" stroke-width="2.3" />
+                <path d="M20 29 Q44 15 68 29 L61 20 Q44 12 27 20 Z" fill="#84B1D9" />
+                <!-- 화관 -->
+                <circle cx="28" cy="23" r="4.5" fill="#CBECC8" stroke="#322C3E" stroke-width="1.3" />
+                <circle cx="38" cy="20" r="4.5" fill="#FCE0B8" stroke="#322C3E" stroke-width="1.3" />
+                <circle cx="49" cy="20" r="4.5" fill="#F8C6D8" stroke="#322C3E" stroke-width="1.3" />
+                <circle cx="59" cy="23" r="4.5" fill="#FFF2B8" stroke="#322C3E" stroke-width="1.3" />
+                <circle cx="33" cy="45" r="2.9" fill="#322C3E" />
+                <circle cx="55" cy="45" r="2.9" fill="#322C3E" />
+                <ellipse cx="24" cy="52" rx="5" ry="2.8" fill="#F49DB8" />
+                <ellipse cx="64" cy="52" rx="5" ry="2.8" fill="#F49DB8" />
+                <path d="M40 52 Q44 57 48 52" fill="none" stroke="#322C3E" stroke-width="2" stroke-linecap="round" />
               </g>
-              <!-- 오른쪽 노란 토끼 친구 -->
-              <g transform="translate(248, -14)">
-                <ellipse cx="28" cy="16" rx="9" ry="22" fill="#FFF2B2" stroke="#3B332F" stroke-width="2.5" />
-                <ellipse cx="62" cy="16" rx="9" ry="22" fill="#FFF2B2" stroke="#3B332F" stroke-width="2.5" />
-                <ellipse cx="28" cy="18" rx="4.5" ry="13" fill="#FAD2D8" />
-                <ellipse cx="62" cy="18" rx="4.5" ry="13" fill="#FAD2D8" />
-                <ellipse cx="45" cy="64" rx="35" ry="32" fill="#FFF2B2" stroke="#3B332F" stroke-width="2.5" />
-                <circle cx="33" cy="60" r="3.2" fill="#3B332F" />
-                <circle cx="57" cy="60" r="3.2" fill="#3B332F" />
-                <ellipse cx="23" cy="67" rx="5.5" ry="3.2" fill="#F7A1AE" />
-                <ellipse cx="67" cy="67" rx="5.5" ry="3.2" fill="#F7A1AE" />
-                <path d="M40 66 Q45 72 50 66" fill="none" stroke="#3B332F" stroke-width="2.2" stroke-linecap="round" />
+
+              <!-- 가운데 모닥불 -->
+              <g transform="translate(166, 46)">
+                <ellipse cx="32" cy="54" rx="28" ry="8" fill="#F4BA7A" opacity="0.45" />
+                <line x1="12" y1="56" x2="50" y2="48" stroke="#6E473B" stroke-width="5" stroke-linecap="round" />
+                <line x1="16" y1="48" x2="52" y2="57" stroke="#59382E" stroke-width="5" stroke-linecap="round" />
+                <path d="M32 6 Q46 22 44 40 Q52 34 48 50 Q32 54 16 50 Q12 34 20 38 Q16 20 32 6 Z" fill="#F08B33" stroke="#322C3E" stroke-width="1.8" />
+                <path d="M32 20 Q40 31 38 44 Q32 48 25 44 Q24 31 32 20 Z" fill="#FFE066" />
+              </g>
+
+              <!-- 오른쪽 노란 토끼 친구 (꽃장식 + 풀치마) -->
+              <g transform="translate(248, -4)">
+                <rect x="20" y="92" width="52" height="14" rx="4" fill="#6F9A4E" stroke="#322C3E" stroke-width="2.2" />
+                <line x1="30" y1="93" x2="30" y2="106" stroke="#322C3E" stroke-width="1.4" />
+                <line x1="41" y1="93" x2="41" y2="106" stroke="#322C3E" stroke-width="1.4" />
+                <line x1="52" y1="93" x2="52" y2="106" stroke="#322C3E" stroke-width="1.4" />
+                <line x1="62" y1="93" x2="62" y2="106" stroke="#322C3E" stroke-width="1.4" />
+                <ellipse cx="34" cy="18" rx="7.5" ry="20" fill="#F9E8A6" stroke="#322C3E" stroke-width="2.4" />
+                <ellipse cx="58" cy="18" rx="7.5" ry="20" fill="#F9E8A6" stroke="#322C3E" stroke-width="2.4" />
+                <ellipse cx="34" cy="20" rx="3.5" ry="12" fill="#F6C8D2" />
+                <ellipse cx="58" cy="20" rx="3.5" ry="12" fill="#F6C8D2" />
+                <circle cx="38" cy="34" r="4.5" fill="#F8C6D8" stroke="#322C3E" stroke-width="1.3" />
+                <circle cx="48" cy="33" r="4.5" fill="#FFFDF8" stroke="#322C3E" stroke-width="1.3" />
+                <circle cx="57" cy="35" r="4.5" fill="#CBECC8" stroke="#322C3E" stroke-width="1.3" />
+                <ellipse cx="46" cy="65" rx="34" ry="31" fill="#F9E8A6" stroke="#322C3E" stroke-width="2.4" />
+                <circle cx="34" cy="61" r="3" fill="#322C3E" />
+                <circle cx="58" cy="61" r="3" fill="#322C3E" />
+                <ellipse cx="24" cy="68" rx="5.5" ry="3" fill="#F49DB8" />
+                <ellipse cx="68" cy="68" rx="5.5" ry="3" fill="#F49DB8" />
+                <path d="M41 67 Q46 72 51 67" fill="none" stroke="#322C3E" stroke-width="2.1" stroke-linecap="round" />
               </g>
             </g>
           </svg>
@@ -1436,10 +1529,10 @@
             <svg class="graph-svg" id="graphSvg" viewBox="0 0 900 650" role="img" aria-label="지식그래프 네트워크 시각화">
               <defs>
                 <marker id="arrowDefault" viewBox="0 0 10 10" refX="21" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#C6B8A3" />
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#BEB3D4" />
                 </marker>
                 <marker id="arrowActive" viewBox="0 0 10 10" refX="21" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#D45B6C" />
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#D95A88" />
                 </marker>
               </defs>
               <g id="graphViewport">
@@ -1695,12 +1788,12 @@
          ======================================================================= */
       (function () {
         const LABEL_META = {
-          Character: { ko: '등장인물', fill: '#FAD4DB', stroke: '#D97B8C', bar: '#E88A9B' },
-          Event: { ko: '주요 사건', fill: '#FDE9A8', stroke: '#D4A12A', bar: '#E8B84B' },
-          Place: { ko: '장소', fill: '#C7EED8', stroke: '#4BA475', bar: '#59B886' },
-          Object: { ko: '사물', fill: '#CBE4FA', stroke: '#508EC7', bar: '#64A2DA' },
-          CulturalElement: { ko: '문화 요소', fill: '#E2D6FC', stroke: '#8465C9', bar: '#9678DA' },
-          Unknown: { ko: '기타', fill: '#EAE4DA', stroke: '#9E9384', bar: '#B2A798' }
+          Character: { ko: '등장인물', fill: '#FAD4E4', stroke: '#D65F8E', bar: '#E476A1' },
+          Event: { ko: '주요 사건', fill: '#FCE5B4', stroke: '#DB8A34', bar: '#E89B48' },
+          Place: { ko: '장소', fill: '#C8EDD9', stroke: '#419B6E', bar: '#52B282' },
+          Object: { ko: '사물', fill: '#CFE2FC', stroke: '#5578C9', bar: '#6B8ED9' },
+          CulturalElement: { ko: '문화 요소', fill: '#E3D5FC', stroke: '#7F60C9', bar: '#9676DE' },
+          Unknown: { ko: '기타', fill: '#EAE4F2', stroke: '#8E84A6', bar: '#A79DC0' }
         };
 
         const state = {
@@ -1973,17 +2066,27 @@
           document.getElementById('aboutContainer').innerHTML = `
             <div class="about-top-grid">
               <div class="avatar-frame" aria-hidden="true">
-                <svg width="118" height="118" viewBox="0 0 120 120">
-                  <circle cx="34" cy="28" r="11" fill="#FFFFFF" stroke="#3B332F" stroke-width="3" />
-                  <circle cx="86" cy="28" r="11" fill="#FFFFFF" stroke="#3B332F" stroke-width="3" />
-                  <ellipse cx="60" cy="64" rx="38" ry="34" fill="#FFFFFF" stroke="#3B332F" stroke-width="3" />
-                  <circle cx="46" cy="60" r="3.4" fill="#3B332F" />
-                  <circle cx="74" cy="60" r="3.4" fill="#3B332F" />
-                  <ellipse cx="36" cy="68" rx="6" ry="3.2" fill="#F9B4C0" />
-                  <ellipse cx="84" cy="68" rx="6" ry="3.2" fill="#F9B4C0" />
-                  <path d="M55 68 Q60 73 65 68" fill="none" stroke="#3B332F" stroke-width="2.4" stroke-linecap="round" />
-                  <rect x="26" y="88" width="68" height="20" rx="5" fill="#DFEEFA" stroke="#3B332F" stroke-width="2.5" />
-                  <line x1="60" y1="88" x2="60" y2="108" stroke="#3B332F" stroke-width="2" />
+                <svg width="136" height="136" viewBox="0 0 120 120">
+                  <!-- 밤하늘 별빛 -->
+                  <circle cx="24" cy="22" r="1.6" fill="#FFF9F0" opacity="0.9" />
+                  <circle cx="96" cy="24" r="1.8" fill="#FFF9F0" opacity="0.9" />
+                  <path d="M90 10 Q91 16 97 17 Q91 18 90 24 Q89 18 83 17 Q89 16 90 10 Z" fill="#FFF8EC" opacity="0.85" />
+                  <circle cx="34" cy="34" r="10.5" fill="#FFFDF8" stroke="#2D2A52" stroke-width="2.8" />
+                  <circle cx="86" cy="34" r="10.5" fill="#FFFDF8" stroke="#2D2A52" stroke-width="2.8" />
+                  <ellipse cx="60" cy="68" rx="37" ry="33" fill="#FFFDF8" stroke="#2D2A52" stroke-width="2.8" />
+                  <!-- 화관 -->
+                  <circle cx="39" cy="36" r="5" fill="#FCE0B8" stroke="#2D2A52" stroke-width="1.5" />
+                  <circle cx="50" cy="33" r="5.2" fill="#F8C6D8" stroke="#2D2A52" stroke-width="1.5" />
+                  <circle cx="61" cy="32" r="5.2" fill="#FFF2B8" stroke="#2D2A52" stroke-width="1.5" />
+                  <circle cx="72" cy="34" r="5.2" fill="#F8C6D8" stroke="#2D2A52" stroke-width="1.5" />
+                  <circle cx="81" cy="37" r="4.8" fill="#CBECC8" stroke="#2D2A52" stroke-width="1.5" />
+                  <circle cx="46" cy="64" r="3.4" fill="#2D2A52" />
+                  <circle cx="74" cy="64" r="3.4" fill="#2D2A52" />
+                  <ellipse cx="36" cy="72" rx="6" ry="3.2" fill="#F49DB8" />
+                  <ellipse cx="84" cy="72" rx="6" ry="3.2" fill="#F49DB8" />
+                  <path d="M55 72 Q60 77 65 72" fill="none" stroke="#2D2A52" stroke-width="2.4" stroke-linecap="round" />
+                  <rect x="28" y="92" width="64" height="18" rx="5" fill="#EDE4FA" stroke="#2D2A52" stroke-width="2.4" />
+                  <line x1="60" y1="92" x2="60" y2="110" stroke="#2D2A52" stroke-width="2" />
                 </svg>
               </div>
 
@@ -2076,50 +2179,90 @@
           if (style === 'chiikawa') {
             return `
               <svg viewBox="0 0 400 225" width="100%" height="100%" aria-hidden="true">
-                <rect width="400" height="225" fill="#DDF1FC" />
-                <path d="M0 155 Q200 138 400 155 L400 225 L0 225 Z" fill="#BBE399" />
-                <circle cx="72" cy="54" r="20" fill="#FFFFFF" opacity="0.85" />
-                <circle cx="96" cy="50" r="15" fill="#FFFFFF" opacity="0.85" />
-                <circle cx="322" cy="48" r="22" fill="#FFFFFF" opacity="0.85" />
-                <g transform="translate(105, 86)">
-                  <circle cx="28" cy="44" r="24" fill="#FFFFFF" stroke="#3B332F" stroke-width="2.5" />
-                  <polygon points="10,25 18,10 26,24" fill="#89BFE8" stroke="#3B332F" stroke-width="2.2" />
-                  <polygon points="46,25 38,10 30,24" fill="#89BFE8" stroke="#3B332F" stroke-width="2.2" />
-                  <circle cx="21" cy="43" r="2.2" fill="#3B332F" />
-                  <circle cx="35" cy="43" r="2.2" fill="#3B332F" />
-                  <circle cx="95" cy="42" r="28" fill="#FFFFFF" stroke="#3B332F" stroke-width="2.5" />
-                  <circle cx="75" cy="18" r="7" fill="#FFFFFF" stroke="#3B332F" stroke-width="2.2" />
-                  <circle cx="115" cy="18" r="7" fill="#FFFFFF" stroke="#3B332F" stroke-width="2.2" />
-                  <circle cx="86" cy="40" r="2.4" fill="#3B332F" />
-                  <circle cx="104" cy="40" r="2.4" fill="#3B332F" />
-                  <ellipse cx="162" cy="45" rx="25" ry="23" fill="#FFF2B2" stroke="#3B332F" stroke-width="2.5" />
-                  <ellipse cx="150" cy="14" rx="6" ry="15" fill="#FFF2B2" stroke="#3B332F" stroke-width="2.2" />
-                  <ellipse cx="174" cy="14" rx="6" ry="15" fill="#FFF2B2" stroke="#3B332F" stroke-width="2.2" />
-                  <circle cx="154" cy="43" r="2.2" fill="#3B332F" />
-                  <circle cx="170" cy="43" r="2.2" fill="#3B332F" />
+                <defs>
+                  <linearGradient id="thumbSky" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#48478A" />
+                    <stop offset="48%" stop-color="#A661A6" />
+                    <stop offset="72%" stop-color="#EE7DA5" />
+                    <stop offset="86%" stop-color="#FCD58F" />
+                    <stop offset="100%" stop-color="#9B86CA" />
+                  </linearGradient>
+                </defs>
+                <rect width="400" height="225" fill="url(#thumbSky)" />
+                <circle cx="88" cy="128" r="10" fill="#FFF3B8" />
+                <path d="M292 22 Q294 36 308 38 Q294 40 292 54 Q290 40 276 38 Q290 36 292 22 Z" fill="#FFF7FF" opacity="0.9" />
+                <circle cx="62" cy="40" r="1.6" fill="#FFFFFF" />
+                <circle cx="170" cy="28" r="1.5" fill="#FFFFFF" />
+                <circle cx="348" cy="52" r="1.8" fill="#FFFFFF" />
+                <path d="M0 156 Q200 144 400 156 L400 200 L0 200 Z" fill="#DFB68E" />
+                <path d="M0 194 Q200 184 400 196 L400 225 L0 225 Z" fill="#8D7AC2" />
+                <path d="M0 165 Q28 110 14 75 M400 165 Q372 110 386 75" stroke="#373A69" stroke-width="10" fill="none" />
+                <g transform="translate(86, 108)">
+                  <rect x="10" y="64" width="38" height="10" rx="3" fill="#6F9A4E" stroke="#2D2A52" stroke-width="1.8" />
+                  <circle cx="29" cy="44" r="22" fill="#FFFDF8" stroke="#2D2A52" stroke-width="2.2" />
+                  <circle cx="14" cy="24" r="6" fill="#FFFDF8" stroke="#2D2A52" stroke-width="2" />
+                  <circle cx="44" cy="24" r="6" fill="#FFFDF8" stroke="#2D2A52" stroke-width="2" />
+                  <circle cx="21" cy="25" r="3.4" fill="#F8C6D8" />
+                  <circle cx="29" cy="23" r="3.4" fill="#FFF2B8" />
+                  <circle cx="37" cy="25" r="3.4" fill="#CBECC8" />
+                  <circle cx="22" cy="43" r="2.2" fill="#2D2A52" />
+                  <circle cx="36" cy="43" r="2.2" fill="#2D2A52" />
+
+                  <circle cx="80" cy="36" r="20" fill="#FFFDF8" stroke="#2D2A52" stroke-width="2.2" />
+                  <polygon points="64,20 71,8 78,19" fill="#84B1D9" stroke="#2D2A52" stroke-width="2" />
+                  <polygon points="96,20 89,8 82,19" fill="#84B1D9" stroke="#2D2A52" stroke-width="2" />
+                  <circle cx="74" cy="35" r="2" fill="#2D2A52" />
+                  <circle cx="86" cy="35" r="2" fill="#2D2A52" />
+
+                  <!-- 작은 모닥불 -->
+                  <path d="M126 38 Q136 52 134 66 Q126 70 118 66 Q116 52 126 38 Z" fill="#F08B33" stroke="#2D2A52" stroke-width="1.5" />
+                  <path d="M126 48 Q131 57 130 64 Q126 67 122 64 Q121 57 126 48 Z" fill="#FFE066" />
+
+                  <rect x="160" y="64" width="38" height="10" rx="3" fill="#6F9A4E" stroke="#2D2A52" stroke-width="1.8" />
+                  <ellipse cx="179" cy="44" rx="22" ry="20" fill="#F9E8A6" stroke="#2D2A52" stroke-width="2.2" />
+                  <ellipse cx="170" cy="16" rx="5.5" ry="13" fill="#F9E8A6" stroke="#2D2A52" stroke-width="2" />
+                  <ellipse cx="188" cy="16" rx="5.5" ry="13" fill="#F9E8A6" stroke="#2D2A52" stroke-width="2" />
+                  <circle cx="172" cy="43" r="2" fill="#2D2A52" />
+                  <circle cx="186" cy="43" r="2" fill="#2D2A52" />
                 </g>
               </svg>`;
           }
           if (style === 'classical') {
             return `
               <svg viewBox="0 0 400 225" width="100%" height="100%" aria-hidden="true">
-                <rect width="400" height="225" fill="#FFF5DF" />
-                <rect x="64" y="42" width="272" height="142" rx="14" fill="#FFFFFF" stroke="#E2D3B7" stroke-width="2.5" />
-                <line x1="200" y1="42" x2="200" y2="184" stroke="#E2D3B7" stroke-width="2" />
-                <circle cx="132" cy="96" r="20" fill="#FAD4DB" stroke="#D97B8C" stroke-width="2" />
-                <circle cx="268" cy="84" r="18" fill="#C7EED8" stroke="#4BA475" stroke-width="2" />
-                <circle cx="252" cy="136" r="16" fill="#CBE4FA" stroke="#508EC7" stroke-width="2" />
-                <line x1="152" y1="94" x2="250" y2="85" stroke="#B6A894" stroke-width="2" stroke-dasharray="5 4" />
-                <line x1="150" y1="104" x2="236" y2="132" stroke="#B6A894" stroke-width="2" stroke-dasharray="5 4" />
+                <defs>
+                  <linearGradient id="thumbClassic" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#4B478C" />
+                    <stop offset="60%" stop-color="#9C65A7" />
+                    <stop offset="100%" stop-color="#F1A78F" />
+                  </linearGradient>
+                </defs>
+                <rect width="400" height="225" fill="url(#thumbClassic)" />
+                <circle cx="48" cy="36" r="2" fill="#FFF7E8" />
+                <circle cx="344" cy="42" r="2.2" fill="#FFF7E8" />
+                <rect x="64" y="42" width="272" height="142" rx="14" fill="rgba(255,250,254,0.94)" stroke="#DFD0EE" stroke-width="2.5" />
+                <line x1="200" y1="42" x2="200" y2="184" stroke="#E5D9F2" stroke-width="2" />
+                <circle cx="132" cy="96" r="20" fill="#FAD4E4" stroke="#D65F8E" stroke-width="2" />
+                <circle cx="268" cy="84" r="18" fill="#FCE5B4" stroke="#DB8A34" stroke-width="2" />
+                <circle cx="252" cy="136" r="16" fill="#CFE2FC" stroke="#5578C9" stroke-width="2" />
+                <line x1="152" y1="94" x2="250" y2="85" stroke="#9B8BBF" stroke-width="2" stroke-dasharray="5 4" />
+                <line x1="150" y1="104" x2="236" y2="132" stroke="#9B8BBF" stroke-width="2" stroke-dasharray="5 4" />
               </svg>`;
           }
           return `
             <svg viewBox="0 0 400 225" width="100%" height="100%" aria-hidden="true">
-              <rect width="400" height="225" fill="#F2EEFE" />
-              <circle cx="130" cy="112" r="42" fill="#FAD4DB" opacity="0.85" />
-              <circle cx="200" cy="112" r="42" fill="#FDE9A8" opacity="0.85" />
-              <circle cx="270" cy="112" r="42" fill="#CBE4FA" opacity="0.85" />
-              <path d="M90 165 Q200 120 310 165" fill="none" stroke="#8465C9" stroke-width="2.5" stroke-linecap="round" />
+              <defs>
+                <linearGradient id="thumbPsy" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#F7ECF9" />
+                  <stop offset="55%" stop-color="#FCE9F2" />
+                  <stop offset="100%" stop-color="#FFF2E3" />
+                </linearGradient>
+              </defs>
+              <rect width="400" height="225" fill="url(#thumbPsy)" />
+              <circle cx="130" cy="112" r="42" fill="#F8BBD0" opacity="0.72" />
+              <circle cx="200" cy="112" r="42" fill="#FCE09B" opacity="0.78" />
+              <circle cx="270" cy="112" r="42" fill="#C4B5EC" opacity="0.75" />
+              <path d="M90 166 Q200 124 310 166" fill="none" stroke="#5E549E" stroke-width="2.5" stroke-linecap="round" />
             </svg>`;
         }
 
@@ -2246,29 +2389,29 @@
                   proj.hasDataExplorerLink
                     ? `
                     <svg viewBox="0 0 420 220" width="100%" style="max-height:220px" role="img" aria-label="5개 레이블 지식그래프 스키마">
-                      <line x1="210" y1="110" x2="88" y2="54" stroke="#C9BCA6" stroke-width="2" />
-                      <line x1="210" y1="110" x2="332" y2="54" stroke="#C9BCA6" stroke-width="2" />
-                      <line x1="210" y1="110" x2="84" y2="168" stroke="#C9BCA6" stroke-width="2" />
-                      <line x1="210" y1="110" x2="336" y2="168" stroke="#C9BCA6" stroke-width="2" />
-                      <line x1="210" y1="110" x2="210" y2="190" stroke="#C9BCA6" stroke-width="2" />
-                      <circle cx="210" cy="110" r="38" fill="#FFF2B2" stroke="#3B332F" stroke-width="2" />
-                      <text x="210" y="106" text-anchor="middle" font-size="11" font-weight="700" fill="#3B332F">치이카와</text>
-                      <text x="210" y="122" text-anchor="middle" font-size="10" fill="#6B5E57">${totalN}N · ${totalE}E</text>
-                      <circle cx="88" cy="54" r="24" fill="#FAD4DB" stroke="#D97B8C" stroke-width="2" />
-                      <text x="88" y="51" text-anchor="middle" font-size="10" font-weight="700" fill="#3B332F">Character</text>
-                      <text x="88" y="64" text-anchor="middle" font-size="10" fill="#6B5E57">(${lc.Character || 15})</text>
-                      <circle cx="332" cy="54" r="24" fill="#FDE9A8" stroke="#D4A12A" stroke-width="2" />
-                      <text x="332" y="51" text-anchor="middle" font-size="10" font-weight="700" fill="#3B332F">Event</text>
-                      <text x="332" y="64" text-anchor="middle" font-size="10" fill="#6B5E57">(${lc.Event || 13})</text>
-                      <circle cx="84" cy="168" r="24" fill="#C7EED8" stroke="#4BA475" stroke-width="2" />
-                      <text x="84" y="165" text-anchor="middle" font-size="10" font-weight="700" fill="#3B332F">Place</text>
-                      <text x="84" y="178" text-anchor="middle" font-size="10" fill="#6B5E57">(${lc.Place || 9})</text>
-                      <circle cx="336" cy="168" r="24" fill="#E2D6FC" stroke="#8465C9" stroke-width="2" />
-                      <text x="336" y="165" text-anchor="middle" font-size="9.5" font-weight="700" fill="#3B332F">Cultural</text>
-                      <text x="336" y="178" text-anchor="middle" font-size="10" fill="#6B5E57">(${lc.CulturalElement || 8})</text>
-                      <circle cx="210" cy="190" r="22" fill="#CBE4FA" stroke="#508EC7" stroke-width="2" />
-                      <text x="210" y="187" text-anchor="middle" font-size="10" font-weight="700" fill="#3B332F">Object</text>
-                      <text x="210" y="199" text-anchor="middle" font-size="10" fill="#6B5E57">(${lc.Object || 10})</text>
+                      <line x1="210" y1="110" x2="88" y2="54" stroke="#BEB2D6" stroke-width="2" />
+                      <line x1="210" y1="110" x2="332" y2="54" stroke="#BEB2D6" stroke-width="2" />
+                      <line x1="210" y1="110" x2="84" y2="168" stroke="#BEB2D6" stroke-width="2" />
+                      <line x1="210" y1="110" x2="336" y2="168" stroke="#BEB2D6" stroke-width="2" />
+                      <line x1="210" y1="110" x2="210" y2="190" stroke="#BEB2D6" stroke-width="2" />
+                      <circle cx="210" cy="110" r="38" fill="#FCE5B4" stroke="#2D2A52" stroke-width="2" />
+                      <text x="210" y="106" text-anchor="middle" font-size="11" font-weight="700" fill="#2D2A52">치이카와</text>
+                      <text x="210" y="122" text-anchor="middle" font-size="10" fill="#5C5780">${totalN}N · ${totalE}E</text>
+                      <circle cx="88" cy="54" r="24" fill="#FAD4E4" stroke="#D65F8E" stroke-width="2" />
+                      <text x="88" y="51" text-anchor="middle" font-size="10" font-weight="700" fill="#2D2A52">Character</text>
+                      <text x="88" y="64" text-anchor="middle" font-size="10" fill="#5C5780">(${lc.Character || 15})</text>
+                      <circle cx="332" cy="54" r="24" fill="#FCE5B4" stroke="#DB8A34" stroke-width="2" />
+                      <text x="332" y="51" text-anchor="middle" font-size="10" font-weight="700" fill="#2D2A52">Event</text>
+                      <text x="332" y="64" text-anchor="middle" font-size="10" fill="#5C5780">(${lc.Event || 13})</text>
+                      <circle cx="84" cy="168" r="24" fill="#C8EDD9" stroke="#419B6E" stroke-width="2" />
+                      <text x="84" y="165" text-anchor="middle" font-size="10" font-weight="700" fill="#2D2A52">Place</text>
+                      <text x="84" y="178" text-anchor="middle" font-size="10" fill="#5C5780">(${lc.Place || 9})</text>
+                      <circle cx="336" cy="168" r="24" fill="#E3D5FC" stroke="#7F60C9" stroke-width="2" />
+                      <text x="336" y="165" text-anchor="middle" font-size="9.5" font-weight="700" fill="#2D2A52">Cultural</text>
+                      <text x="336" y="178" text-anchor="middle" font-size="10" fill="#5C5780">(${lc.CulturalElement || 8})</text>
+                      <circle cx="210" cy="190" r="22" fill="#CFE2FC" stroke="#5578C9" stroke-width="2" />
+                      <text x="210" y="187" text-anchor="middle" font-size="10" font-weight="700" fill="#2D2A52">Object</text>
+                      <text x="210" y="199" text-anchor="middle" font-size="10" fill="#5C5780">(${lc.Object || 10})</text>
                     </svg>
                     `
                     : `
@@ -2453,7 +2596,7 @@
           if (visibleNodes.length === 0) {
             edgesLayer.innerHTML = '';
             nodesLayer.innerHTML = `
-              <text x="450" y="320" text-anchor="middle" fill="#8C7E76" font-size="14" font-weight="600">
+              <text x="450" y="320" text-anchor="middle" fill="#7F789E" font-size="14" font-weight="600">
                 조건에 맞는 노드가 없습니다. 필터나 검색어를 초기화해 주세요.
               </text>
             `;
@@ -2469,8 +2612,8 @@
               const p2 = g.posMap.get(e.target);
               if (!p1 || !p2) return '';
               const isFocus = selectedId && (e.source === selectedId || e.target === selectedId);
-              const opacity = selectedId ? (isFocus ? 0.95 : 0.12) : 0.52;
-              const stroke = isFocus ? '#D45B6C' : '#C9BCA6';
+              const opacity = selectedId ? (isFocus ? 0.95 : 0.12) : 0.54;
+              const stroke = isFocus ? '#D95A88' : '#BEB3D4';
               const strokeWidth = isFocus ? 2.2 : 1.3;
               const marker = isFocus ? 'url(#arrowActive)' : 'url(#arrowDefault)';
               const mx = (p1.x + p2.x) / 2;
@@ -2481,8 +2624,8 @@
                     stroke="${stroke}" stroke-width="${strokeWidth}" marker-end="${marker}" />
                   ${
                     isFocus
-                      ? `<rect x="${(mx - 38).toFixed(1)}" y="${(my - 9).toFixed(1)}" width="76" height="16" rx="5" fill="#FFFDF7" stroke="#E8B8C0" stroke-width="0.8" />
-                         <text x="${mx.toFixed(1)}" y="${(my + 2.5).toFixed(1)}" text-anchor="middle" font-size="8.5" font-weight="700" fill="#B84A5B" font-family="JetBrains Mono, monospace">${escapeHtml(e.label)}</text>`
+                      ? `<rect x="${(mx - 38).toFixed(1)}" y="${(my - 9).toFixed(1)}" width="76" height="16" rx="5" fill="#FCF9FE" stroke="#EAB4CA" stroke-width="0.8" />
+                         <text x="${mx.toFixed(1)}" y="${(my + 2.5).toFixed(1)}" text-anchor="middle" font-size="8.5" font-weight="700" fill="#B33B68" font-family="JetBrains Mono, monospace">${escapeHtml(e.label)}</text>`
                       : ''
                   }
                 </g>
@@ -2500,16 +2643,16 @@
               const isNeighbor = connectedNeighbors.has(n.id);
               const opacity = selectedId ? (isNeighbor ? 1 : 0.22) : 1;
               const radius = isSelected ? 22 : Math.min(21, 13 + Math.sqrt(n.degree) * 1.9);
-              const strokeColor = isSelected ? '#B84A5B' : meta.stroke;
+              const strokeColor = isSelected ? '#B33B68' : meta.stroke;
               const strokeWidth = isSelected ? 3.2 : 2;
               const shortLabel = n.name.length > 8 ? n.name.slice(0, 7) + '…' : n.name;
 
               return `
                 <g class="graph-node" data-node-id="${escapeAttr(n.id)}" transform="translate(${p.x.toFixed(1)}, ${p.y.toFixed(1)})" opacity="${opacity}" style="cursor:pointer">
-                  ${isSelected ? `<circle r="${radius + 5}" fill="none" stroke="#F4A8B4" stroke-width="2.5" />` : ''}
+                  ${isSelected ? `<circle r="${radius + 5}" fill="none" stroke="#F0A5C3" stroke-width="2.5" />` : ''}
                   <circle r="${radius}" fill="${meta.fill}" stroke="${strokeColor}" stroke-width="${strokeWidth}" />
-                  <text y="3.5" text-anchor="middle" font-size="9.5" font-weight="700" fill="#3B332F" pointer-events="none">${escapeHtml(n.properties.id || n.primaryLabel.slice(0, 2))}</text>
-                  <text y="${radius + 13}" text-anchor="middle" font-size="10.5" font-weight="${isSelected || isNeighbor ? '700' : '600'}" fill="#3B332F" paint-order="stroke" stroke="#FFFDF7" stroke-width="3" pointer-events="none">${escapeHtml(shortLabel)}</text>
+                  <text y="3.5" text-anchor="middle" font-size="9.5" font-weight="700" fill="#2D2A52" pointer-events="none">${escapeHtml(n.properties.id || n.primaryLabel.slice(0, 2))}</text>
+                  <text y="${radius + 13}" text-anchor="middle" font-size="10.5" font-weight="${isSelected || isNeighbor ? '700' : '600'}" fill="#2D2A52" paint-order="stroke" stroke="#FCF9FE" stroke-width="3" pointer-events="none">${escapeHtml(shortLabel)}</text>
                 </g>
               `;
             })
@@ -2554,15 +2697,15 @@
 
             body.innerHTML = `
               <div class="kpi-row">
-                <div class="kpi-box" style="background:#FDEFEF">
+                <div class="kpi-box" style="background:#FDF0F6">
                   <div class="kpi-label">전체 노드 수</div>
-                  <div class="kpi-value tabular-nums" style="color:#B84A5B">${g.nodes.length}</div>
+                  <div class="kpi-value tabular-nums" style="color:#B33B68">${g.nodes.length}</div>
                 </div>
-                <div class="kpi-box" style="background:#EEF6FD">
+                <div class="kpi-box" style="background:#EFF1FC">
                   <div class="kpi-label">전체 관계 수</div>
-                  <div class="kpi-value tabular-nums" style="color:#3B7BB8">${g.edges.length}</div>
+                  <div class="kpi-value tabular-nums" style="color:#4B4894">${g.edges.length}</div>
                 </div>
-                <div class="kpi-box" style="background:#EFF9F2">
+                <div class="kpi-box" style="background:#EEF9F2">
                   <div class="kpi-label">고립 노드</div>
                   <div class="kpi-value tabular-nums" style="color:#2F855A">${isolatedCount}</div>
                 </div>
@@ -2595,7 +2738,7 @@
                     return `
                       <div class="bar-row">
                         <span class="bar-name" style="font-family:var(--font-mono); font-size:0.7rem">${escapeHtml(rel)}</span>
-                        <div class="bar-track"><div class="bar-fill" style="width:${pct}%; background:#B5A4E6"></div></div>
+                        <div class="bar-track"><div class="bar-fill" style="width:${pct}%; background:#9B86CA"></div></div>
                         <span class="bar-num tabular-nums">${cnt}</span>
                       </div>
                     `;
@@ -2603,7 +2746,7 @@
                   .join('')}
               </div>
 
-              <div class="bar-chart-block" style="background:#FFF8E9; margin-bottom:0">
+              <div class="bar-chart-block" style="background:#FFF6EC; border-color:#F0DBC4; margin-bottom:0">
                 <h4 class="bar-chart-title">인문학적 해석 요약</h4>
                 <p style="margin:0; font-size:0.83rem; color:var(--ink-secondary)">
                   현재 필터 기준 <strong>${visibleNodes.length}개 노드</strong>와 <strong>${visibleEdges.length}개 관계</strong>가 표시됩니다.
