@@ -1,0 +1,3059 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>석예린 포트폴리오 | 한문학 · 심리학 · 디지털 인문학</title>
+    <meta
+      name="description"
+      content="한문학·심리학·디지털 인문학을 잇는 석예린의 개인 포트폴리오 및 Neo4j 지식그래프 데이터 탐색기"
+    />
+    <meta property="og:title" content="석예린 포트폴리오 | Yerin Seok" />
+    <meta
+      property="og:description"
+      content="한문학·심리학·디지털 인문학을 잇는 석예린의 개인 포트폴리오 및 Neo4j 지식그래프 데이터 탐색기"
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;600;700&family=Nunito:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-canvas: #fffdf7;
+        --bg-surface: #ffffff;
+        --bg-warm: #fff8e9;
+        --bg-soft-sky: #eaf5fb;
+        --bg-soft-blush: #fde8e8;
+        --bg-soft-mint: #e8f8ef;
+        --bg-soft-lavender: #f1ecfe;
+        --ink-primary: #3b332f;
+        --ink-secondary: #6b5e57;
+        --ink-muted: #8c7e76;
+        --border-hairline: #ede4d3;
+        --border-strong: #dfd3be;
+        --accent-coral: #e06d7d;
+        --accent-coral-deep: #b84a5b;
+        --accent-sky: #4b9cd3;
+        --accent-amber: #d9822b;
+        --accent-mint: #2f9e66;
+        --accent-lavender: #7c5cd6;
+        --shadow-sm: 0 2px 8px rgba(74, 63, 58, 0.05);
+        --shadow-md: 0 8px 24px rgba(74, 63, 58, 0.08);
+        --radius-sm: 10px;
+        --radius-md: 16px;
+        --radius-lg: 24px;
+        --font-display: 'Nunito', 'Jua', 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+        --font-body: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+        --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background-color: var(--bg-canvas);
+        color: var(--ink-primary);
+        font-family: var(--font-body);
+        font-size: 15px;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button {
+        font-family: inherit;
+        cursor: pointer;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--accent-coral);
+        outline-offset: 2px;
+      }
+
+      .tabular-nums {
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* Top Header Bar (3-zone contract) */
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(255, 253, 247, 0.94);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border-hairline);
+      }
+
+      .header-inner {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 12px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .brand-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: transparent;
+        border: none;
+        padding: 4px 6px;
+        border-radius: 12px;
+        color: var(--ink-primary);
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: 1.125rem;
+        letter-spacing: -0.02em;
+        white-space: nowrap;
+        flex-shrink: 0;
+        transition: transform 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .brand-btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .nav-list {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .nav-link {
+        border: none;
+        background: transparent;
+        color: var(--ink-secondary);
+        font-size: 0.9375rem;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 12px;
+        white-space: nowrap;
+        flex-shrink: 0;
+        min-height: 40px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: background-color 0.16s ease, color 0.16s ease;
+      }
+
+      .nav-link:hover {
+        background-color: #f6efe2;
+        color: var(--ink-primary);
+      }
+
+      .nav-link.active {
+        background-color: var(--bg-soft-blush);
+        color: var(--accent-coral-deep);
+        box-shadow: inset 0 0 0 1px rgba(224, 109, 125, 0.25);
+      }
+
+      /* Main Layout */
+      .main-container {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 28px 24px 64px;
+      }
+
+      .view-section {
+        display: none;
+        animation: fadeSlide 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .view-section.active {
+        display: block;
+      }
+
+      @keyframes fadeSlide {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .view-section {
+          animation: none;
+        }
+        html {
+          scroll-behavior: auto;
+        }
+      }
+
+      /* Hero Banner (Matching Panel 1 of reference) */
+      .hero-banner {
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--radius-lg);
+        border: 1px solid #d9eaf4;
+        background: linear-gradient(180deg, #dff2fc 0%, #bfe4f7 52%, #9ad1ec 52.5%, #b9e2f5 68%, #e4f3cb 69%, #cbe8a6 100%);
+        min-height: 430px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 48px 24px 128px;
+        box-shadow: var(--shadow-sm);
+        margin-bottom: 32px;
+      }
+
+      .hero-scenery-svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 680px;
+      }
+
+      .hero-kicker {
+        display: inline-block;
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: #5c4b43;
+        background: rgba(255, 249, 232, 0.92);
+        border: 1px solid #eadcbe;
+        padding: 6px 18px;
+        border-radius: 999px;
+        margin-bottom: 16px;
+        box-shadow: 0 2px 8px rgba(60, 50, 40, 0.06);
+      }
+
+      .hero-title {
+        margin: 0 0 12px;
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 4.2vw, 3.25rem);
+        font-weight: 800;
+        line-height: 1.18;
+        letter-spacing: -0.025em;
+        color: #2f2825;
+        text-wrap: balance;
+      }
+
+      .hero-subtitle {
+        margin: 0 auto 26px;
+        max-width: 560px;
+        font-size: 1.03rem;
+        color: #463d38;
+        font-weight: 500;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+      }
+
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 11px 22px;
+        min-height: 44px;
+        border-radius: 999px;
+        border: 1px solid #d45b6c;
+        background: var(--accent-coral);
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 0.9375rem;
+        white-space: nowrap;
+        box-shadow: 0 4px 12px rgba(224, 109, 125, 0.25);
+        transition: transform 0.16s ease, background-color 0.16s ease;
+      }
+
+      .btn-primary:hover {
+        background: var(--accent-coral-deep);
+        transform: translateY(-1px);
+      }
+
+      .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 11px 22px;
+        min-height: 44px;
+        border-radius: 999px;
+        border: 1px solid #dfd3be;
+        background: rgba(255, 255, 255, 0.95);
+        color: var(--ink-primary);
+        font-weight: 700;
+        font-size: 0.9375rem;
+        white-space: nowrap;
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.16s ease, background-color 0.16s ease;
+      }
+
+      .btn-secondary:hover {
+        background: #fff8e9;
+        transform: translateY(-1px);
+      }
+
+      /* Section Headings */
+      .section-heading {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 8px;
+        font-family: var(--font-display);
+        font-size: 1.75rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: var(--ink-primary);
+      }
+
+      .section-lead {
+        margin: 0 0 24px;
+        color: var(--ink-secondary);
+        font-size: 0.96875rem;
+      }
+
+      /* About Card & Contact (Matching Panel 2) */
+      .about-shell {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-hairline);
+        border-radius: var(--radius-lg);
+        padding: 32px;
+        box-shadow: var(--shadow-sm);
+        margin-bottom: 24px;
+      }
+
+      .about-top-grid {
+        display: grid;
+        grid-template-columns: 156px minmax(0, 1.35fr) minmax(270px, 0.95fr);
+        gap: 28px;
+        align-items: center;
+      }
+
+      .avatar-frame {
+        width: 148px;
+        height: 148px;
+        border-radius: 50%;
+        background: #fff4cc;
+        border: 4px solid #f5e5b5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        margin: 0 auto;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .profile-name {
+        margin: 0 0 4px;
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--ink-primary);
+      }
+
+      .profile-role {
+        margin: 0 0 12px;
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: var(--accent-coral-deep);
+      }
+
+      .profile-bio {
+        margin: 0 0 14px;
+        color: var(--ink-secondary);
+        font-size: 0.95rem;
+      }
+
+      .meta-inline {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 10px;
+        font-size: 0.84rem;
+        color: var(--ink-muted);
+      }
+
+      .contact-card {
+        background: var(--bg-warm);
+        border: 1px solid #efe3c8;
+        border-radius: var(--radius-md);
+        padding: 20px;
+      }
+
+      .contact-title {
+        margin: 0 0 12px;
+        font-family: var(--font-display);
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: var(--ink-primary);
+      }
+
+      .contact-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .contact-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 8px 10px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.78);
+        border: 1px solid #efe6d4;
+        font-size: 0.875rem;
+        transition: border-color 0.15s ease, background-color 0.15s ease;
+      }
+
+      .contact-row:hover {
+        border-color: #dec9a4;
+        background: #ffffff;
+      }
+
+      .contact-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+        flex: 1;
+        color: var(--ink-primary);
+        font-weight: 500;
+      }
+
+      .contact-link span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .copy-btn {
+        border: 1px solid #dfd3be;
+        background: #ffffff;
+        color: var(--ink-secondary);
+        border-radius: 8px;
+        padding: 4px 10px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .copy-btn:hover {
+        background: var(--bg-soft-blush);
+        color: var(--accent-coral-deep);
+        border-color: rgba(224, 109, 125, 0.4);
+      }
+
+      /* 3-Column Bento Info Cards */
+      .bento-3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin-bottom: 24px;
+      }
+
+      .info-card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-hairline);
+        border-radius: var(--radius-md);
+        padding: 22px;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .info-card-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 12px;
+        font-family: var(--font-display);
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: var(--ink-primary);
+      }
+
+      .info-list {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--ink-secondary);
+        font-size: 0.9125rem;
+      }
+
+      .info-list li + li {
+        margin-top: 6px;
+      }
+
+      /* Timeline Section */
+      .timeline-shell {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-hairline);
+        border-radius: var(--radius-lg);
+        padding: 28px 32px;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .timeline-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px 28px;
+        margin-top: 16px;
+      }
+
+      .timeline-item {
+        padding: 16px 18px;
+        border-radius: var(--radius-md);
+        background: #fffcf5;
+        border: 1px solid var(--border-hairline);
+      }
+
+      .timeline-meta {
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: var(--accent-coral-deep);
+        margin-bottom: 4px;
+      }
+
+      .timeline-title {
+        margin: 0 0 6px;
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--ink-primary);
+      }
+
+      .timeline-desc {
+        margin: 0;
+        font-size: 0.8875rem;
+        color: var(--ink-secondary);
+      }
+
+      /* Projects View (Matching Panel 3 & 4) */
+      .filter-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 24px;
+      }
+
+      .filter-tab {
+        border: 1px solid var(--border-hairline);
+        background: var(--bg-surface);
+        color: var(--ink-secondary);
+        padding: 8px 16px;
+        border-radius: 999px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        min-height: 40px;
+        white-space: nowrap;
+        transition: all 0.15s ease;
+      }
+
+      .filter-tab:hover {
+        background: var(--bg-warm);
+        color: var(--ink-primary);
+      }
+
+      .filter-tab.active {
+        background: var(--bg-soft-blush);
+        color: var(--accent-coral-deep);
+        border-color: rgba(224, 109, 125, 0.35);
+      }
+
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px;
+      }
+
+      .project-card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-hairline);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s ease;
+        text-align: left;
+        padding: 0;
+      }
+
+      .project-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-md);
+      }
+
+      .project-thumb {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: var(--bg-soft-sky);
+        border-bottom: 1px solid var(--border-hairline);
+        overflow: hidden;
+      }
+
+      .project-body {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+
+      .project-kicker {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--accent-coral-deep);
+        margin-bottom: 6px;
+      }
+
+      .project-title {
+        margin: 0 0 8px;
+        font-family: var(--font-display);
+        font-size: 1.15rem;
+        font-weight: 800;
+        line-height: 1.35;
+        color: var(--ink-primary);
+      }
+
+      .project-summary {
+        margin: 0 0 14px;
+        font-size: 0.89rem;
+        color: var(--ink-secondary);
+        flex: 1;
+      }
+
+      .project-meta-line {
+        font-size: 0.8rem;
+        color: var(--ink-muted);
+        border-top: 1px solid #f4ede0;
+        padding-top: 10px;
+      }
+
+      /* Project Detail View (Matching Panel 4) */
+      .detail-back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border: 1px solid var(--border-hairline);
+        background: var(--bg-surface);
+        color: var(--ink-secondary);
+        padding: 8px 14px;
+        border-radius: 10px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+
+      .detail-back-btn:hover {
+        background: var(--bg-warm);
+        color: var(--ink-primary);
+      }
+
+      .detail-header-card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-hairline);
+        border-radius: var(--radius-lg);
+        padding: 28px 32px;
+        margin-bottom: 20px;
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(240px, 0.8fr);
+        gap: 24px;
+        align-items: center;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .detail-grid-2 {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .detail-card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-hairline);
+        border-radius: var(--radius-md);
+        padding: 24px;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .detail-card-warm {
+        background: #fffcf3;
+      }
+
+      .detail-card h3 {
+        margin: 0 0 12px;
+        font-family: var(--font-display);
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: var(--ink-primary);
+      }
+
+      .source-link-item {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        padding: 8px 0;
+        border-bottom: 1px dashed #ede4d3;
+        font-size: 0.9rem;
+      }
+
+      .source-link-item:last-child {
+        border-bottom: none;
+      }
+
+      .source-link-item a {
+        color: #2f73a8;
+        font-weight: 600;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      /* Data Explorer View (Matching Panel 5) */
+      .explorer-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+
+      .upload-json-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 14px;
+        border-radius: 10px;
+        border: 1px solid var(--border-strong);
+        background: var(--bg-surface);
+        font-size: 0.84rem;
+        font-weight: 600;
+        color: var(--ink-secondary);
+        cursor: pointer;
+        white-space: nowrap;
+      }
+
+      .upload-json-label:hover {
+        background: var(--bg-warm);
+        color: var(--ink-primary);
+      }
+
+      .explorer-layout {
+        display: grid;
+        grid-template-columns: 268px minmax(0, 1fr) 360px;
+        gap: 16px;
+        align-items: start;
+      }
+
+      .explorer-panel {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-hairline);
+        border-radius: var(--radius-md);
+        padding: 16px;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 9px 12px;
+        border-radius: 10px;
+        border: 1px solid var(--border-strong);
+        background: #fffdf9;
+        color: var(--ink-primary);
+        font-size: 0.875rem;
+        font-family: inherit;
+        margin-bottom: 14px;
+      }
+
+      .search-input:focus {
+        outline: 2px solid var(--accent-coral);
+        border-color: transparent;
+      }
+
+      .filter-group-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: var(--ink-secondary);
+        margin: 12px 0 8px;
+      }
+
+      .filter-check-list {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .filter-check-scroll {
+        max-height: 225px;
+        overflow-y: auto;
+        padding-right: 4px;
+      }
+
+      .check-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 4px 6px;
+        border-radius: 8px;
+        font-size: 0.83rem;
+        cursor: pointer;
+      }
+
+      .check-row:hover {
+        background: #faf5eb;
+      }
+
+      .check-left {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        min-width: 0;
+      }
+
+      .check-left input {
+        accent-color: var(--accent-coral);
+        cursor: pointer;
+      }
+
+      .swatch-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 3px;
+        flex-shrink: 0;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+      }
+
+      .check-label-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: var(--ink-primary);
+        font-weight: 500;
+      }
+
+      .check-count {
+        font-family: var(--font-mono);
+        font-size: 0.76rem;
+        color: var(--ink-muted);
+      }
+
+      .mini-link-btn {
+        border: none;
+        background: transparent;
+        color: var(--accent-coral-deep);
+        font-size: 0.76rem;
+        font-weight: 600;
+        padding: 2px 4px;
+      }
+
+      /* Graph Canvas */
+      .graph-stage {
+        position: relative;
+        background: #fffef9;
+        border: 1px solid var(--border-hairline);
+        border-radius: var(--radius-md);
+        height: 650px;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .graph-svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+        cursor: grab;
+        touch-action: none;
+        user-select: none;
+      }
+
+      .graph-svg:active {
+        cursor: grabbing;
+      }
+
+      .graph-controls {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        z-index: 10;
+      }
+
+      .graph-ctrl-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        border: 1px solid var(--border-strong);
+        background: rgba(255, 255, 255, 0.94);
+        color: var(--ink-primary);
+        font-weight: 700;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .graph-ctrl-btn:hover {
+        background: var(--bg-warm);
+      }
+
+      .graph-status-bar {
+        position: absolute;
+        left: 14px;
+        bottom: 14px;
+        padding: 6px 12px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid var(--border-hairline);
+        font-size: 0.78rem;
+        color: var(--ink-secondary);
+        pointer-events: none;
+      }
+
+      .graph-tooltip {
+        position: absolute;
+        pointer-events: none;
+        z-index: 20;
+        background: rgba(59, 51, 47, 0.94);
+        color: #ffffff;
+        padding: 7px 11px;
+        border-radius: 8px;
+        font-size: 0.78rem;
+        line-height: 1.4;
+        max-width: 240px;
+        display: none;
+        box-shadow: var(--shadow-md);
+      }
+
+      /* Right Inspector Panel */
+      .inspector-tabs {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 4px;
+        padding: 4px;
+        background: #f6f0e4;
+        border-radius: 10px;
+        margin-bottom: 14px;
+      }
+
+      .inspector-tab {
+        border: none;
+        background: transparent;
+        color: var(--ink-secondary);
+        font-size: 0.78rem;
+        font-weight: 600;
+        padding: 7px 4px;
+        border-radius: 7px;
+        white-space: nowrap;
+        transition: background-color 0.15s ease, color 0.15s ease;
+      }
+
+      .inspector-tab.active {
+        background: #ffffff;
+        color: var(--ink-primary);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      }
+
+      .kpi-row {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+
+      .kpi-box {
+        padding: 12px 8px;
+        border-radius: 12px;
+        text-align: center;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      .kpi-label {
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--ink-secondary);
+        margin-bottom: 2px;
+      }
+
+      .kpi-value {
+        font-family: var(--font-display);
+        font-size: 1.45rem;
+        font-weight: 800;
+        line-height: 1.1;
+      }
+
+      .bar-chart-block {
+        margin-bottom: 16px;
+        padding: 12px;
+        border-radius: 12px;
+        background: #fffcf6;
+        border: 1px solid var(--border-hairline);
+      }
+
+      .bar-chart-title {
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: var(--ink-primary);
+        margin: 0 0 10px;
+      }
+
+      .bar-row {
+        display: grid;
+        grid-template-columns: 102px minmax(0, 1fr) 28px;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 7px;
+        font-size: 0.76rem;
+      }
+
+      .bar-row:last-child {
+        margin-bottom: 0;
+      }
+
+      .bar-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: var(--ink-secondary);
+        font-weight: 500;
+      }
+
+      .bar-track {
+        height: 8px;
+        border-radius: 999px;
+        background: #efe8da;
+        overflow: hidden;
+      }
+
+      .bar-fill {
+        height: 100%;
+        border-radius: 999px;
+      }
+
+      .bar-num {
+        text-align: right;
+        font-family: var(--font-mono);
+        color: var(--ink-muted);
+      }
+
+      .prop-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.82rem;
+        margin-bottom: 14px;
+      }
+
+      .prop-table th,
+      .prop-table td {
+        padding: 6px 8px;
+        border-bottom: 1px solid #f1e9da;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .prop-table th {
+        width: 34%;
+        color: var(--ink-muted);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+      }
+
+      .prop-table td {
+        color: var(--ink-primary);
+        word-break: break-word;
+      }
+
+      .edge-chip-list {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        max-height: 250px;
+        overflow-y: auto;
+      }
+
+      .edge-chip-btn {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        width: 100%;
+        padding: 7px 10px;
+        border-radius: 9px;
+        border: 1px solid var(--border-hairline);
+        background: #fffcf6;
+        text-align: left;
+        font-size: 0.8rem;
+        transition: background-color 0.14s ease;
+      }
+
+      .edge-chip-btn:hover {
+        background: var(--bg-soft-blush);
+        border-color: rgba(224, 109, 125, 0.35);
+      }
+
+      .edge-rel-tag {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--ink-secondary);
+      }
+
+      .preset-btn {
+        width: 100%;
+        text-align: left;
+        padding: 11px 12px;
+        border-radius: 10px;
+        border: 1px solid var(--border-hairline);
+        background: #fffcf6;
+        margin-bottom: 8px;
+        transition: border-color 0.14s ease, background-color 0.14s ease;
+      }
+
+      .preset-btn:hover {
+        background: var(--bg-warm);
+        border-color: #d7c3a0;
+      }
+
+      .preset-btn strong {
+        display: block;
+        font-size: 0.86rem;
+        color: var(--ink-primary);
+        margin-bottom: 2px;
+      }
+
+      .preset-btn span {
+        font-size: 0.78rem;
+        color: var(--ink-secondary);
+      }
+
+      /* Footer */
+      .site-footer {
+        border-top: 1px solid var(--border-hairline);
+        background: #faf5ea;
+        padding: 24px;
+        text-align: center;
+        font-size: 0.84rem;
+        color: var(--ink-muted);
+      }
+
+      /* Responsive Breakpoints */
+      @media (max-width: 1080px) {
+        .explorer-layout {
+          grid-template-columns: 240px minmax(0, 1fr);
+        }
+        .explorer-inspector {
+          grid-column: 1 / -1;
+        }
+        .about-top-grid {
+          grid-template-columns: 120px minmax(0, 1fr);
+        }
+        .contact-card {
+          grid-column: 1 / -1;
+        }
+        .projects-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 768px) {
+        .header-inner {
+          padding: 10px 14px;
+          gap: 10px;
+        }
+        .brand-btn {
+          font-size: 0.98rem;
+        }
+        .nav-link {
+          padding: 7px 11px;
+          font-size: 0.84rem;
+        }
+        .main-container {
+          padding: 18px 14px 48px;
+        }
+        .hero-banner {
+          min-height: 360px;
+          padding: 34px 16px 112px;
+        }
+        .about-shell,
+        .timeline-shell,
+        .detail-header-card {
+          padding: 20px 18px;
+        }
+        .about-top-grid,
+        .bento-3,
+        .timeline-list,
+        .projects-grid,
+        .detail-header-card,
+        .detail-grid-2,
+        .explorer-layout {
+          grid-template-columns: 1fr;
+        }
+        .graph-stage {
+          height: 460px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- =====================================================================
+         상단 고정 내비게이션 바
+         - 왼쪽: 홈 버튼 (클릭 시 첫 화면 '자기소개'로 이동)
+         - 오른쪽: 자기소개 / 프로젝트 / 데이터 탐색 3개 메뉴
+         ===================================================================== -->
+    <header class="site-header">
+      <div class="header-inner">
+        <button type="button" class="brand-btn" id="homeBtn" aria-label="첫 화면으로 돌아가기">
+          <svg width="28" height="28" viewBox="0 0 36 36" aria-hidden="true">
+            <circle cx="10" cy="9" r="4.5" fill="#FFFFFF" stroke="#3B332F" stroke-width="2.2" />
+            <circle cx="26" cy="9" r="4.5" fill="#FFFFFF" stroke="#3B332F" stroke-width="2.2" />
+            <ellipse cx="18" cy="20" rx="13" ry="11.5" fill="#FFFFFF" stroke="#3B332F" stroke-width="2.2" />
+            <circle cx="13.5" cy="18.5" r="1.5" fill="#3B332F" />
+            <circle cx="22.5" cy="18.5" r="1.5" fill="#3B332F" />
+            <ellipse cx="10.5" cy="21.5" rx="2.3" ry="1.4" fill="#F9B4C0" />
+            <ellipse cx="25.5" cy="21.5" rx="2.3" ry="1.4" fill="#F9B4C0" />
+            <path d="M15.8 22.5 Q18 24.5 20.2 22.5" fill="none" stroke="#3B332F" stroke-width="1.8" stroke-linecap="round" />
+          </svg>
+          <span id="brandTitleText">석예린 · Yerin</span>
+        </button>
+
+        <nav class="nav-list" aria-label="주요 메뉴">
+          <button type="button" class="nav-link active" data-nav="about">자기소개</button>
+          <button type="button" class="nav-link" data-nav="projects">프로젝트</button>
+          <button type="button" class="nav-link" data-nav="explorer">데이터 탐색</button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main-container">
+      <!-- ===================================================================
+           VIEW 1: 자기소개 (첫 화면 + 연락처 + 이력)
+           =================================================================== -->
+      <section id="view-about" class="view-section active" aria-labelledby="heroHeadline">
+        <div class="hero-banner">
+          <!-- 일러스트 배경 SVG (외부 이미지 의존성 없이 단일 index.html로 동작) -->
+          <svg class="hero-scenery-svg" viewBox="0 0 1200 460" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+            <!-- 구름 -->
+            <g fill="#FFFFFF" opacity="0.88">
+              <ellipse cx="160" cy="86" rx="58" ry="22" />
+              <ellipse cx="195" cy="76" rx="40" ry="24" />
+              <ellipse cx="1020" cy="96" rx="68" ry="24" />
+              <ellipse cx="1065" cy="84" rx="42" ry="26" />
+              <ellipse cx="620" cy="60" rx="50" ry="18" opacity="0.65" />
+            </g>
+            <!-- 바다 물결 -->
+            <path d="M0 296 Q300 282 600 296 T1200 296 L1200 340 L0 340 Z" fill="#8CCAE8" opacity="0.55" />
+            <path d="M0 318 Q180 312 360 320 T720 318 T1200 318" stroke="#FFFFFF" stroke-width="3" fill="none" opacity="0.55" />
+            <!-- 초원 언덕 -->
+            <path d="M0 326 Q340 292 700 324 T1200 316 L1200 460 L0 460 Z" fill="#BCE396" />
+            <path d="M0 364 Q420 336 860 366 T1200 356 L1200 460 L0 460 Z" fill="#A6D67B" />
+            <!-- 작은 들꽃 -->
+            <g transform="translate(120,404)">
+              <circle cx="0" cy="-7" r="4" fill="#FFFFFF" />
+              <circle cx="6" cy="-2" r="4" fill="#FFFFFF" />
+              <circle cx="4" cy="5" r="4" fill="#FFFFFF" />
+              <circle cx="-4" cy="5" r="4" fill="#FFFFFF" />
+              <circle cx="-6" cy="-2" r="4" fill="#FFFFFF" />
+              <circle cx="0" cy="0" r="3.2" fill="#F6C84C" />
+            </g>
+            <g transform="translate(1080,396)">
+              <circle cx="0" cy="-7" r="4" fill="#FFE2EC" />
+              <circle cx="6" cy="-2" r="4" fill="#FFE2EC" />
+              <circle cx="4" cy="5" r="4" fill="#FFE2EC" />
+              <circle cx="-4" cy="5" r="4" fill="#FFE2EC" />
+              <circle cx="-6" cy="-2" r="4" fill="#FFE2EC" />
+              <circle cx="0" cy="0" r="3.2" fill="#F6C84C" />
+            </g>
+            <!-- 세 마리 캐릭터 일러스트 (하단 중앙 배치) -->
+            <g transform="translate(430, 326)">
+              <!-- 왼쪽 파란 고양이 친구 -->
+              <g transform="translate(0, 12)">
+                <polygon points="18,18 28,2 40,16" fill="#89BFE8" stroke="#3B332F" stroke-width="2.5" stroke-linejoin="round" />
+                <polygon points="72,18 62,2 50,16" fill="#89BFE8" stroke="#3B332F" stroke-width="2.5" stroke-linejoin="round" />
+                <ellipse cx="45" cy="48" rx="34" ry="31" fill="#FFFFFF" stroke="#3B332F" stroke-width="2.5" />
+                <path d="M19 30 Q45 14 71 30 L64 20 Q45 11 26 20 Z" fill="#89BFE8" />
+                <circle cx="33" cy="46" r="3" fill="#3B332F" />
+                <circle cx="57" cy="46" r="3" fill="#3B332F" />
+                <ellipse cx="24" cy="54" rx="5" ry="3" fill="#F9B4C0" />
+                <ellipse cx="66" cy="54" rx="5" ry="3" fill="#F9B4C0" />
+                <path d="M41 53 Q45 58 49 53" fill="none" stroke="#3B332F" stroke-width="2.2" stroke-linecap="round" />
+              </g>
+              <!-- 가운데 하얀 주인공 친구 -->
+              <g transform="translate(122, 0)">
+                <circle cx="18" cy="14" r="10" fill="#FFFFFF" stroke="#3B332F" stroke-width="2.5" />
+                <circle cx="78" cy="14" r="10" fill="#FFFFFF" stroke="#3B332F" stroke-width="2.5" />
+                <ellipse cx="48" cy="52" rx="40" ry="36" fill="#FFFFFF" stroke="#3B332F" stroke-width="2.5" />
+                <circle cx="34" cy="48" r="3.4" fill="#3B332F" />
+                <circle cx="62" cy="48" r="3.4" fill="#3B332F" />
+                <circle cx="33" cy="47" r="1" fill="#FFFFFF" />
+                <circle cx="61" cy="47" r="1" fill="#FFFFFF" />
+                <ellipse cx="23" cy="56" rx="6" ry="3.4" fill="#F9B4C0" />
+                <ellipse cx="73" cy="56" rx="6" ry="3.4" fill="#F9B4C0" />
+                <path d="M43 56 Q48 61 53 56" fill="none" stroke="#3B332F" stroke-width="2.2" stroke-linecap="round" />
+              </g>
+              <!-- 오른쪽 노란 토끼 친구 -->
+              <g transform="translate(248, -14)">
+                <ellipse cx="28" cy="16" rx="9" ry="22" fill="#FFF2B2" stroke="#3B332F" stroke-width="2.5" />
+                <ellipse cx="62" cy="16" rx="9" ry="22" fill="#FFF2B2" stroke="#3B332F" stroke-width="2.5" />
+                <ellipse cx="28" cy="18" rx="4.5" ry="13" fill="#FAD2D8" />
+                <ellipse cx="62" cy="18" rx="4.5" ry="13" fill="#FAD2D8" />
+                <ellipse cx="45" cy="64" rx="35" ry="32" fill="#FFF2B2" stroke="#3B332F" stroke-width="2.5" />
+                <circle cx="33" cy="60" r="3.2" fill="#3B332F" />
+                <circle cx="57" cy="60" r="3.2" fill="#3B332F" />
+                <ellipse cx="23" cy="67" rx="5.5" ry="3.2" fill="#F7A1AE" />
+                <ellipse cx="67" cy="67" rx="5.5" ry="3.2" fill="#F7A1AE" />
+                <path d="M40 66 Q45 72 50 66" fill="none" stroke="#3B332F" stroke-width="2.2" stroke-linecap="round" />
+              </g>
+            </g>
+          </svg>
+
+          <div class="hero-content">
+            <span class="hero-kicker" id="heroKicker"></span>
+            <h1 class="hero-title" id="heroHeadline"></h1>
+            <p class="hero-subtitle" id="heroIntro"></p>
+            <div class="hero-actions">
+              <button type="button" class="btn-primary" id="heroProjectsBtn">프로젝트 살펴보기 →</button>
+              <button type="button" class="btn-secondary" id="heroExplorerBtn">지식그래프 탐색하기</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- About Me & Contact -->
+        <div class="about-shell" id="aboutContainer"></div>
+
+        <!-- 3-Column Track Summary -->
+        <div class="bento-3" id="tracksContainer"></div>
+
+        <!-- Academic & Activity Timeline -->
+        <div class="timeline-shell">
+          <h2 class="section-heading" style="font-size: 1.35rem">학업 · 활동 · 연구 이력</h2>
+          <p class="section-lead" style="margin-bottom: 12px">
+            고전 텍스트와 인간 심리를 데이터 구조로 엮어온 주요 여정입니다.
+          </p>
+          <div class="timeline-list" id="timelineContainer"></div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           VIEW 2: 프로젝트 (카드 목록 + 프로젝트 상세 뷰)
+           =================================================================== -->
+      <section id="view-projects" class="view-section" aria-labelledby="projectsHeading">
+        <div id="projectsListView">
+          <h2 class="section-heading" id="projectsHeading">Projects</h2>
+          <p class="section-lead">
+            한문학·심리학의 시선과 Neo4j 지식그래프·데이터 시각화를 결합한 프로젝트 아카이브입니다.
+          </p>
+          <div class="filter-bar" id="projectFilters" role="tablist" aria-label="프로젝트 카테고리 필터"></div>
+          <div class="projects-grid" id="projectsGrid"></div>
+        </div>
+
+        <div id="projectDetailView" style="display: none"></div>
+      </section>
+
+      <!-- ===================================================================
+           VIEW 3: 데이터 탐색 (Neo4j 데이터.json 인터랙티브 그래프 탐색기)
+           =================================================================== -->
+      <section id="view-explorer" class="view-section" aria-labelledby="explorerHeading">
+        <div class="explorer-header">
+          <div>
+            <h2 class="section-heading" id="explorerHeading">Data Explorer</h2>
+            <p class="section-lead" style="margin-bottom: 0">
+              Neo4j 데이터로 구축한 ‘치이카와: 인어섬의 비밀’ 지식그래프를 브라우저에서 직접 탐색해보세요.
+            </p>
+          </div>
+          <label class="upload-json-label" title="다른 Neo4j JSON 파일을 불러와 탐색할 수 있습니다">
+            <span>새 Neo4j JSON 열기</span>
+            <input type="file" id="neo4jFileInput" accept=".json,.jsonl,.txt" style="display: none" />
+          </label>
+        </div>
+
+        <div class="explorer-layout">
+          <!-- Left Controls -->
+          <aside class="explorer-panel" aria-label="그래프 필터">
+            <input
+              type="search"
+              id="graphSearchInput"
+              class="search-input"
+              placeholder="노드 이름·속성 검색 (예: 치이카와, 인어)"
+              aria-label="노드 검색"
+            />
+
+            <div class="filter-group-title">
+              <span>노드 클래스 (Labels)</span>
+              <button type="button" class="mini-link-btn" id="toggleAllLabelsBtn">전체 선택</button>
+            </div>
+            <div class="filter-check-list" id="labelFilterList"></div>
+
+            <div class="filter-group-title" style="margin-top: 16px">
+              <span>관계 유형 (Edges)</span>
+              <button type="button" class="mini-link-btn" id="toggleAllRelsBtn">전체 선택</button>
+            </div>
+            <div class="filter-check-list filter-check-scroll" id="relFilterList"></div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px">
+              <button type="button" class="btn-secondary" id="resetGraphBtn" style="padding: 8px 10px; min-height: 38px; font-size: 0.82rem; border-radius: 10px">
+                필터 초기화
+              </button>
+              <button type="button" class="btn-secondary" id="relayoutGraphBtn" style="padding: 8px 10px; min-height: 38px; font-size: 0.82rem; border-radius: 10px">
+                배치 재정렬
+              </button>
+            </div>
+          </aside>
+
+          <!-- Center Graph Canvas -->
+          <div class="graph-stage" id="graphStage">
+            <svg class="graph-svg" id="graphSvg" viewBox="0 0 900 650" role="img" aria-label="지식그래프 네트워크 시각화">
+              <defs>
+                <marker id="arrowDefault" viewBox="0 0 10 10" refX="21" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#C6B8A3" />
+                </marker>
+                <marker id="arrowActive" viewBox="0 0 10 10" refX="21" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#D45B6C" />
+                </marker>
+              </defs>
+              <g id="graphViewport">
+                <g id="edgesLayer"></g>
+                <g id="nodesLayer"></g>
+              </g>
+            </svg>
+
+            <div class="graph-controls" aria-label="그래프 확대 및 축소">
+              <button type="button" class="graph-ctrl-btn" id="zoomInBtn" title="확대">+</button>
+              <button type="button" class="graph-ctrl-btn" id="zoomOutBtn" title="축소">−</button>
+              <button type="button" class="graph-ctrl-btn" id="zoomFitBtn" title="화면에 맞추기">⛶</button>
+            </div>
+
+            <div class="graph-status-bar tabular-nums" id="graphStatusBar">
+              노드 0 · 관계 0 표시 중 (노드를 클릭하면 연결 관계가 강조됩니다)
+            </div>
+            <div class="graph-tooltip" id="graphTooltip"></div>
+          </div>
+
+          <!-- Right Inspector & Analytics -->
+          <aside class="explorer-panel explorer-inspector" aria-label="노드 상세 및 통계">
+            <div class="inspector-tabs" role="tablist">
+              <button type="button" class="inspector-tab active" data-inspector="overview">개요</button>
+              <button type="button" class="inspector-tab" data-inspector="node">선택 노드</button>
+              <button type="button" class="inspector-tab" data-inspector="hubs">주요 허브</button>
+              <button type="button" class="inspector-tab" data-inspector="research">연구 질문</button>
+            </div>
+            <div id="inspectorBody"></div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="siteFooter"></footer>
+
+    <script>
+      /* =======================================================================
+         [1] 포트폴리오 데이터 설정 (PORTFOLIO_DATA)
+         -----------------------------------------------------------------------
+         앞으로 학업, 경력, 동아리/학생회 활동, 프로젝트, LinkedIn URL 등을
+         수정·추가하실 때는 아래 PORTFOLIO_DATA 객체만 편집하시면 됩니다.
+         ======================================================================= */
+      const PORTFOLIO_DATA = {
+        brandName: '석예린 · Yerin',
+        footerText: '© 2026 석예린 (Yerin Seok) · 한문학 · 심리학 · 디지털 인문학 포트폴리오',
+        profile: {
+          name: '석예린',
+          nameEng: 'Yerin Seok',
+          kicker: '한문학 × 심리학 × 디지털 인문학',
+          headline: '안녕하세요, 석예린입니다.',
+          intro:
+            '고전 한문의 서사와 인간 심리의 결을 읽고, 데이터와 지식그래프로 이야기의 구조를 탐색합니다.',
+          roleTitle: '한문학과 25학번 · 디지털 인문학 & 데이터 서사 탐구',
+          bio:
+            '한문학을 전공하며 고전 텍스트가 품은 시대와 인간의 마음을 읽고, 심리학적 통찰과 디지털 인문학(지식그래프·데이터 시각화)을 연결해 서사의 맥락을 구조화합니다. 연구직과 교수의 비전을 품고 질문하며 기록합니다.',
+          metaTags: [
+            '2025 입학',
+            '한문학과',
+            'INFJ',
+            '롤모델 정솔미 교수님',
+            '관심 진로: 교수·연구직',
+            '희망 근무지: 서울'
+          ]
+        },
+        contact: {
+          email: 'yerinseok3355@gmail.com',
+          linkedinUrl: 'https://www.linkedin.com',
+          linkedinLabel: 'LinkedIn 프로필 연결 (URL 업데이트)',
+          wikiUrl:
+            'https://dh.aks.ac.kr/~kimseoyun/wiki/index.php/%EC%82%AC%EC%9A%A9%EC%9E%90:%EC%84%9D%EC%98%88%EB%A6%B0',
+          wikiLabel: '디지털 인문학 위키 · 사용자:석예린',
+          instagramHandle: '@instagram (활동 SNS)',
+          githubUrl: ''
+        },
+        tracks: [
+          {
+            title: 'Education & Academic Focus',
+            subtitle: '한문학 · 심리학 탐구',
+            items: [
+              '한문학과 (2025학번) 재학 중',
+              '심리학 연계 관심 — 인물 동기와 정서 서사 탐구',
+              '목표 진로: 학계 연구직 및 교수 (롤모델 정솔미 교수님)'
+            ]
+          },
+          {
+            title: 'Activities & Community',
+            subtitle: '학생회 · 밴드 · 동아리',
+            items: [
+              '학과 학생회 및 교내 소통·기획 활동',
+              '밴드 · 베이킹 동아리 분과 활동 및 관심',
+              '관심 키워드: 제미나이(AI) 리서치, 육회, 아이슬란드 여행'
+            ]
+          },
+          {
+            title: 'Research & Skills',
+            subtitle: '디지털 인문학 · 데이터',
+            items: [
+              'Neo4j 지식그래프 구축 및 Cypher 질의 탐색',
+              '인물·사건·장소·사물·문화요소 온톨로지 설계',
+              '위키(MediaWiki) 기반 데이터 편찬 및 시각화'
+            ]
+          }
+        ],
+        timeline: [
+          {
+            period: '2025 – 현재',
+            category: '학업 · 전공',
+            title: '한문학과 입학 및 인문·심리 연계 탐색',
+            description:
+              '고전 한문 텍스트의 맥락을 읽는 훈련을 바탕으로 심리학과 디지털 인문학 방법론을 접목하고 있습니다.'
+          },
+          {
+            period: '2025 – 현재',
+            category: '학생회 · 동아리',
+            title: '학생회 & 밴드·베이킹 활동',
+            description:
+              '공동체 안에서의 협업과 기획을 경험하며, 학업 외 다양한 창작과 음악 활동으로 균형을 가꾸고 있습니다.'
+          },
+          {
+            period: '2026',
+            category: '디지털 인문학 위키',
+            title: 'AKS 디지털 인문학 위키 사용자 문서 및 데이터 편찬',
+            description:
+              '연구 프로필과 데이터 편찬 작업물((월) B팀_치이카와)을 위키 기반 아카이브로 기록·관리했습니다.'
+          },
+          {
+            period: '2026',
+            category: '팀 프로젝트 · A+토벌단',
+            title: '영화 ‘치이카와: 인어섬의 비밀’ Neo4j 지식그래프 구축',
+            description:
+              '장소(Place) 및 주요 사물(Object) 데이터 수집과 지식그래프 시각화를 담당해 55노드·114관계를 모델링했습니다.'
+          }
+        ],
+        projects: [
+          {
+            id: 'chiikawa-kg',
+            title: '영화 ‘치이카와: 인어섬의 비밀’ 지식그래프 분석',
+            category: '지식그래프',
+            featured: true,
+            period: '2026 · 팀 A+토벌단',
+            role: '장소(Place)·주요 사물(Object) 데이터 수집 및 지식그래프 시각화',
+            summary:
+              '등장인물, 사건, 장소, 사물, 문화적 요소를 5개 클래스 55개 노드·114개 관계로 구조화하여 작품의 서사·문화·관계적 흥행 요인을 분석한 Neo4j 프로젝트입니다.',
+            tags: ['Neo4j', '지식그래프', '디지털 인문학', '데이터 시각화'],
+            thumbStyle: 'chiikawa',
+            overview:
+              '국경과 문화를 넘어 사랑받는 <치이카와> 극장판의 서사적·문화적·관계적 특징을 탐색하기 위해 구축한 지식그래프입니다. 박민진(불어불문학과), 방민주(영어영문학과), 석예린(한문학과) 3인이 협업하여 데이터 편찬작업((월) B팀_치이카와)을 수행했습니다.',
+            sources: [
+              {
+                name: '나무위키 — 극장판 치이카와: 인어 섬의 비밀',
+                desc: '등장인물, 주요 사건, 줄거리 및 세계관 정보',
+                url: 'https://namu.wiki/w/%EA%B7%B9%EC%9E%A5%ED%8C%90%20%EC%B9%98%EC%9D%B4%EC%B9%B4%EC%99%80:%20%EC%9D%B8%EC%96%B4%20%EC%84%AC%EC%9D%98%20%EB%B9%84%EB%B0%80'
+              },
+              {
+                name: 'CGV — 극장판 치이카와: 인어 섬의 비밀',
+                desc: '영화의 공식 소개, 기본 정보 및 작품 개요',
+                url: 'https://cgv.co.kr/cnm/cgvChart/movieChart/30001367'
+              },
+              {
+                name: '디지털 인문학 위키 — 사용자:석예린',
+                desc: '연구자 프로필 및 디지털 인문학 아카이브',
+                url: 'https://dh.aks.ac.kr/~kimseoyun/wiki/index.php/%EC%82%AC%EC%9A%A9%EC%9E%90:%EC%84%9D%EC%98%88%EB%A6%B0'
+              }
+            ],
+            researchQuestions: [
+              '서사적 측면: 하나의 사건은 어떻게 연쇄적인 갈등과 해결로 이어지는가?',
+              '서사적 측면: 겉으로 드러난 갈등과 실제 갈등의 원인은 어떻게 다른가?',
+              '문화적 측면: 일본의 전통문화와 설화는 작품 속에서 어떤 서사적 기능을 수행하는가?',
+              '문화적 측면: 일본 문화의 고유성을 드러내는 사물과 표현은 이야기에 어떻게 활용되는가?',
+              '관계적 측면: 가장 많은 사건에 관여하는 캐릭터는 누구이며 어떤 역할을 수행하는가?',
+              '관계적 측면: 등장인물 간 우정·갈등·구조 관계는 어떻게 연결되어 있는가?'
+            ],
+            insights: [
+              '주인공 치이카와는 총 19개 관계(8개 사건 참여)로 이야기 중심축을 형성하며, 친구·구조·대결 관계가 입체적으로 교차합니다.',
+              '전단지·인어 비늘·전설의 동물 도감 등 주요 사물(Object)이 사건(인어살해)의 숨은 진실(REVEALS)과 문화적 설화(ASSOCIATED_WITH)를 잇는 핵심 매개로 작동합니다.',
+              '‘인어섬 마을’과 ‘세이렌의 거처’ 같은 공간 노드가 사건 발생지(OCCURS_AT)와 인물 이동(TRAVELS_TO)을 연결해 서사의 공간적 긴장을 드러냅니다.'
+            ],
+            hasDataExplorerLink: true
+          },
+          {
+            id: 'classical-narrative-ontology',
+            title: '한문 서사 · 디지털 인문학 위키 아카이빙',
+            category: '인문·데이터',
+            featured: false,
+            period: '2025 – 2026',
+            role: '텍스트 구조화 및 위키 편찬 설계',
+            summary:
+              '고전 한문 텍스트의 인물·공간·사건 맥락을 디지털 인문학 위키(MediaWiki)와 그래프 온톨로지 관점으로 정리하고 연결하는 학습 및 아카이브 작업입니다.',
+            tags: ['한문학', '온톨로지', 'MediaWiki'],
+            thumbStyle: 'classical',
+            overview:
+              '전통적인 문헌 독해에 더해, 텍스트 속 개체(Entity)와 관계(Relation)를 명시적으로 정의하고 위키 하이퍼텍스트로 기록하는 방법론을 탐구했습니다.',
+            sources: [
+              {
+                name: '디지털 인문학 위키 — 사용자:석예린',
+                desc: '개인 위키 페이지 및 기본 이력 기록',
+                url: 'https://dh.aks.ac.kr/~kimseoyun/wiki/index.php/%EC%82%AC%EC%9A%A9%EC%9E%90:%EC%84%9D%EC%98%88%EB%A6%B0'
+              }
+            ],
+            researchQuestions: [
+              '고전 서사 속 공간 이동과 사물의 상징은 인물 관계와 어떻게 결합되는가?',
+              '비정형 문헌 기록을 노드-엣지 데이터 모델로 표현할 때 어떤 해석적 이점이 있는가?'
+            ],
+            insights: [
+              '텍스트를 인물·장소·사건·사물·문화요소 단위로 분해하면 반복되는 서사 패턴과 숨은 인과관계를 한눈에 비교할 수 있습니다.'
+            ],
+            hasDataExplorerLink: false
+          },
+          {
+            id: 'psychology-story-lab',
+            title: '서사 속 심리 동기와 갈등 구조 탐구 노트',
+            category: '아카이브·활동',
+            featured: false,
+            period: '2026 · 개인 리서치',
+            role: '기획 및 서사·심리 프레임워크 정리',
+            summary:
+              '이야기 속 인물들의 행동 동기와 관계 역학(우정·갈등·구원)을 심리학적 관점으로 해석하고, 학생회·밴드 등 공동체 경험과 연결해 정리한 노트입니다.',
+            tags: ['심리학', '서사 분석', '커뮤니티'],
+            thumbStyle: 'psychology',
+            overview:
+              '겉으로 드러난 사건 이면의 심리적 동기와 관계 망을 살펴보는 리서치 노트입니다. 추후 새로운 분석 글과 데이터셋을 계속 추가할 수 있도록 구성되어 있습니다.',
+            sources: [],
+            researchQuestions: [
+              '갈등 상황에서 인물의 성격 특성과 연대 관계는 문제 해결 방식에 어떤 영향을 미치는가?',
+              '공동체 의례(축제·송별회·음악)는 집단 내 정서적 결속을 어떻게 강화하는가?'
+            ],
+            insights: [
+              '단순한 선악 구도를 넘어 인물 각자의 결핍과 관계의 역학을 함께 모델링할 때 작품 해석의 깊이가 확장됩니다.'
+            ],
+            hasDataExplorerLink: false
+          }
+        ]
+      };
+
+      /* =======================================================================
+         [2] Neo4j 지식그래프 원본 데이터 (NEO4J_RAW_DATA)
+         -----------------------------------------------------------------------
+         첨부된 `Neo4j 데이터.json`의 전체 데이터(55 노드 · 114 관계)입니다.
+         추후 다른 Neo4j JSON으로 교체할 때는 이 배열/문자열을 바꾸거나,
+         화면 상단의 '새 Neo4j JSON 열기' 버튼으로 바로 테스트할 수 있습니다.
+         ======================================================================= */
+      const NEO4J_RAW_DATA = [
+  {
+    "data": "{\"type\":\"node\",\"id\":\"55\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"먼작귀\",\"skills\":\"비밀 유지\",\"immortality\":false,\"personality\":\"소심하지만 다정하고 용감함\",\"name\":\"치이카와\",\"id\":\"C01\",\"type\":\"동그란 귀와 작고 하얀 몸\"}}\n{\"type\":\"node\",\"id\":\"56\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"가르마\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"다정하고 긍정적임\",\"name\":\"하치와레\",\"id\":\"C02\",\"type\":\"파란색과 흰색의 고양이\"}}\n{\"type\":\"node\",\"id\":\"57\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"토끼\",\"skills\":\"랩\",\"immortality\":false,\"personality\":\"활발하고 자유분방함\",\"name\":\"우사기\",\"id\":\"C03\",\"type\":\"노란색 몸과 긴 귀\"}}\n{\"type\":\"node\",\"id\":\"58\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"하늘다람쥐\",\"skills\":\"떼쓰기\",\"immortality\":false,\"personality\":\"자기중심적이고 애교많음\",\"name\":\"모몽가\",\"id\":\"C04\",\"type\":\"하늘다람쥐를 닮은 모습\"}}\n{\"type\":\"node\",\"id\":\"59\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"밤만쥬\",\"skills\":\"맛보기 대장\",\"immortality\":false,\"personality\":\"느긋하고 먹기를 좋아함\",\"name\":\"쿠리만쥬\",\"id\":\"C05\",\"type\":\"베이지색 몸과 작은 수달 귀\"}}\n{\"type\":\"node\",\"id\":\"60\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"해달\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"침착하고 듬직함\",\"name\":\"랏코\",\"id\":\"C06\",\"type\":\"해달을 닮은 모습\"}}\n{\"type\":\"node\",\"id\":\"61\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"시사\",\"skills\":\"요리 대장\",\"immortality\":false,\"personality\":\"성실하고 예의 바름\",\"name\":\"시사\",\"id\":\"C07\",\"type\":\"시사(사자상)을 닮은 모습\"}}\n{\"type\":\"node\",\"id\":\"62\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"헌책방\",\"skills\":\"집게로 절단하기\",\"immortality\":false,\"personality\":\"다정하고 온순함\",\"name\":\"카니\",\"id\":\"C08\",\"type\":\"게 모양 장식을 지닌 분홍색  \"}}\n{\"type\":\"node\",\"id\":\"63\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"섬 아저씨\",\"skills\":\"소용돌이 생성\",\"immortality\":false,\"personality\":\"친절하고 사명감 있음\",\"name\":\"시마지로\",\"id\":\"C09\",\"type\":\"천 하나를 두른 아저씨의 모습\"}}\n{\"type\":\"node\",\"id\":\"64\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"세이렌\",\"skills\":\"노래를 통한 식물 조종\",\"immortality\":false,\"personality\":\"선악을 구분하기 어려움\",\"name\":\"세이렌\",\"id\":\"C10\",\"type\":\"검은 만두 머리와 빨간 꼬리\"}}\n{\"type\":\"node\",\"id\":\"65\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"인어들\",\"skills\":\"코러스\",\"immortality\":false,\"personality\":\"무리 지어 다니고 노래를 좋아함\",\"name\":\"인어들\",\"id\":\"C11\",\"type\":\"하얀 몸과 빨간 꼬리\"}}\n{\"type\":\"node\",\"id\":\"66\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"섬주민\",\"skills\":\"없음\",\"immortality\":false,\"personality\":\"없음\",\"name\":\"섬주민\",\"id\":\"C12\",\"type\":\"모두 회색으로 표시\"}}\n{\"type\":\"node\",\"id\":\"67\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"한잎이\",\"skills\":\"없음\",\"immortality\":true,\"personality\":\"순하고 호기심이 많음\",\"name\":\"히토하\",\"id\":\"C13\",\"type\":\"머리에 잎이 한 개 달림\"}}\n{\"type\":\"node\",\"id\":\"68\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"두잎이\",\"skills\":\"없음\",\"immortality\":true,\"personality\":\"명랑하고 친근함\",\"name\":\"후타바\",\"id\":\"C14\",\"type\":\"머리에 잎이 두 개 달림\"}}\n{\"type\":\"node\",\"id\":\"69\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"섬 마을 촌장\",\"skills\":\"없음\",\"immortality\":false,\"personality\":\"없음\",\"name\":\"섬 마을 촌장\",\"id\":\"C15\",\"type\":\"회색으로 표시\"}}\n{\"type\":\"node\",\"id\":\"70\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"치이카와의 집\",\"id\":\"P01\",\"type\":\"거주 공간\"}}\n{\"type\":\"node\",\"id\":\"71\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"히토하와 후타바의 집\",\"id\":\"P02\",\"type\":\"거주 공간\"}}\n{\"type\":\"node\",\"id\":\"72\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"선착장\",\"id\":\"P03\",\"type\":\"마을 및 거주지\"}}\n{\"type\":\"node\",\"id\":\"73\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"세이렌의 거처\",\"id\":\"P04\",\"type\":\"감금 시설\"}}\n{\"type\":\"node\",\"id\":\"74\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"인어섬 마을\",\"id\":\"P05\",\"type\":\"마을 및 거주지\"}}\n{\"type\":\"node\",\"id\":\"75\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"시마지로의 가게\",\"id\":\"P06\",\"type\":\"상업 시설\"}}\n{\"type\":\"node\",\"id\":\"76\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"숲\",\"id\":\"P07\",\"type\":\"자연 공간\"}}\n{\"type\":\"node\",\"id\":\"77\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"해변\",\"id\":\"P08\",\"type\":\"자연 공간\"}}\n{\"type\":\"node\",\"id\":\"78\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"동굴\",\"id\":\"P09\",\"type\":\"자연 공간\"}}\n{\"type\":\"node\",\"id\":\"79\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"전단지수령\",\"id\":\"E01\",\"type\":\"정보 획득\"}}\n{\"type\":\"node\",\"id\":\"80\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어섬방문\",\"id\":\"E02\",\"type\":\"이동 및 방문\"}}\n{\"type\":\"node\",\"id\":\"81\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"세이렌조우\",\"id\":\"E03\",\"type\":\"조우\"}}\n{\"type\":\"node\",\"id\":\"82\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"토벌의뢰\",\"id\":\"E04\",\"type\":\"의무 의뢰\"}}\n{\"type\":\"node\",\"id\":\"83\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"랏코납치\",\"id\":\"E05\",\"type\":\"납치 및 갈등\"}}\n{\"type\":\"node\",\"id\":\"84\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"동료구출\",\"id\":\"E06\",\"type\":\"구조 및 탈출\"}}\n{\"type\":\"node\",\"id\":\"85\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"세이렌위협\",\"id\":\"E07\",\"type\":\"갈등 및 위협\"}}\n{\"type\":\"node\",\"id\":\"86\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"세이렌토벌\",\"id\":\"E08\",\"type\":\"전투 및 토벌\"}}\n{\"type\":\"node\",\"id\":\"87\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어살해\",\"id\":\"E09\",\"type\":\"교류 및 송별 \"}}\n{\"type\":\"node\",\"id\":\"88\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"영생획득\",\"id\":\"E10\",\"type\":\"살해 및 갈등 발생\"}}\n{\"type\":\"node\",\"id\":\"89\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어조림섭취\",\"id\":\"E11\",\"type\":\"음식 섭취\"}}\n{\"type\":\"node\",\"id\":\"90\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어섬송별회\",\"id\":\"E12\",\"type\":\"초자연적 변화\"}}\n{\"type\":\"node\",\"id\":\"91\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"귀환\",\"id\":\"E13\",\"type\":\"이동 및 귀환 \"}}\n{\"type\":\"node\",\"id\":\"92\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"전단지\",\"id\":\"O01\",\"type\":\"정보 전달 매체\"}}\n{\"type\":\"node\",\"id\":\"93\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"토벌봉\",\"id\":\"O02\",\"type\":\"무기\"}}\n{\"type\":\"node\",\"id\":\"94\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"검\",\"id\":\"O03\",\"type\":\"무기\"}}\n{\"type\":\"node\",\"id\":\"95\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"인어 비늘\",\"id\":\"O04\",\"type\":\"신체 유래 물질\"}}\n{\"type\":\"node\",\"id\":\"96\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"사탕\",\"id\":\"O05\",\"type\":\"음식\"}}\n{\"type\":\"node\",\"id\":\"97\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"건전지\",\"id\":\"O06\",\"type\":\"전력 공급 도구\"}}\n{\"type\":\"node\",\"id\":\"98\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"인어 조림\",\"id\":\"O07\",\"type\":\"음식\"}}\n{\"type\":\"node\",\"id\":\"99\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"매운 카레\",\"id\":\"O08\",\"type\":\"음식\"}}\n{\"type\":\"node\",\"id\":\"100\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"캐롤라이나 리퍼 가루\",\"id\":\"O09\",\"type\":\"음식\"}}\n{\"type\":\"node\",\"id\":\"101\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"전설의 동물 도감\",\"id\":\"O10\",\"type\":\"서적 및 정보자료\"}}\n{\"type\":\"node\",\"id\":\"102\",\"labels\":[\"CulturalElement\"],\"properties\":{\"name\":\"축제\",\"id\":\"CE01\",\"type\":\"지역 축제\"}}\n{\"type\":\"node\",\"id\":\"103\",\"labels\":[\"CulturalElement\"],\"properties\":{\"name\":\"인어설화\",\"id\":\"CE02\",\"type\":\"설화\"}}\n{\"type\":\"node\",\"id\":\"104\",\"labels\":[\"CulturalElement\"],\"properties\":{\"name\":\"바다신앙\",\"id\":\"CE03\",\"type\":\"신앙 \"}}\n{\"type\":\"node\",\"id\":\"105\",\"labels\":[\"CulturalElement\"],\"properties\":{\"name\":\"생선조림\",\"id\":\"CE04\",\"type\":\"음식 문화\"}}\n{\"type\":\"node\",\"id\":\"106\",\"labels\":[\"CulturalElement\"],\"properties\":{\"name\":\"단팥과자\",\"id\":\"CE05\",\"type\":\"음식 문화\"}}\n{\"type\":\"node\",\"id\":\"107\",\"labels\":[\"CulturalElement\"],\"properties\":{\"name\":\"탄산\",\"id\":\"CE06\",\"type\":\"음식 문화\"}}\n{\"type\":\"node\",\"id\":\"108\",\"labels\":[\"CulturalElement\"],\"properties\":{\"name\":\"오사카사투리\",\"id\":\"CE07\",\"type\":\"지역 방언\"}}\n{\"type\":\"node\",\"id\":\"109\",\"labels\":[\"CulturalElement\"],\"properties\":{\"name\":\"공동체음악\",\"id\":\"CE08\",\"type\":\"음악 문화\"}}\n{\"type\":\"relationship\",\"id\":\"1152930300699869239\",\"label\":\"FRIENDS_OF\",\"start\":{\"id\":\"55\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"먼작귀\",\"skills\":\"비밀 유지\",\"immortality\":false,\"personality\":\"소심하지만 다정하고 용감함\",\"name\":\"치이카와\",\"id\":\"C01\",\"type\":\"동그란 귀와 작고 하얀 몸\"}},\"end\":{\"id\":\"56\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"가르마\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"다정하고 긍정적임\",\"name\":\"하치와레\",\"id\":\"C02\",\"type\":\"파란색과 흰색의 고양이\"}}}\n{\"type\":\"relationship\",\"id\":\"1155182100513554487\",\"label\":\"FRIENDS_OF\",\"start\":{\"id\":\"55\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"먼작귀\",\"skills\":\"비밀 유지\",\"immortality\":false,\"personality\":\"소심하지만 다정하고 용감함\",\"name\":\"치이카와\",\"id\":\"C01\",\"type\":\"동그란 귀와 작고 하얀 몸\"}},\"end\":{\"id\":\"57\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"토끼\",\"skills\":\"랩\",\"immortality\":false,\"personality\":\"활발하고 자유분방함\",\"name\":\"우사기\",\"id\":\"C03\",\"type\":\"노란색 몸과 긴 귀\"}}}\n{\"type\":\"relationship\",\"id\":\"1157433900327239735\",\"label\":\"FRIENDS_OF\",\"start\":{\"id\":\"55\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"먼작귀\",\"skills\":\"비밀 유지\",\"immortality\":false,\"personality\":\"소심하지만 다정하고 용감함\",\"name\":\"치이카와\",\"id\":\"C01\",\"type\":\"동그란 귀와 작고 하얀 몸\"}},\"end\":{\"id\":\"63\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"섬 아저씨\",\"skills\":\"소용돌이 생성\",\"immortality\":false,\"personality\":\"친절하고 사명감 있음\",\"name\":\"시마지로\",\"id\":\"C09\",\"type\":\"천 하나를 두른 아저씨의 모습\"}}}\n{\"type\":\"relationship\",\"id\":\"1152931400211497015\",\"label\":\"RIVAL_OF\",\"start\":{\"id\":\"55\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"먼작귀\",\"skills\":\"비밀 유지\",\"immortality\":false,\"personality\":\"소심하지만 다정하고 용감함\",\"name\":\"치이카와\",\"id\":\"C01\",\"type\":\"동그란 귀와 작고 하얀 몸\"}},\"end\":{\"id\":\"64\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"세이렌\",\"skills\":\"노래를 통한 식물 조종\",\"immortality\":false,\"personality\":\"선악을 구분하기 어려움\",\"name\":\"세이렌\",\"id\":\"C10\",\"type\":\"검은 만두 머리와 빨간 꼬리\"}}}\n{\"type\":\"relationship\",\"id\":\"1152932499723124791\",\"label\":\"ATTACKS\",\"start\":{\"id\":\"55\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"먼작귀\",\"skills\":\"비밀 유지\",\"immortality\":false,\"personality\":\"소심하지만 다정하고 용감함\",\"name\":\"치이카와\",\"id\":\"C01\",\"type\":\"동그란 귀와 작고 하얀 몸\"}},\"end\":{\"id\":\"64\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"세이렌\",\"skills\":\"노래를 통한 식물 조종\",\"immortality\":false,\"personality\":\"선악을 구분하기 어려움\",\"name\":\"세이렌\",\"id\":\"C10\",\"type\":\"검은 만두 머리와 빨간 꼬리\"}}}\n{\"type\":\"relationship\",\"id\":\"1152933599234752567\",\"label\":\"RESCUES\",\"start\":{\"id\":\"55\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"먼작귀\",\"skills\":\"비밀 유지\",\"immortality\":false,\"personality\":\"소심하지만 다정하고 용감함\",\"name\":\"치이카와\",\"id\":\"C01\",\"type\":\"동그란 귀와 작고 하얀 몸\"}},\"end\":{\"id\":\"60\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"해달\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"침착하고 듬직함\",\"name\":\"랏코\",\"id\":\"C06\",\"type\":\"해달을 닮은 모습\"}}}\n{\"type\":\"relationship\",\"id\":\"1155185399048437815\",\"label\":\"RESCUES\",\"start\":{\"id\":\"55\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"먼작귀\",\"skills\":\"비밀 유지\",\"immortality\":false,\"personality\":\"소심하지만 다정하고 용감함\",\"name\":\"치이카와\",\"id\":\"C01\",\"type\":\"동그란 귀와 작고 하얀 몸\"}},\"end\":{\"id\":\"66\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"섬주민\",\"skills\":\"없음\",\"immortality\":false,\"personality\":\"없음\",\"name\":\"섬주민\",\"id\":\"C12\",\"type\":\"모두 회색으로 표시\"}}}\n{\"type\":\"relationship\",\"id\":\"1152936897769635895\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"55\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"먼작귀\",\"skills\":\"비밀 유지\",\"immortality\":false,\"personality\":\"소심하지만 다정하고 용감함\",\"name\":\"치이카와\",\"id\":\"C01\",\"type\":\"동그란 귀와 작고 하얀 몸\"}},\"end\":{\"id\":\"79\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"전단지수령\",\"id\":\"E01\",\"type\":\"정보 획득\"}}}\n{\"type\":\"relationship\",\"id\":\"1155188697583321143\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"55\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"먼작귀\",\"skills\":\"비밀 유지\",\"immortality\":false,\"personality\":\"소심하지만 다정하고 용감함\",\"name\":\"치이카와\",\"id\":\"C01\",\"type\":\"동그란 귀와 작고 하얀 몸\"}},\"end\":{\"id\":\"80\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어섬방문\",\"id\":\"E02\",\"type\":\"이동 및 방문\"}}}\n{\"type\":\"relationship\",\"id\":\"1157440497397006391\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"55\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"먼작귀\",\"skills\":\"비밀 유지\",\"immortality\":false,\"personality\":\"소심하지만 다정하고 용감함\",\"name\":\"치이카와\",\"id\":\"C01\",\"type\":\"동그란 귀와 작고 하얀 몸\"}},\"end\":{\"id\":\"81\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"세이렌조우\",\"id\":\"E03\",\"type\":\"조우\"}}}\n{\"type\":\"relationship\",\"id\":\"6917544420803870802\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"55\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"먼작귀\",\"skills\":\"비밀 유지\",\"immortality\":false,\"personality\":\"소심하지만 다정하고 용감함\",\"name\":\"치이카와\",\"id\":\"C01\",\"type\":\"동그란 귀와 작고 하얀 몸\"}},\"end\":{\"id\":\"82\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"토벌의뢰\",\"id\":\"E04\",\"type\":\"의무 의뢰\"}}}\n{\"type\":\"relationship\",\"id\":\"6917544420803870804\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"55\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"먼작귀\",\"skills\":\"비밀 유지\",\"immortality\":false,\"personality\":\"소심하지만 다정하고 용감함\",\"name\":\"치이카와\",\"id\":\"C01\",\"type\":\"동그란 귀와 작고 하얀 몸\"}},\"end\":{\"id\":\"84\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"동료구출\",\"id\":\"E06\",\"type\":\"구조 및 탈출\"}}}\n{\"type\":\"relationship\",\"id\":\"6917544420803870806\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"55\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"먼작귀\",\"skills\":\"비밀 유지\",\"immortality\":false,\"personality\":\"소심하지만 다정하고 용감함\",\"name\":\"치이카와\",\"id\":\"C01\",\"type\":\"동그란 귀와 작고 하얀 몸\"}},\"end\":{\"id\":\"86\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"세이렌토벌\",\"id\":\"E08\",\"type\":\"전투 및 토벌\"}}}\n{\"type\":\"relationship\",\"id\":\"6917544420803870810\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"55\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"먼작귀\",\"skills\":\"비밀 유지\",\"immortality\":false,\"personality\":\"소심하지만 다정하고 용감함\",\"name\":\"치이카와\",\"id\":\"C01\",\"type\":\"동그란 귀와 작고 하얀 몸\"}},\"end\":{\"id\":\"90\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어섬송별회\",\"id\":\"E12\",\"type\":\"초자연적 변화\"}}}\n{\"type\":\"relationship\",\"id\":\"6917544420803870811\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"55\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"먼작귀\",\"skills\":\"비밀 유지\",\"immortality\":false,\"personality\":\"소심하지만 다정하고 용감함\",\"name\":\"치이카와\",\"id\":\"C01\",\"type\":\"동그란 귀와 작고 하얀 몸\"}},\"end\":{\"id\":\"91\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"귀환\",\"id\":\"E13\",\"type\":\"이동 및 귀환 \"}}}\n{\"type\":\"relationship\",\"id\":\"6917545520315498566\",\"label\":\"LIVES_IN\",\"start\":{\"id\":\"55\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"먼작귀\",\"skills\":\"비밀 유지\",\"immortality\":false,\"personality\":\"소심하지만 다정하고 용감함\",\"name\":\"치이카와\",\"id\":\"C01\",\"type\":\"동그란 귀와 작고 하얀 몸\"}},\"end\":{\"id\":\"70\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"치이카와의 집\",\"id\":\"P01\",\"type\":\"거주 공간\"}}}\n{\"type\":\"relationship\",\"id\":\"6917546619827126365\",\"label\":\"USES\",\"start\":{\"id\":\"55\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"먼작귀\",\"skills\":\"비밀 유지\",\"immortality\":false,\"personality\":\"소심하지만 다정하고 용감함\",\"name\":\"치이카와\",\"id\":\"C01\",\"type\":\"동그란 귀와 작고 하얀 몸\"}},\"end\":{\"id\":\"93\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"토벌봉\",\"id\":\"O02\",\"type\":\"무기\"}}}\n{\"type\":\"relationship\",\"id\":\"6917546619827126368\",\"label\":\"USES\",\"start\":{\"id\":\"55\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"먼작귀\",\"skills\":\"비밀 유지\",\"immortality\":false,\"personality\":\"소심하지만 다정하고 용감함\",\"name\":\"치이카와\",\"id\":\"C01\",\"type\":\"동그란 귀와 작고 하얀 몸\"}},\"end\":{\"id\":\"96\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"사탕\",\"id\":\"O05\",\"type\":\"음식\"}}}\n{\"type\":\"relationship\",\"id\":\"6917553216896893002\",\"label\":\"TRAVELS_TO\",\"start\":{\"id\":\"55\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"먼작귀\",\"skills\":\"비밀 유지\",\"immortality\":false,\"personality\":\"소심하지만 다정하고 용감함\",\"name\":\"치이카와\",\"id\":\"C01\",\"type\":\"동그란 귀와 작고 하얀 몸\"}},\"end\":{\"id\":\"74\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"인어섬 마을\",\"id\":\"P05\",\"type\":\"마을 및 거주지\"}}}\n{\"type\":\"relationship\",\"id\":\"1152930300699869240\",\"label\":\"FRIENDS_OF\",\"start\":{\"id\":\"56\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"가르마\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"다정하고 긍정적임\",\"name\":\"하치와레\",\"id\":\"C02\",\"type\":\"파란색과 흰색의 고양이\"}},\"end\":{\"id\":\"57\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"토끼\",\"skills\":\"랩\",\"immortality\":false,\"personality\":\"활발하고 자유분방함\",\"name\":\"우사기\",\"id\":\"C03\",\"type\":\"노란색 몸과 긴 귀\"}}}\n{\"type\":\"relationship\",\"id\":\"1152932499723124792\",\"label\":\"ATTACKS\",\"start\":{\"id\":\"56\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"가르마\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"다정하고 긍정적임\",\"name\":\"하치와레\",\"id\":\"C02\",\"type\":\"파란색과 흰색의 고양이\"}},\"end\":{\"id\":\"64\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"세이렌\",\"skills\":\"노래를 통한 식물 조종\",\"immortality\":false,\"personality\":\"선악을 구분하기 어려움\",\"name\":\"세이렌\",\"id\":\"C10\",\"type\":\"검은 만두 머리와 빨간 꼬리\"}}}\n{\"type\":\"relationship\",\"id\":\"1152936897769635896\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"56\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"가르마\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"다정하고 긍정적임\",\"name\":\"하치와레\",\"id\":\"C02\",\"type\":\"파란색과 흰색의 고양이\"}},\"end\":{\"id\":\"79\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"전단지수령\",\"id\":\"E01\",\"type\":\"정보 획득\"}}}\n{\"type\":\"relationship\",\"id\":\"1155188697583321144\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"56\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"가르마\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"다정하고 긍정적임\",\"name\":\"하치와레\",\"id\":\"C02\",\"type\":\"파란색과 흰색의 고양이\"}},\"end\":{\"id\":\"80\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어섬방문\",\"id\":\"E02\",\"type\":\"이동 및 방문\"}}}\n{\"type\":\"relationship\",\"id\":\"1157440497397006392\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"56\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"가르마\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"다정하고 긍정적임\",\"name\":\"하치와레\",\"id\":\"C02\",\"type\":\"파란색과 흰색의 고양이\"}},\"end\":{\"id\":\"81\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"세이렌조우\",\"id\":\"E03\",\"type\":\"조우\"}}}\n{\"type\":\"relationship\",\"id\":\"1159692297210691640\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"56\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"가르마\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"다정하고 긍정적임\",\"name\":\"하치와레\",\"id\":\"C02\",\"type\":\"파란색과 흰색의 고양이\"}},\"end\":{\"id\":\"82\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"토벌의뢰\",\"id\":\"E04\",\"type\":\"의무 의뢰\"}}}\n{\"type\":\"relationship\",\"id\":\"6919796220617556052\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"56\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"가르마\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"다정하고 긍정적임\",\"name\":\"하치와레\",\"id\":\"C02\",\"type\":\"파란색과 흰색의 고양이\"}},\"end\":{\"id\":\"84\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"동료구출\",\"id\":\"E06\",\"type\":\"구조 및 탈출\"}}}\n{\"type\":\"relationship\",\"id\":\"6919796220617556054\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"56\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"가르마\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"다정하고 긍정적임\",\"name\":\"하치와레\",\"id\":\"C02\",\"type\":\"파란색과 흰색의 고양이\"}},\"end\":{\"id\":\"86\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"세이렌토벌\",\"id\":\"E08\",\"type\":\"전투 및 토벌\"}}}\n{\"type\":\"relationship\",\"id\":\"6919796220617556058\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"56\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"가르마\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"다정하고 긍정적임\",\"name\":\"하치와레\",\"id\":\"C02\",\"type\":\"파란색과 흰색의 고양이\"}},\"end\":{\"id\":\"90\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어섬송별회\",\"id\":\"E12\",\"type\":\"초자연적 변화\"}}}\n{\"type\":\"relationship\",\"id\":\"6919796220617556059\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"56\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"가르마\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"다정하고 긍정적임\",\"name\":\"하치와레\",\"id\":\"C02\",\"type\":\"파란색과 흰색의 고양이\"}},\"end\":{\"id\":\"91\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"귀환\",\"id\":\"E13\",\"type\":\"이동 및 귀환 \"}}}\n{\"type\":\"relationship\",\"id\":\"1152937997281263672\",\"label\":\"LIVES_IN\",\"start\":{\"id\":\"56\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"가르마\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"다정하고 긍정적임\",\"name\":\"하치와레\",\"id\":\"C02\",\"type\":\"파란색과 흰색의 고양이\"}},\"end\":{\"id\":\"70\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"치이카와의 집\",\"id\":\"P01\",\"type\":\"거주 공간\"}}}\n{\"type\":\"relationship\",\"id\":\"1152945693862658104\",\"label\":\"TRAVELS_TO\",\"start\":{\"id\":\"56\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"가르마\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"다정하고 긍정적임\",\"name\":\"하치와레\",\"id\":\"C02\",\"type\":\"파란색과 흰색의 고양이\"}},\"end\":{\"id\":\"74\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"인어섬 마을\",\"id\":\"P05\",\"type\":\"마을 및 거주지\"}}}\n{\"type\":\"relationship\",\"id\":\"1152936897769635897\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"57\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"토끼\",\"skills\":\"랩\",\"immortality\":false,\"personality\":\"활발하고 자유분방함\",\"name\":\"우사기\",\"id\":\"C03\",\"type\":\"노란색 몸과 긴 귀\"}},\"end\":{\"id\":\"79\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"전단지수령\",\"id\":\"E01\",\"type\":\"정보 획득\"}}}\n{\"type\":\"relationship\",\"id\":\"1155188697583321145\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"57\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"토끼\",\"skills\":\"랩\",\"immortality\":false,\"personality\":\"활발하고 자유분방함\",\"name\":\"우사기\",\"id\":\"C03\",\"type\":\"노란색 몸과 긴 귀\"}},\"end\":{\"id\":\"80\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어섬방문\",\"id\":\"E02\",\"type\":\"이동 및 방문\"}}}\n{\"type\":\"relationship\",\"id\":\"1157440497397006393\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"57\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"토끼\",\"skills\":\"랩\",\"immortality\":false,\"personality\":\"활발하고 자유분방함\",\"name\":\"우사기\",\"id\":\"C03\",\"type\":\"노란색 몸과 긴 귀\"}},\"end\":{\"id\":\"81\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"세이렌조우\",\"id\":\"E03\",\"type\":\"조우\"}}}\n{\"type\":\"relationship\",\"id\":\"1159692297210691641\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"57\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"토끼\",\"skills\":\"랩\",\"immortality\":false,\"personality\":\"활발하고 자유분방함\",\"name\":\"우사기\",\"id\":\"C03\",\"type\":\"노란색 몸과 긴 귀\"}},\"end\":{\"id\":\"82\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"토벌의뢰\",\"id\":\"E04\",\"type\":\"의무 의뢰\"}}}\n{\"type\":\"relationship\",\"id\":\"1161944097024376889\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"57\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"토끼\",\"skills\":\"랩\",\"immortality\":false,\"personality\":\"활발하고 자유분방함\",\"name\":\"우사기\",\"id\":\"C03\",\"type\":\"노란색 몸과 긴 귀\"}},\"end\":{\"id\":\"84\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"동료구출\",\"id\":\"E06\",\"type\":\"구조 및 탈출\"}}}\n{\"type\":\"relationship\",\"id\":\"1164195896838062137\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"57\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"토끼\",\"skills\":\"랩\",\"immortality\":false,\"personality\":\"활발하고 자유분방함\",\"name\":\"우사기\",\"id\":\"C03\",\"type\":\"노란색 몸과 긴 귀\"}},\"end\":{\"id\":\"86\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"세이렌토벌\",\"id\":\"E08\",\"type\":\"전투 및 토벌\"}}}\n{\"type\":\"relationship\",\"id\":\"1166447696651747385\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"57\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"토끼\",\"skills\":\"랩\",\"immortality\":false,\"personality\":\"활발하고 자유분방함\",\"name\":\"우사기\",\"id\":\"C03\",\"type\":\"노란색 몸과 긴 귀\"}},\"end\":{\"id\":\"90\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어섬송별회\",\"id\":\"E12\",\"type\":\"초자연적 변화\"}}}\n{\"type\":\"relationship\",\"id\":\"6922048020431241307\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"57\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"토끼\",\"skills\":\"랩\",\"immortality\":false,\"personality\":\"활발하고 자유분방함\",\"name\":\"우사기\",\"id\":\"C03\",\"type\":\"노란색 몸과 긴 귀\"}},\"end\":{\"id\":\"91\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"귀환\",\"id\":\"E13\",\"type\":\"이동 및 귀환 \"}}}\n{\"type\":\"relationship\",\"id\":\"1152937997281263673\",\"label\":\"LIVES_IN\",\"start\":{\"id\":\"57\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"토끼\",\"skills\":\"랩\",\"immortality\":false,\"personality\":\"활발하고 자유분방함\",\"name\":\"우사기\",\"id\":\"C03\",\"type\":\"노란색 몸과 긴 귀\"}},\"end\":{\"id\":\"70\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"치이카와의 집\",\"id\":\"P01\",\"type\":\"거주 공간\"}}}\n{\"type\":\"relationship\",\"id\":\"1152945693862658105\",\"label\":\"TRAVELS_TO\",\"start\":{\"id\":\"57\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"토끼\",\"skills\":\"랩\",\"immortality\":false,\"personality\":\"활발하고 자유분방함\",\"name\":\"우사기\",\"id\":\"C03\",\"type\":\"노란색 몸과 긴 귀\"}},\"end\":{\"id\":\"74\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"인어섬 마을\",\"id\":\"P05\",\"type\":\"마을 및 거주지\"}}}\n{\"type\":\"relationship\",\"id\":\"1152930300699869242\",\"label\":\"FRIENDS_OF\",\"start\":{\"id\":\"58\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"하늘다람쥐\",\"skills\":\"떼쓰기\",\"immortality\":false,\"personality\":\"자기중심적이고 애교많음\",\"name\":\"모몽가\",\"id\":\"C04\",\"type\":\"하늘다람쥐를 닮은 모습\"}},\"end\":{\"id\":\"62\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"헌책방\",\"skills\":\"집게로 절단하기\",\"immortality\":false,\"personality\":\"다정하고 온순함\",\"name\":\"카니\",\"id\":\"C08\",\"type\":\"게 모양 장식을 지닌 분홍색  \"}}}\n{\"type\":\"relationship\",\"id\":\"1152932499723124794\",\"label\":\"ATTACKS\",\"start\":{\"id\":\"58\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"하늘다람쥐\",\"skills\":\"떼쓰기\",\"immortality\":false,\"personality\":\"자기중심적이고 애교많음\",\"name\":\"모몽가\",\"id\":\"C04\",\"type\":\"하늘다람쥐를 닮은 모습\"}},\"end\":{\"id\":\"65\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"인어들\",\"skills\":\"코러스\",\"immortality\":false,\"personality\":\"무리 지어 다니고 노래를 좋아함\",\"name\":\"인어들\",\"id\":\"C11\",\"type\":\"하얀 몸과 빨간 꼬리\"}}}\n{\"type\":\"relationship\",\"id\":\"1152933599234752570\",\"label\":\"RESCUES\",\"start\":{\"id\":\"58\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"하늘다람쥐\",\"skills\":\"떼쓰기\",\"immortality\":false,\"personality\":\"자기중심적이고 애교많음\",\"name\":\"모몽가\",\"id\":\"C04\",\"type\":\"하늘다람쥐를 닮은 모습\"}},\"end\":{\"id\":\"55\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"먼작귀\",\"skills\":\"비밀 유지\",\"immortality\":false,\"personality\":\"소심하지만 다정하고 용감함\",\"name\":\"치이카와\",\"id\":\"C01\",\"type\":\"동그란 귀와 작고 하얀 몸\"}}}\n{\"type\":\"relationship\",\"id\":\"1152945693862658106\",\"label\":\"TRAVELS_TO\",\"start\":{\"id\":\"58\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"하늘다람쥐\",\"skills\":\"떼쓰기\",\"immortality\":false,\"personality\":\"자기중심적이고 애교많음\",\"name\":\"모몽가\",\"id\":\"C04\",\"type\":\"하늘다람쥐를 닮은 모습\"}},\"end\":{\"id\":\"74\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"인어섬 마을\",\"id\":\"P05\",\"type\":\"마을 및 거주지\"}}}\n{\"type\":\"relationship\",\"id\":\"1152930300699869243\",\"label\":\"FRIENDS_OF\",\"start\":{\"id\":\"59\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"밤만쥬\",\"skills\":\"맛보기 대장\",\"immortality\":false,\"personality\":\"느긋하고 먹기를 좋아함\",\"name\":\"쿠리만쥬\",\"id\":\"C05\",\"type\":\"베이지색 몸과 작은 수달 귀\"}},\"end\":{\"id\":\"61\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"시사\",\"skills\":\"요리 대장\",\"immortality\":false,\"personality\":\"성실하고 예의 바름\",\"name\":\"시사\",\"id\":\"C07\",\"type\":\"시사(사자상)을 닮은 모습\"}}}\n{\"type\":\"relationship\",\"id\":\"1152932499723124795\",\"label\":\"ATTACKS\",\"start\":{\"id\":\"59\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"밤만쥬\",\"skills\":\"맛보기 대장\",\"immortality\":false,\"personality\":\"느긋하고 먹기를 좋아함\",\"name\":\"쿠리만쥬\",\"id\":\"C05\",\"type\":\"베이지색 몸과 작은 수달 귀\"}},\"end\":{\"id\":\"64\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"세이렌\",\"skills\":\"노래를 통한 식물 조종\",\"immortality\":false,\"personality\":\"선악을 구분하기 어려움\",\"name\":\"세이렌\",\"id\":\"C10\",\"type\":\"검은 만두 머리와 빨간 꼬리\"}}}\n{\"type\":\"relationship\",\"id\":\"1152945693862658107\",\"label\":\"TRAVELS_TO\",\"start\":{\"id\":\"59\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"밤만쥬\",\"skills\":\"맛보기 대장\",\"immortality\":false,\"personality\":\"느긋하고 먹기를 좋아함\",\"name\":\"쿠리만쥬\",\"id\":\"C05\",\"type\":\"베이지색 몸과 작은 수달 귀\"}},\"end\":{\"id\":\"74\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"인어섬 마을\",\"id\":\"P05\",\"type\":\"마을 및 거주지\"}}}\n{\"type\":\"relationship\",\"id\":\"1152930300699869244\",\"label\":\"FRIENDS_OF\",\"start\":{\"id\":\"60\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"해달\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"침착하고 듬직함\",\"name\":\"랏코\",\"id\":\"C06\",\"type\":\"해달을 닮은 모습\"}},\"end\":{\"id\":\"55\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"먼작귀\",\"skills\":\"비밀 유지\",\"immortality\":false,\"personality\":\"소심하지만 다정하고 용감함\",\"name\":\"치이카와\",\"id\":\"C01\",\"type\":\"동그란 귀와 작고 하얀 몸\"}}}\n{\"type\":\"relationship\",\"id\":\"1155182100513554492\",\"label\":\"FRIENDS_OF\",\"start\":{\"id\":\"60\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"해달\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"침착하고 듬직함\",\"name\":\"랏코\",\"id\":\"C06\",\"type\":\"해달을 닮은 모습\"}},\"end\":{\"id\":\"56\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"가르마\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"다정하고 긍정적임\",\"name\":\"하치와레\",\"id\":\"C02\",\"type\":\"파란색과 흰색의 고양이\"}}}\n{\"type\":\"relationship\",\"id\":\"1152931400211497020\",\"label\":\"RIVAL_OF\",\"start\":{\"id\":\"60\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"해달\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"침착하고 듬직함\",\"name\":\"랏코\",\"id\":\"C06\",\"type\":\"해달을 닮은 모습\"}},\"end\":{\"id\":\"64\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"세이렌\",\"skills\":\"노래를 통한 식물 조종\",\"immortality\":false,\"personality\":\"선악을 구분하기 어려움\",\"name\":\"세이렌\",\"id\":\"C10\",\"type\":\"검은 만두 머리와 빨간 꼬리\"}}}\n{\"type\":\"relationship\",\"id\":\"1152932499723124796\",\"label\":\"ATTACKS\",\"start\":{\"id\":\"60\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"해달\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"침착하고 듬직함\",\"name\":\"랏코\",\"id\":\"C06\",\"type\":\"해달을 닮은 모습\"}},\"end\":{\"id\":\"64\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"세이렌\",\"skills\":\"노래를 통한 식물 조종\",\"immortality\":false,\"personality\":\"선악을 구분하기 어려움\",\"name\":\"세이렌\",\"id\":\"C10\",\"type\":\"검은 만두 머리와 빨간 꼬리\"}}}\n{\"type\":\"relationship\",\"id\":\"1152939096792891452\",\"label\":\"USES\",\"start\":{\"id\":\"60\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"해달\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"침착하고 듬직함\",\"name\":\"랏코\",\"id\":\"C06\",\"type\":\"해달을 닮은 모습\"}},\"end\":{\"id\":\"94\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"검\",\"id\":\"O03\",\"type\":\"무기\"}}}\n{\"type\":\"relationship\",\"id\":\"1152945693862658108\",\"label\":\"TRAVELS_TO\",\"start\":{\"id\":\"60\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"해달\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"침착하고 듬직함\",\"name\":\"랏코\",\"id\":\"C06\",\"type\":\"해달을 닮은 모습\"}},\"end\":{\"id\":\"74\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"인어섬 마을\",\"id\":\"P05\",\"type\":\"마을 및 거주지\"}}}\n{\"type\":\"relationship\",\"id\":\"1152939096792891453\",\"label\":\"USES\",\"start\":{\"id\":\"61\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"시사\",\"skills\":\"요리 대장\",\"immortality\":false,\"personality\":\"성실하고 예의 바름\",\"name\":\"시사\",\"id\":\"C07\",\"type\":\"시사(사자상)을 닮은 모습\"}},\"end\":{\"id\":\"100\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"캐롤라이나 리퍼 가루\",\"id\":\"O09\",\"type\":\"음식\"}}}\n{\"type\":\"relationship\",\"id\":\"1152945693862658109\",\"label\":\"TRAVELS_TO\",\"start\":{\"id\":\"61\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"시사\",\"skills\":\"요리 대장\",\"immortality\":false,\"personality\":\"성실하고 예의 바름\",\"name\":\"시사\",\"id\":\"C07\",\"type\":\"시사(사자상)을 닮은 모습\"}},\"end\":{\"id\":\"74\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"인어섬 마을\",\"id\":\"P05\",\"type\":\"마을 및 거주지\"}}}\n{\"type\":\"relationship\",\"id\":\"1152947892885913661\",\"label\":\"REFLECTS\",\"start\":{\"id\":\"61\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"시사\",\"skills\":\"요리 대장\",\"immortality\":false,\"personality\":\"성실하고 예의 바름\",\"name\":\"시사\",\"id\":\"C07\",\"type\":\"시사(사자상)을 닮은 모습\"}},\"end\":{\"id\":\"108\",\"labels\":[\"CulturalElement\"],\"properties\":{\"name\":\"오사카사투리\",\"id\":\"CE07\",\"type\":\"지역 방언\"}}}\n{\"type\":\"relationship\",\"id\":\"1152945693862658110\",\"label\":\"TRAVELS_TO\",\"start\":{\"id\":\"62\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"헌책방\",\"skills\":\"집게로 절단하기\",\"immortality\":false,\"personality\":\"다정하고 온순함\",\"name\":\"카니\",\"id\":\"C08\",\"type\":\"게 모양 장식을 지닌 분홍색  \"}},\"end\":{\"id\":\"74\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"인어섬 마을\",\"id\":\"P05\",\"type\":\"마을 및 거주지\"}}}\n{\"type\":\"relationship\",\"id\":\"1152944594351030335\",\"label\":\"OPERATES\",\"start\":{\"id\":\"63\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"섬 아저씨\",\"skills\":\"소용돌이 생성\",\"immortality\":false,\"personality\":\"친절하고 사명감 있음\",\"name\":\"시마지로\",\"id\":\"C09\",\"type\":\"천 하나를 두른 아저씨의 모습\"}},\"end\":{\"id\":\"75\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"시마지로의 가게\",\"id\":\"P06\",\"type\":\"상업 시설\"}}}\n{\"type\":\"relationship\",\"id\":\"1152934698746380352\",\"label\":\"KIDNAPS\",\"start\":{\"id\":\"64\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"세이렌\",\"skills\":\"노래를 통한 식물 조종\",\"immortality\":false,\"personality\":\"선악을 구분하기 어려움\",\"name\":\"세이렌\",\"id\":\"C10\",\"type\":\"검은 만두 머리와 빨간 꼬리\"}},\"end\":{\"id\":\"56\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"가르마\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"다정하고 긍정적임\",\"name\":\"하치와레\",\"id\":\"C02\",\"type\":\"파란색과 흰색의 고양이\"}}}\n{\"type\":\"relationship\",\"id\":\"1155186498560065600\",\"label\":\"KIDNAPS\",\"start\":{\"id\":\"64\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"세이렌\",\"skills\":\"노래를 통한 식물 조종\",\"immortality\":false,\"personality\":\"선악을 구분하기 어려움\",\"name\":\"세이렌\",\"id\":\"C10\",\"type\":\"검은 만두 머리와 빨간 꼬리\"}},\"end\":{\"id\":\"57\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"토끼\",\"skills\":\"랩\",\"immortality\":false,\"personality\":\"활발하고 자유분방함\",\"name\":\"우사기\",\"id\":\"C03\",\"type\":\"노란색 몸과 긴 귀\"}}}\n{\"type\":\"relationship\",\"id\":\"1157438298373750848\",\"label\":\"KIDNAPS\",\"start\":{\"id\":\"64\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"세이렌\",\"skills\":\"노래를 통한 식물 조종\",\"immortality\":false,\"personality\":\"선악을 구분하기 어려움\",\"name\":\"세이렌\",\"id\":\"C10\",\"type\":\"검은 만두 머리와 빨간 꼬리\"}},\"end\":{\"id\":\"58\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"하늘다람쥐\",\"skills\":\"떼쓰기\",\"immortality\":false,\"personality\":\"자기중심적이고 애교많음\",\"name\":\"모몽가\",\"id\":\"C04\",\"type\":\"하늘다람쥐를 닮은 모습\"}}}\n{\"type\":\"relationship\",\"id\":\"1159690098187436096\",\"label\":\"KIDNAPS\",\"start\":{\"id\":\"64\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"세이렌\",\"skills\":\"노래를 통한 식물 조종\",\"immortality\":false,\"personality\":\"선악을 구분하기 어려움\",\"name\":\"세이렌\",\"id\":\"C10\",\"type\":\"검은 만두 머리와 빨간 꼬리\"}},\"end\":{\"id\":\"60\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"해달\",\"skills\":\"언어 발화\",\"immortality\":false,\"personality\":\"침착하고 듬직함\",\"name\":\"랏코\",\"id\":\"C06\",\"type\":\"해달을 닮은 모습\"}}}\n{\"type\":\"relationship\",\"id\":\"1161941898001121344\",\"label\":\"KIDNAPS\",\"start\":{\"id\":\"64\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"세이렌\",\"skills\":\"노래를 통한 식물 조종\",\"immortality\":false,\"personality\":\"선악을 구분하기 어려움\",\"name\":\"세이렌\",\"id\":\"C10\",\"type\":\"검은 만두 머리와 빨간 꼬리\"}},\"end\":{\"id\":\"62\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"헌책방\",\"skills\":\"집게로 절단하기\",\"immortality\":false,\"personality\":\"다정하고 온순함\",\"name\":\"카니\",\"id\":\"C08\",\"type\":\"게 모양 장식을 지닌 분홍색  \"}}}\n{\"type\":\"relationship\",\"id\":\"6917542221780615234\",\"label\":\"KIDNAPS\",\"start\":{\"id\":\"64\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"세이렌\",\"skills\":\"노래를 통한 식물 조종\",\"immortality\":false,\"personality\":\"선악을 구분하기 어려움\",\"name\":\"세이렌\",\"id\":\"C10\",\"type\":\"검은 만두 머리와 빨간 꼬리\"}},\"end\":{\"id\":\"66\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"섬주민\",\"skills\":\"없음\",\"immortality\":false,\"personality\":\"없음\",\"name\":\"섬주민\",\"id\":\"C12\",\"type\":\"모두 회색으로 표시\"}}}\n{\"type\":\"relationship\",\"id\":\"1152937997281263680\",\"label\":\"LIVES_IN\",\"start\":{\"id\":\"64\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"세이렌\",\"skills\":\"노래를 통한 식물 조종\",\"immortality\":false,\"personality\":\"선악을 구분하기 어려움\",\"name\":\"세이렌\",\"id\":\"C10\",\"type\":\"검은 만두 머리와 빨간 꼬리\"}},\"end\":{\"id\":\"73\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"세이렌의 거처\",\"id\":\"P04\",\"type\":\"감금 시설\"}}}\n{\"type\":\"relationship\",\"id\":\"1152940196304519232\",\"label\":\"EATS\",\"start\":{\"id\":\"64\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"세이렌\",\"skills\":\"노래를 통한 식물 조종\",\"immortality\":false,\"personality\":\"선악을 구분하기 어려움\",\"name\":\"세이렌\",\"id\":\"C10\",\"type\":\"검은 만두 머리와 빨간 꼬리\"}},\"end\":{\"id\":\"99\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"매운 카레\",\"id\":\"O08\",\"type\":\"음식\"}}}\n{\"type\":\"relationship\",\"id\":\"6917547719338754148\",\"label\":\"EATS\",\"start\":{\"id\":\"64\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"세이렌\",\"skills\":\"노래를 통한 식물 조종\",\"immortality\":false,\"personality\":\"선악을 구분하기 어려움\",\"name\":\"세이렌\",\"id\":\"C10\",\"type\":\"검은 만두 머리와 빨간 꼬리\"}},\"end\":{\"id\":\"100\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"캐롤라이나 리퍼 가루\",\"id\":\"O09\",\"type\":\"음식\"}}}\n{\"type\":\"relationship\",\"id\":\"6917555415920148584\",\"label\":\"REFLECTS\",\"start\":{\"id\":\"64\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"세이렌\",\"skills\":\"노래를 통한 식물 조종\",\"immortality\":false,\"personality\":\"선악을 구분하기 어려움\",\"name\":\"세이렌\",\"id\":\"C10\",\"type\":\"검은 만두 머리와 빨간 꼬리\"}},\"end\":{\"id\":\"104\",\"labels\":[\"CulturalElement\"],\"properties\":{\"name\":\"바다신앙\",\"id\":\"CE03\",\"type\":\"신앙 \"}}}\n{\"type\":\"relationship\",\"id\":\"1152947892885913665\",\"label\":\"REFLECTS\",\"start\":{\"id\":\"65\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"인어들\",\"skills\":\"코러스\",\"immortality\":false,\"personality\":\"무리 지어 다니고 노래를 좋아함\",\"name\":\"인어들\",\"id\":\"C11\",\"type\":\"하얀 몸과 빨간 꼬리\"}},\"end\":{\"id\":\"103\",\"labels\":[\"CulturalElement\"],\"properties\":{\"name\":\"인어설화\",\"id\":\"CE02\",\"type\":\"설화\"}}}\n{\"type\":\"relationship\",\"id\":\"1152937997281263682\",\"label\":\"LIVES_IN\",\"start\":{\"id\":\"66\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"섬주민\",\"skills\":\"없음\",\"immortality\":false,\"personality\":\"없음\",\"name\":\"섬주민\",\"id\":\"C12\",\"type\":\"모두 회색으로 표시\"}},\"end\":{\"id\":\"74\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"인어섬 마을\",\"id\":\"P05\",\"type\":\"마을 및 거주지\"}}}\n{\"type\":\"relationship\",\"id\":\"1152935798258008131\",\"label\":\"KILLS\",\"start\":{\"id\":\"67\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"한잎이\",\"skills\":\"없음\",\"immortality\":true,\"personality\":\"순하고 호기심이 많음\",\"name\":\"히토하\",\"id\":\"C13\",\"type\":\"머리에 잎이 한 개 달림\"}},\"end\":{\"id\":\"65\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"인어들\",\"skills\":\"코러스\",\"immortality\":false,\"personality\":\"무리 지어 다니고 노래를 좋아함\",\"name\":\"인어들\",\"id\":\"C11\",\"type\":\"하얀 몸과 빨간 꼬리\"}}}\n{\"type\":\"relationship\",\"id\":\"1152936897769635907\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"67\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"한잎이\",\"skills\":\"없음\",\"immortality\":true,\"personality\":\"순하고 호기심이 많음\",\"name\":\"히토하\",\"id\":\"C13\",\"type\":\"머리에 잎이 한 개 달림\"}},\"end\":{\"id\":\"87\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어살해\",\"id\":\"E09\",\"type\":\"교류 및 송별 \"}}}\n{\"type\":\"relationship\",\"id\":\"1157440497397006403\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"67\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"한잎이\",\"skills\":\"없음\",\"immortality\":true,\"personality\":\"순하고 호기심이 많음\",\"name\":\"히토하\",\"id\":\"C13\",\"type\":\"머리에 잎이 한 개 달림\"}},\"end\":{\"id\":\"88\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"영생획득\",\"id\":\"E10\",\"type\":\"살해 및 갈등 발생\"}}}\n{\"type\":\"relationship\",\"id\":\"1155188697583321155\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"67\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"한잎이\",\"skills\":\"없음\",\"immortality\":true,\"personality\":\"순하고 호기심이 많음\",\"name\":\"히토하\",\"id\":\"C13\",\"type\":\"머리에 잎이 한 개 달림\"}},\"end\":{\"id\":\"89\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어조림섭취\",\"id\":\"E11\",\"type\":\"음식 섭취\"}}}\n{\"type\":\"relationship\",\"id\":\"1152937997281263683\",\"label\":\"LIVES_IN\",\"start\":{\"id\":\"67\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"한잎이\",\"skills\":\"없음\",\"immortality\":true,\"personality\":\"순하고 호기심이 많음\",\"name\":\"히토하\",\"id\":\"C13\",\"type\":\"머리에 잎이 한 개 달림\"}},\"end\":{\"id\":\"71\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"히토하와 후타바의 집\",\"id\":\"P02\",\"type\":\"거주 공간\"}}}\n{\"type\":\"relationship\",\"id\":\"1152936897769635908\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"68\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"두잎이\",\"skills\":\"없음\",\"immortality\":true,\"personality\":\"명랑하고 친근함\",\"name\":\"후타바\",\"id\":\"C14\",\"type\":\"머리에 잎이 두 개 달림\"}},\"end\":{\"id\":\"87\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어살해\",\"id\":\"E09\",\"type\":\"교류 및 송별 \"}}}\n{\"type\":\"relationship\",\"id\":\"1157440497397006404\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"68\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"두잎이\",\"skills\":\"없음\",\"immortality\":true,\"personality\":\"명랑하고 친근함\",\"name\":\"후타바\",\"id\":\"C14\",\"type\":\"머리에 잎이 두 개 달림\"}},\"end\":{\"id\":\"88\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"영생획득\",\"id\":\"E10\",\"type\":\"살해 및 갈등 발생\"}}}\n{\"type\":\"relationship\",\"id\":\"1155188697583321156\",\"label\":\"PARTICIPATES_IN\",\"start\":{\"id\":\"68\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"두잎이\",\"skills\":\"없음\",\"immortality\":true,\"personality\":\"명랑하고 친근함\",\"name\":\"후타바\",\"id\":\"C14\",\"type\":\"머리에 잎이 두 개 달림\"}},\"end\":{\"id\":\"89\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어조림섭취\",\"id\":\"E11\",\"type\":\"음식 섭취\"}}}\n{\"type\":\"relationship\",\"id\":\"1152937997281263684\",\"label\":\"LIVES_IN\",\"start\":{\"id\":\"68\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"두잎이\",\"skills\":\"없음\",\"immortality\":true,\"personality\":\"명랑하고 친근함\",\"name\":\"후타바\",\"id\":\"C14\",\"type\":\"머리에 잎이 두 개 달림\"}},\"end\":{\"id\":\"71\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"히토하와 후타바의 집\",\"id\":\"P02\",\"type\":\"거주 공간\"}}}\n{\"type\":\"relationship\",\"id\":\"1152937997281263685\",\"label\":\"LIVES_IN\",\"start\":{\"id\":\"69\",\"labels\":[\"Character\"],\"properties\":{\"name_kor\":\"섬 마을 촌장\",\"skills\":\"없음\",\"immortality\":false,\"personality\":\"없음\",\"name\":\"섬 마을 촌장\",\"id\":\"C15\",\"type\":\"회색으로 표시\"}},\"end\":{\"id\":\"74\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"인어섬 마을\",\"id\":\"P05\",\"type\":\"마을 및 거주지\"}}}\n{\"type\":\"relationship\",\"id\":\"1152941295816147023\",\"label\":\"CAUSES\",\"start\":{\"id\":\"79\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"전단지수령\",\"id\":\"E01\",\"type\":\"정보 획득\"}},\"end\":{\"id\":\"80\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어섬방문\",\"id\":\"E02\",\"type\":\"이동 및 방문\"}}}\n{\"type\":\"relationship\",\"id\":\"1152942395327774799\",\"label\":\"OCCURS_AT\",\"start\":{\"id\":\"79\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"전단지수령\",\"id\":\"E01\",\"type\":\"정보 획득\"}},\"end\":{\"id\":\"70\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"치이카와의 집\",\"id\":\"P01\",\"type\":\"거주 공간\"}}}\n{\"type\":\"relationship\",\"id\":\"1152941295816147024\",\"label\":\"CAUSES\",\"start\":{\"id\":\"80\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어섬방문\",\"id\":\"E02\",\"type\":\"이동 및 방문\"}},\"end\":{\"id\":\"81\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"세이렌조우\",\"id\":\"E03\",\"type\":\"조우\"}}}\n{\"type\":\"relationship\",\"id\":\"1152942395327774800\",\"label\":\"OCCURS_AT\",\"start\":{\"id\":\"80\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어섬방문\",\"id\":\"E02\",\"type\":\"이동 및 방문\"}},\"end\":{\"id\":\"72\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"선착장\",\"id\":\"P03\",\"type\":\"마을 및 거주지\"}}}\n{\"type\":\"relationship\",\"id\":\"1152947892885913680\",\"label\":\"REFLECTS\",\"start\":{\"id\":\"80\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어섬방문\",\"id\":\"E02\",\"type\":\"이동 및 방문\"}},\"end\":{\"id\":\"102\",\"labels\":[\"CulturalElement\"],\"properties\":{\"name\":\"축제\",\"id\":\"CE01\",\"type\":\"지역 축제\"}}}\n{\"type\":\"relationship\",\"id\":\"1152941295816147025\",\"label\":\"CAUSES\",\"start\":{\"id\":\"81\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"세이렌조우\",\"id\":\"E03\",\"type\":\"조우\"}},\"end\":{\"id\":\"85\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"세이렌위협\",\"id\":\"E07\",\"type\":\"갈등 및 위협\"}}}\n{\"type\":\"relationship\",\"id\":\"1152942395327774801\",\"label\":\"OCCURS_AT\",\"start\":{\"id\":\"81\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"세이렌조우\",\"id\":\"E03\",\"type\":\"조우\"}},\"end\":{\"id\":\"78\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"동굴\",\"id\":\"P09\",\"type\":\"자연 공간\"}}}\n{\"type\":\"relationship\",\"id\":\"1152941295816147027\",\"label\":\"CAUSES\",\"start\":{\"id\":\"83\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"랏코납치\",\"id\":\"E05\",\"type\":\"납치 및 갈등\"}},\"end\":{\"id\":\"84\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"동료구출\",\"id\":\"E06\",\"type\":\"구조 및 탈출\"}}}\n{\"type\":\"relationship\",\"id\":\"1152942395327774803\",\"label\":\"OCCURS_AT\",\"start\":{\"id\":\"83\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"랏코납치\",\"id\":\"E05\",\"type\":\"납치 및 갈등\"}},\"end\":{\"id\":\"76\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"숲\",\"id\":\"P07\",\"type\":\"자연 공간\"}}}\n{\"type\":\"relationship\",\"id\":\"1152941295816147028\",\"label\":\"CAUSES\",\"start\":{\"id\":\"84\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"동료구출\",\"id\":\"E06\",\"type\":\"구조 및 탈출\"}},\"end\":{\"id\":\"86\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"세이렌토벌\",\"id\":\"E08\",\"type\":\"전투 및 토벌\"}}}\n{\"type\":\"relationship\",\"id\":\"1152942395327774804\",\"label\":\"OCCURS_AT\",\"start\":{\"id\":\"84\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"동료구출\",\"id\":\"E06\",\"type\":\"구조 및 탈출\"}},\"end\":{\"id\":\"73\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"세이렌의 거처\",\"id\":\"P04\",\"type\":\"감금 시설\"}}}\n{\"type\":\"relationship\",\"id\":\"1152941295816147029\",\"label\":\"CAUSES\",\"start\":{\"id\":\"85\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"세이렌위협\",\"id\":\"E07\",\"type\":\"갈등 및 위협\"}},\"end\":{\"id\":\"82\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"토벌의뢰\",\"id\":\"E04\",\"type\":\"의무 의뢰\"}}}\n{\"type\":\"relationship\",\"id\":\"1155193095629832277\",\"label\":\"CAUSES\",\"start\":{\"id\":\"85\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"세이렌위협\",\"id\":\"E07\",\"type\":\"갈등 및 위협\"}},\"end\":{\"id\":\"83\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"랏코납치\",\"id\":\"E05\",\"type\":\"납치 및 갈등\"}}}\n{\"type\":\"relationship\",\"id\":\"1152941295816147030\",\"label\":\"CAUSES\",\"start\":{\"id\":\"86\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"세이렌토벌\",\"id\":\"E08\",\"type\":\"전투 및 토벌\"}},\"end\":{\"id\":\"90\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어섬송별회\",\"id\":\"E12\",\"type\":\"초자연적 변화\"}}}\n{\"type\":\"relationship\",\"id\":\"1152942395327774806\",\"label\":\"OCCURS_AT\",\"start\":{\"id\":\"86\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"세이렌토벌\",\"id\":\"E08\",\"type\":\"전투 및 토벌\"}},\"end\":{\"id\":\"77\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"해변\",\"id\":\"P08\",\"type\":\"자연 공간\"}}}\n{\"type\":\"relationship\",\"id\":\"1155193095629832279\",\"label\":\"CAUSES\",\"start\":{\"id\":\"87\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어살해\",\"id\":\"E09\",\"type\":\"교류 및 송별 \"}},\"end\":{\"id\":\"85\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"세이렌위협\",\"id\":\"E07\",\"type\":\"갈등 및 위협\"}}}\n{\"type\":\"relationship\",\"id\":\"1152941295816147031\",\"label\":\"CAUSES\",\"start\":{\"id\":\"87\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어살해\",\"id\":\"E09\",\"type\":\"교류 및 송별 \"}},\"end\":{\"id\":\"89\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어조림섭취\",\"id\":\"E11\",\"type\":\"음식 섭취\"}}}\n{\"type\":\"relationship\",\"id\":\"1152942395327774807\",\"label\":\"OCCURS_AT\",\"start\":{\"id\":\"87\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어살해\",\"id\":\"E09\",\"type\":\"교류 및 송별 \"}},\"end\":{\"id\":\"73\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"세이렌의 거처\",\"id\":\"P04\",\"type\":\"감금 시설\"}}}\n{\"type\":\"relationship\",\"id\":\"1152947892885913687\",\"label\":\"REFLECTS\",\"start\":{\"id\":\"87\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어살해\",\"id\":\"E09\",\"type\":\"교류 및 송별 \"}},\"end\":{\"id\":\"103\",\"labels\":[\"CulturalElement\"],\"properties\":{\"name\":\"인어설화\",\"id\":\"CE02\",\"type\":\"설화\"}}}\n{\"type\":\"relationship\",\"id\":\"1155199692699598935\",\"label\":\"REFLECTS\",\"start\":{\"id\":\"87\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어살해\",\"id\":\"E09\",\"type\":\"교류 및 송별 \"}},\"end\":{\"id\":\"106\",\"labels\":[\"CulturalElement\"],\"properties\":{\"name\":\"단팥과자\",\"id\":\"CE05\",\"type\":\"음식 문화\"}}}\n{\"type\":\"relationship\",\"id\":\"1152941295816147033\",\"label\":\"CAUSES\",\"start\":{\"id\":\"89\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어조림섭취\",\"id\":\"E11\",\"type\":\"음식 섭취\"}},\"end\":{\"id\":\"88\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"영생획득\",\"id\":\"E10\",\"type\":\"살해 및 갈등 발생\"}}}\n{\"type\":\"relationship\",\"id\":\"1152947892885913689\",\"label\":\"REFLECTS\",\"start\":{\"id\":\"89\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어조림섭취\",\"id\":\"E11\",\"type\":\"음식 섭취\"}},\"end\":{\"id\":\"105\",\"labels\":[\"CulturalElement\"],\"properties\":{\"name\":\"생선조림\",\"id\":\"CE04\",\"type\":\"음식 문화\"}}}\n{\"type\":\"relationship\",\"id\":\"1152941295816147034\",\"label\":\"CAUSES\",\"start\":{\"id\":\"90\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어섬송별회\",\"id\":\"E12\",\"type\":\"초자연적 변화\"}},\"end\":{\"id\":\"91\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"귀환\",\"id\":\"E13\",\"type\":\"이동 및 귀환 \"}}}\n{\"type\":\"relationship\",\"id\":\"1152942395327774810\",\"label\":\"OCCURS_AT\",\"start\":{\"id\":\"90\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어섬송별회\",\"id\":\"E12\",\"type\":\"초자연적 변화\"}},\"end\":{\"id\":\"74\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"인어섬 마을\",\"id\":\"P05\",\"type\":\"마을 및 거주지\"}}}\n{\"type\":\"relationship\",\"id\":\"1152947892885913690\",\"label\":\"REFLECTS\",\"start\":{\"id\":\"90\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어섬송별회\",\"id\":\"E12\",\"type\":\"초자연적 변화\"}},\"end\":{\"id\":\"109\",\"labels\":[\"CulturalElement\"],\"properties\":{\"name\":\"공동체음악\",\"id\":\"CE08\",\"type\":\"음악 문화\"}}}\n{\"type\":\"relationship\",\"id\":\"1152942395327774811\",\"label\":\"OCCURS_AT\",\"start\":{\"id\":\"91\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"귀환\",\"id\":\"E13\",\"type\":\"이동 및 귀환 \"}},\"end\":{\"id\":\"72\",\"labels\":[\"Place\"],\"properties\":{\"name\":\"선착장\",\"id\":\"P03\",\"type\":\"마을 및 거주지\"}}}\n{\"type\":\"relationship\",\"id\":\"1152941295816147036\",\"label\":\"CAUSES\",\"start\":{\"id\":\"92\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"전단지\",\"id\":\"O01\",\"type\":\"정보 전달 매체\"}},\"end\":{\"id\":\"80\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어섬방문\",\"id\":\"E02\",\"type\":\"이동 및 방문\"}}}\n{\"type\":\"relationship\",\"id\":\"1152943494839402591\",\"label\":\"ASSOCIATED_WITH\",\"start\":{\"id\":\"95\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"인어 비늘\",\"id\":\"O04\",\"type\":\"신체 유래 물질\"}},\"end\":{\"id\":\"103\",\"labels\":[\"CulturalElement\"],\"properties\":{\"name\":\"인어설화\",\"id\":\"CE02\",\"type\":\"설화\"}}}\n{\"type\":\"relationship\",\"id\":\"1152946793374285919\",\"label\":\"REVEALS\",\"start\":{\"id\":\"95\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"인어 비늘\",\"id\":\"O04\",\"type\":\"신체 유래 물질\"}},\"end\":{\"id\":\"87\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어살해\",\"id\":\"E09\",\"type\":\"교류 및 송별 \"}}}\n{\"type\":\"relationship\",\"id\":\"1152943494839402593\",\"label\":\"ASSOCIATED_WITH\",\"start\":{\"id\":\"97\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"건전지\",\"id\":\"O06\",\"type\":\"전력 공급 도구\"}},\"end\":{\"id\":\"107\",\"labels\":[\"CulturalElement\"],\"properties\":{\"name\":\"탄산\",\"id\":\"CE06\",\"type\":\"음식 문화\"}}}\n{\"type\":\"relationship\",\"id\":\"1152943494839402594\",\"label\":\"ASSOCIATED_WITH\",\"start\":{\"id\":\"98\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"인어 조림\",\"id\":\"O07\",\"type\":\"음식\"}},\"end\":{\"id\":\"105\",\"labels\":[\"CulturalElement\"],\"properties\":{\"name\":\"생선조림\",\"id\":\"CE04\",\"type\":\"음식 문화\"}}}\n{\"type\":\"relationship\",\"id\":\"1152943494839402597\",\"label\":\"ASSOCIATED_WITH\",\"start\":{\"id\":\"101\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"전설의 동물 도감\",\"id\":\"O10\",\"type\":\"서적 및 정보자료\"}},\"end\":{\"id\":\"103\",\"labels\":[\"CulturalElement\"],\"properties\":{\"name\":\"인어설화\",\"id\":\"CE02\",\"type\":\"설화\"}}}\n{\"type\":\"relationship\",\"id\":\"1152946793374285925\",\"label\":\"REVEALS\",\"start\":{\"id\":\"101\",\"labels\":[\"Object\"],\"properties\":{\"name\":\"전설의 동물 도감\",\"id\":\"O10\",\"type\":\"서적 및 정보자료\"}},\"end\":{\"id\":\"87\",\"labels\":[\"Event\"],\"properties\":{\"name\":\"인어살해\",\"id\":\"E09\",\"type\":\"교류 및 송별 \"}}}"
+  }
+];
+    </script>
+
+    <script>
+      /* =======================================================================
+         [3] 앱 렌더링 및 인터랙티브 지식그래프 엔진
+         ======================================================================= */
+      (function () {
+        const LABEL_META = {
+          Character: { ko: '등장인물', fill: '#FAD4DB', stroke: '#D97B8C', bar: '#E88A9B' },
+          Event: { ko: '주요 사건', fill: '#FDE9A8', stroke: '#D4A12A', bar: '#E8B84B' },
+          Place: { ko: '장소', fill: '#C7EED8', stroke: '#4BA475', bar: '#59B886' },
+          Object: { ko: '사물', fill: '#CBE4FA', stroke: '#508EC7', bar: '#64A2DA' },
+          CulturalElement: { ko: '문화 요소', fill: '#E2D6FC', stroke: '#8465C9', bar: '#9678DA' },
+          Unknown: { ko: '기타', fill: '#EAE4DA', stroke: '#9E9384', bar: '#B2A798' }
+        };
+
+        const state = {
+          activeView: 'about',
+          projectFilter: '전체',
+          selectedProjectId: null,
+          graph: {
+            nodes: [],
+            edges: [],
+            nodeMap: new Map(),
+            labelCounts: {},
+            relCounts: {},
+            activeLabels: new Set(),
+            activeRels: new Set(),
+            searchQuery: '',
+            selectedNodeId: null,
+            hoveredNodeId: null,
+            inspectorTab: 'overview',
+            zoom: 1,
+            panX: 0,
+            panY: 0,
+            posMap: new Map(),
+            customSourceName: ''
+          }
+        };
+
+        // -------------------------------------------------------------------
+        // Defensive Neo4j JSON Parser (NDJSON-in-JSON / Standard JSON Array)
+        // -------------------------------------------------------------------
+        function parseNeo4jData(rawInput) {
+          const items = [];
+          try {
+            let parsed = typeof rawInput === 'string' ? JSON.parse(rawInput) : rawInput;
+            if (Array.isArray(parsed)) {
+              for (const entry of parsed) {
+                if (entry && typeof entry.data === 'string') {
+                  const lines = entry.data.split(/\r?\n/);
+                  for (const line of lines) {
+                    const trimmed = line.trim();
+                    if (!trimmed) continue;
+                    try {
+                      items.push(JSON.parse(trimmed));
+                    } catch (e) {
+                      // Skip malformed line safely
+                    }
+                  }
+                } else if (entry && typeof entry === 'object' && entry.type) {
+                  items.push(entry);
+                }
+              }
+            } else if (parsed && typeof parsed === 'object' && typeof parsed.data === 'string') {
+              parsed.data.split(/\r?\n/).forEach((line) => {
+                const t = line.trim();
+                if (!t) return;
+                try {
+                  items.push(JSON.parse(t));
+                } catch (e) {}
+              });
+            }
+          } catch (err) {
+            // Fallback: try raw NDJSON lines directly
+            if (typeof rawInput === 'string') {
+              rawInput.split(/\r?\n/).forEach((line) => {
+                const t = line.trim();
+                if (!t) return;
+                try {
+                  items.push(JSON.parse(t));
+                } catch (e) {}
+              });
+            }
+          }
+
+          const nodeMap = new Map();
+          const edges = [];
+
+          function ensureNode(rawNode) {
+            if (!rawNode || rawNode.id === undefined || rawNode.id === null) return null;
+            const id = String(rawNode.id);
+            if (!nodeMap.has(id)) {
+              const labels = Array.isArray(rawNode.labels) && rawNode.labels.length ? rawNode.labels : ['Unknown'];
+              const props = rawNode.properties && typeof rawNode.properties === 'object' ? rawNode.properties : {};
+              const displayName = props.name || props.name_kor || props.id || '노드 ' + id;
+              nodeMap.set(id, {
+                id,
+                labels,
+                primaryLabel: labels[0] || 'Unknown',
+                properties: props,
+                name: String(displayName),
+                degree: 0
+              });
+            }
+            return nodeMap.get(id);
+          }
+
+          for (const item of items) {
+            if (!item || typeof item !== 'object') continue;
+            if (item.type === 'node') {
+              ensureNode(item);
+            } else if (item.type === 'relationship') {
+              const startNode = ensureNode(item.start);
+              const endNode = ensureNode(item.end);
+              if (startNode && endNode) {
+                edges.push({
+                  id: String(item.id || `${startNode.id}-${item.label || 'REL'}-${endNode.id}-${edges.length}`),
+                  label: String(item.label || 'RELATED_TO'),
+                  source: startNode.id,
+                  target: endNode.id,
+                  properties: item.properties && typeof item.properties === 'object' ? item.properties : {}
+                });
+              }
+            }
+          }
+
+          edges.forEach((edge) => {
+            const s = nodeMap.get(edge.source);
+            const t = nodeMap.get(edge.target);
+            if (s) s.degree += 1;
+            if (t) t.degree += 1;
+          });
+
+          const nodes = Array.from(nodeMap.values());
+          const labelCounts = {};
+          const relCounts = {};
+          nodes.forEach((n) => {
+            labelCounts[n.primaryLabel] = (labelCounts[n.primaryLabel] || 0) + 1;
+          });
+          edges.forEach((e) => {
+            relCounts[e.label] = (relCounts[e.label] || 0) + 1;
+          });
+
+          return { nodes, edges, nodeMap, labelCounts, relCounts };
+        }
+
+        // -------------------------------------------------------------------
+        // Deterministic Force-Directed Layout (Pre-settled, Crisp, Zero-Jitter)
+        // -------------------------------------------------------------------
+        function computeLayout(nodes, edges) {
+          const width = 900;
+          const height = 650;
+          const cx = width / 2;
+          const cy = height / 2;
+          const pos = new Map();
+
+          const labelOrder = ['Character', 'Event', 'Place', 'Object', 'CulturalElement', 'Unknown'];
+          const groups = {};
+          nodes.forEach((n) => {
+            if (!groups[n.primaryLabel]) groups[n.primaryLabel] = [];
+            groups[n.primaryLabel].push(n);
+          });
+
+          // Seed around concentric / sector clusters by label
+          labelOrder.forEach((lbl, gIdx) => {
+            const list = groups[lbl] || [];
+            const sectorAngle = (gIdx / Math.max(1, Object.keys(groups).length)) * Math.PI * 2 - Math.PI / 2;
+            const clusterDist = lbl === 'Character' ? 90 : 195;
+            const gx = cx + Math.cos(sectorAngle) * clusterDist;
+            const gy = cy + Math.sin(sectorAngle) * clusterDist;
+
+            list.forEach((n, idx) => {
+              const a = (idx / Math.max(1, list.length)) * Math.PI * 2;
+              const r = 36 + (idx % 3) * 28;
+              pos.set(n.id, {
+                x: gx + Math.cos(a) * r,
+                y: gy + Math.sin(a) * r,
+                vx: 0,
+                vy: 0
+              });
+            });
+          });
+
+          // Put highest-degree node near center
+          const sortedByDeg = [...nodes].sort((a, b) => b.degree - a.degree);
+          if (sortedByDeg[0]) {
+            pos.set(sortedByDeg[0].id, { x: cx, y: cy, vx: 0, vy: 0 });
+          }
+
+          const ticks = 220;
+          for (let t = 0; t < ticks; t++) {
+            const alpha = 1 - t / ticks;
+            // Repulsion
+            for (let i = 0; i < nodes.length; i++) {
+              const n1 = nodes[i];
+              const p1 = pos.get(n1.id);
+              for (let j = i + 1; j < nodes.length; j++) {
+                const n2 = nodes[j];
+                const p2 = pos.get(n2.id);
+                let dx = p1.x - p2.x;
+                let dy = p1.y - p2.y;
+                let distSq = dx * dx + dy * dy;
+                if (distSq < 1) {
+                  dx = 1;
+                  dy = 1;
+                  distSq = 2;
+                }
+                const dist = Math.sqrt(distSq);
+                const minGap = 64;
+                const force = ((dist < minGap ? 2200 : 1150) / distSq) * alpha;
+                const fx = (dx / dist) * force;
+                const fy = (dy / dist) * force;
+                p1.vx += fx;
+                p1.vy += fy;
+                p2.vx -= fx;
+                p2.vy -= fy;
+              }
+            }
+
+            // Spring attraction along edges
+            for (const e of edges) {
+              const p1 = pos.get(e.source);
+              const p2 = pos.get(e.target);
+              if (!p1 || !p2) continue;
+              const dx = p2.x - p1.x;
+              const dy = p2.y - p1.y;
+              const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+              const targetLen = 112;
+              const pull = (dist - targetLen) * 0.045 * alpha;
+              const fx = (dx / dist) * pull;
+              const fy = (dy / dist) * pull;
+              p1.vx += fx;
+              p1.vy += fy;
+              p2.vx -= fx;
+              p2.vy -= fy;
+            }
+
+            // Gravity toward center + damping + bounding
+            for (const n of nodes) {
+              const p = pos.get(n.id);
+              p.vx += (cx - p.x) * 0.018 * alpha;
+              p.vy += (cy - p.y) * 0.018 * alpha;
+              p.vx *= 0.78;
+              p.vy *= 0.78;
+              p.x = Math.max(46, Math.min(width - 46, p.x + p.vx));
+              p.y = Math.max(46, Math.min(height - 46, p.y + p.vy));
+            }
+          }
+
+          return pos;
+        }
+
+        // -------------------------------------------------------------------
+        // Navigation & View Switching
+        // -------------------------------------------------------------------
+        function switchView(viewName) {
+          state.activeView = viewName;
+          document.querySelectorAll('.view-section').forEach((sec) => {
+            sec.classList.toggle('active', sec.id === 'view-' + viewName);
+          });
+          document.querySelectorAll('[data-nav]').forEach((btn) => {
+            btn.classList.toggle('active', btn.getAttribute('data-nav') === viewName);
+          });
+          if (viewName === 'projects' && state.selectedProjectId) {
+            renderProjectDetail(state.selectedProjectId);
+          }
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // -------------------------------------------------------------------
+        // Render About View
+        // -------------------------------------------------------------------
+        function renderAbout() {
+          const { profile, contact, tracks, timeline, brandName, footerText } = PORTFOLIO_DATA;
+          document.getElementById('brandTitleText').textContent = brandName;
+          document.getElementById('siteFooter').textContent = footerText;
+
+          document.getElementById('heroKicker').textContent = profile.kicker;
+          document.getElementById('heroHeadline').textContent = profile.headline;
+          document.getElementById('heroIntro').textContent = profile.intro;
+
+          const metaText = profile.metaTags.join(' · ');
+          document.getElementById('aboutContainer').innerHTML = `
+            <div class="about-top-grid">
+              <div class="avatar-frame" aria-hidden="true">
+                <svg width="118" height="118" viewBox="0 0 120 120">
+                  <circle cx="34" cy="28" r="11" fill="#FFFFFF" stroke="#3B332F" stroke-width="3" />
+                  <circle cx="86" cy="28" r="11" fill="#FFFFFF" stroke="#3B332F" stroke-width="3" />
+                  <ellipse cx="60" cy="64" rx="38" ry="34" fill="#FFFFFF" stroke="#3B332F" stroke-width="3" />
+                  <circle cx="46" cy="60" r="3.4" fill="#3B332F" />
+                  <circle cx="74" cy="60" r="3.4" fill="#3B332F" />
+                  <ellipse cx="36" cy="68" rx="6" ry="3.2" fill="#F9B4C0" />
+                  <ellipse cx="84" cy="68" rx="6" ry="3.2" fill="#F9B4C0" />
+                  <path d="M55 68 Q60 73 65 68" fill="none" stroke="#3B332F" stroke-width="2.4" stroke-linecap="round" />
+                  <rect x="26" y="88" width="68" height="20" rx="5" fill="#DFEEFA" stroke="#3B332F" stroke-width="2.5" />
+                  <line x1="60" y1="88" x2="60" y2="108" stroke="#3B332F" stroke-width="2" />
+                </svg>
+              </div>
+
+              <div>
+                <h2 class="profile-name">${escapeHtml(profile.name)} (${escapeHtml(profile.nameEng)})</h2>
+                <p class="profile-role">${escapeHtml(profile.roleTitle)}</p>
+                <p class="profile-bio">${escapeHtml(profile.bio)}</p>
+                <div class="meta-inline">${escapeHtml(metaText)}</div>
+              </div>
+
+              <div class="contact-card">
+                <h3 class="contact-title">Contact &amp; Links</h3>
+                <div class="contact-list">
+                  <div class="contact-row">
+                    <a class="contact-link" href="mailto:${escapeAttr(contact.email)}">
+                      <span aria-hidden="true">✉</span>
+                      <span>${escapeHtml(contact.email)}</span>
+                    </a>
+                    <button type="button" class="copy-btn" id="copyEmailBtn">복사</button>
+                  </div>
+                  <div class="contact-row">
+                    <a class="contact-link" href="${escapeAttr(contact.wikiUrl)}" target="_blank" rel="noopener noreferrer">
+                      <span aria-hidden="true">↗</span>
+                      <span>${escapeHtml(contact.wikiLabel)}</span>
+                    </a>
+                  </div>
+                  <div class="contact-row">
+                    <a class="contact-link" href="${escapeAttr(contact.linkedinUrl)}" target="_blank" rel="noopener noreferrer">
+                      <span aria-hidden="true">in</span>
+                      <span>${escapeHtml(contact.linkedinLabel)}</span>
+                    </a>
+                  </div>
+                  ${
+                    contact.instagramHandle
+                      ? `<div class="contact-row">
+                          <span class="contact-link"><span aria-hidden="true">◎</span><span>${escapeHtml(contact.instagramHandle)}</span></span>
+                        </div>`
+                      : ''
+                  }
+                </div>
+              </div>
+            </div>
+          `;
+
+          document.getElementById('copyEmailBtn').addEventListener('click', function () {
+            const btn = this;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(contact.email).then(() => {
+                btn.textContent = '복사됨';
+                setTimeout(() => (btn.textContent = '복사'), 1800);
+              });
+            } else {
+              btn.textContent = contact.email;
+            }
+          });
+
+          document.getElementById('tracksContainer').innerHTML = tracks
+            .map(
+              (tr) => `
+              <article class="info-card">
+                <h3 class="info-card-title">${escapeHtml(tr.title)}</h3>
+                <div style="font-size:0.82rem; color:var(--accent-coral-deep); font-weight:600; margin:-6px 0 10px;">
+                  ${escapeHtml(tr.subtitle)}
+                </div>
+                <ul class="info-list">
+                  ${tr.items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}
+                </ul>
+              </article>
+            `
+            )
+            .join('');
+
+          document.getElementById('timelineContainer').innerHTML = timeline
+            .map(
+              (item) => `
+              <article class="timeline-item">
+                <div class="timeline-meta tabular-nums">${escapeHtml(item.period)} · ${escapeHtml(item.category)}</div>
+                <h3 class="timeline-title">${escapeHtml(item.title)}</h3>
+                <p class="timeline-desc">${escapeHtml(item.description)}</p>
+              </article>
+            `
+            )
+            .join('');
+        }
+
+        // -------------------------------------------------------------------
+        // Render Projects List & Detail View
+        // -------------------------------------------------------------------
+        function getProjectThumbnailSvg(style) {
+          if (style === 'chiikawa') {
+            return `
+              <svg viewBox="0 0 400 225" width="100%" height="100%" aria-hidden="true">
+                <rect width="400" height="225" fill="#DDF1FC" />
+                <path d="M0 155 Q200 138 400 155 L400 225 L0 225 Z" fill="#BBE399" />
+                <circle cx="72" cy="54" r="20" fill="#FFFFFF" opacity="0.85" />
+                <circle cx="96" cy="50" r="15" fill="#FFFFFF" opacity="0.85" />
+                <circle cx="322" cy="48" r="22" fill="#FFFFFF" opacity="0.85" />
+                <g transform="translate(105, 86)">
+                  <circle cx="28" cy="44" r="24" fill="#FFFFFF" stroke="#3B332F" stroke-width="2.5" />
+                  <polygon points="10,25 18,10 26,24" fill="#89BFE8" stroke="#3B332F" stroke-width="2.2" />
+                  <polygon points="46,25 38,10 30,24" fill="#89BFE8" stroke="#3B332F" stroke-width="2.2" />
+                  <circle cx="21" cy="43" r="2.2" fill="#3B332F" />
+                  <circle cx="35" cy="43" r="2.2" fill="#3B332F" />
+                  <circle cx="95" cy="42" r="28" fill="#FFFFFF" stroke="#3B332F" stroke-width="2.5" />
+                  <circle cx="75" cy="18" r="7" fill="#FFFFFF" stroke="#3B332F" stroke-width="2.2" />
+                  <circle cx="115" cy="18" r="7" fill="#FFFFFF" stroke="#3B332F" stroke-width="2.2" />
+                  <circle cx="86" cy="40" r="2.4" fill="#3B332F" />
+                  <circle cx="104" cy="40" r="2.4" fill="#3B332F" />
+                  <ellipse cx="162" cy="45" rx="25" ry="23" fill="#FFF2B2" stroke="#3B332F" stroke-width="2.5" />
+                  <ellipse cx="150" cy="14" rx="6" ry="15" fill="#FFF2B2" stroke="#3B332F" stroke-width="2.2" />
+                  <ellipse cx="174" cy="14" rx="6" ry="15" fill="#FFF2B2" stroke="#3B332F" stroke-width="2.2" />
+                  <circle cx="154" cy="43" r="2.2" fill="#3B332F" />
+                  <circle cx="170" cy="43" r="2.2" fill="#3B332F" />
+                </g>
+              </svg>`;
+          }
+          if (style === 'classical') {
+            return `
+              <svg viewBox="0 0 400 225" width="100%" height="100%" aria-hidden="true">
+                <rect width="400" height="225" fill="#FFF5DF" />
+                <rect x="64" y="42" width="272" height="142" rx="14" fill="#FFFFFF" stroke="#E2D3B7" stroke-width="2.5" />
+                <line x1="200" y1="42" x2="200" y2="184" stroke="#E2D3B7" stroke-width="2" />
+                <circle cx="132" cy="96" r="20" fill="#FAD4DB" stroke="#D97B8C" stroke-width="2" />
+                <circle cx="268" cy="84" r="18" fill="#C7EED8" stroke="#4BA475" stroke-width="2" />
+                <circle cx="252" cy="136" r="16" fill="#CBE4FA" stroke="#508EC7" stroke-width="2" />
+                <line x1="152" y1="94" x2="250" y2="85" stroke="#B6A894" stroke-width="2" stroke-dasharray="5 4" />
+                <line x1="150" y1="104" x2="236" y2="132" stroke="#B6A894" stroke-width="2" stroke-dasharray="5 4" />
+              </svg>`;
+          }
+          return `
+            <svg viewBox="0 0 400 225" width="100%" height="100%" aria-hidden="true">
+              <rect width="400" height="225" fill="#F2EEFE" />
+              <circle cx="130" cy="112" r="42" fill="#FAD4DB" opacity="0.85" />
+              <circle cx="200" cy="112" r="42" fill="#FDE9A8" opacity="0.85" />
+              <circle cx="270" cy="112" r="42" fill="#CBE4FA" opacity="0.85" />
+              <path d="M90 165 Q200 120 310 165" fill="none" stroke="#8465C9" stroke-width="2.5" stroke-linecap="round" />
+            </svg>`;
+        }
+
+        function renderProjects() {
+          const categories = ['전체', ...new Set(PORTFOLIO_DATA.projects.map((p) => p.category))];
+          const filtersEl = document.getElementById('projectFilters');
+          filtersEl.innerHTML = categories
+            .map(
+              (cat) => `
+              <button type="button" class="filter-tab ${state.projectFilter === cat ? 'active' : ''}" data-pcat="${escapeAttr(cat)}">
+                ${escapeHtml(cat)}
+              </button>
+            `
+            )
+            .join('');
+
+          filtersEl.querySelectorAll('[data-pcat]').forEach((btn) => {
+            btn.addEventListener('click', () => {
+              state.projectFilter = btn.getAttribute('data-pcat');
+              state.selectedProjectId = null;
+              document.getElementById('projectsListView').style.display = 'block';
+              document.getElementById('projectDetailView').style.display = 'none';
+              renderProjects();
+            });
+          });
+
+          const list = PORTFOLIO_DATA.projects.filter(
+            (p) => state.projectFilter === '전체' || p.category === state.projectFilter
+          );
+
+          document.getElementById('projectsGrid').innerHTML = list
+            .map(
+              (proj) => `
+              <button type="button" class="project-card" data-proj-id="${escapeAttr(proj.id)}">
+                <div class="project-thumb">${getProjectThumbnailSvg(proj.thumbStyle)}</div>
+                <div class="project-body">
+                  <div class="project-kicker">
+                    ${proj.featured ? '대표 프로젝트 · ' : ''}${escapeHtml(proj.category)} · ${escapeHtml(proj.period)}
+                  </div>
+                  <h3 class="project-title">${escapeHtml(proj.title)}</h3>
+                  <p class="project-summary">${escapeHtml(proj.summary)}</p>
+                  <div class="project-meta-line">${proj.tags.map(escapeHtml).join(' · ')}</div>
+                </div>
+              </button>
+            `
+            )
+            .join('');
+
+          document.querySelectorAll('[data-proj-id]').forEach((card) => {
+            card.addEventListener('click', () => {
+              const id = card.getAttribute('data-proj-id');
+              renderProjectDetail(id);
+            });
+          });
+        }
+
+        function renderProjectDetail(projectId) {
+          const proj = PORTFOLIO_DATA.projects.find((p) => p.id === projectId);
+          if (!proj) return;
+          state.selectedProjectId = projectId;
+          document.getElementById('projectsListView').style.display = 'none';
+          const detailEl = document.getElementById('projectDetailView');
+          detailEl.style.display = 'block';
+
+          const lc = state.graph.labelCounts;
+          const totalN = state.graph.nodes.length || 55;
+          const totalE = state.graph.edges.length || 114;
+
+          detailEl.innerHTML = `
+            <button type="button" class="detail-back-btn" id="backToProjectsBtn">← 프로젝트 목록으로 돌아가기</button>
+
+            <div class="detail-header-card">
+              <div>
+                <div class="project-kicker">${escapeHtml(proj.category)} · ${escapeHtml(proj.period)}</div>
+                <h2 class="section-heading" style="margin-bottom: 10px">${escapeHtml(proj.title)}</h2>
+                <p style="margin: 0 0 12px; color: var(--ink-secondary); font-weight: 500">
+                  담당 역할: ${escapeHtml(proj.role)}
+                </p>
+                <div style="font-size: 0.85rem; color: var(--ink-muted)">
+                  ${proj.tags.map(escapeHtml).join(' · ')}
+                </div>
+              </div>
+              <div style="border-radius: 16px; overflow: hidden; border: 1px solid var(--border-hairline)">
+                ${getProjectThumbnailSvg(proj.thumbStyle)}
+              </div>
+            </div>
+
+            <div class="detail-grid-2">
+              <div class="detail-card detail-card-warm">
+                <h3>Project Overview</h3>
+                <p style="margin: 0; color: var(--ink-secondary); font-size: 0.94rem">${escapeHtml(proj.overview)}</p>
+              </div>
+
+              <div class="detail-card">
+                <h3>Data Sources &amp; Links</h3>
+                ${
+                  proj.sources && proj.sources.length
+                    ? proj.sources
+                        .map(
+                          (s) => `
+                          <div class="source-link-item">
+                            <a href="${escapeAttr(s.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.name)}</a>
+                            <span style="color: var(--ink-muted); font-size: 0.84rem">— ${escapeHtml(s.desc)}</span>
+                          </div>
+                        `
+                        )
+                        .join('')
+                    : `<p style="margin:0; color:var(--ink-muted); font-size:0.9rem">개인 리서치 및 학업 정리 노트 프로젝트입니다.</p>`
+                }
+              </div>
+            </div>
+
+            <div class="detail-grid-2">
+              <div class="detail-card">
+                <h3>Research Questions</h3>
+                <ul class="info-list">
+                  ${proj.researchQuestions.map((q) => `<li>${escapeHtml(q)}</li>`).join('')}
+                </ul>
+              </div>
+
+              <div class="detail-card detail-card-warm">
+                <h3>${proj.hasDataExplorerLink ? 'Data Model (지식그래프 구조)' : 'Key Insights'}</h3>
+                ${
+                  proj.hasDataExplorerLink
+                    ? `
+                    <svg viewBox="0 0 420 220" width="100%" style="max-height:220px" role="img" aria-label="5개 레이블 지식그래프 스키마">
+                      <line x1="210" y1="110" x2="88" y2="54" stroke="#C9BCA6" stroke-width="2" />
+                      <line x1="210" y1="110" x2="332" y2="54" stroke="#C9BCA6" stroke-width="2" />
+                      <line x1="210" y1="110" x2="84" y2="168" stroke="#C9BCA6" stroke-width="2" />
+                      <line x1="210" y1="110" x2="336" y2="168" stroke="#C9BCA6" stroke-width="2" />
+                      <line x1="210" y1="110" x2="210" y2="190" stroke="#C9BCA6" stroke-width="2" />
+                      <circle cx="210" cy="110" r="38" fill="#FFF2B2" stroke="#3B332F" stroke-width="2" />
+                      <text x="210" y="106" text-anchor="middle" font-size="11" font-weight="700" fill="#3B332F">치이카와</text>
+                      <text x="210" y="122" text-anchor="middle" font-size="10" fill="#6B5E57">${totalN}N · ${totalE}E</text>
+                      <circle cx="88" cy="54" r="24" fill="#FAD4DB" stroke="#D97B8C" stroke-width="2" />
+                      <text x="88" y="51" text-anchor="middle" font-size="10" font-weight="700" fill="#3B332F">Character</text>
+                      <text x="88" y="64" text-anchor="middle" font-size="10" fill="#6B5E57">(${lc.Character || 15})</text>
+                      <circle cx="332" cy="54" r="24" fill="#FDE9A8" stroke="#D4A12A" stroke-width="2" />
+                      <text x="332" y="51" text-anchor="middle" font-size="10" font-weight="700" fill="#3B332F">Event</text>
+                      <text x="332" y="64" text-anchor="middle" font-size="10" fill="#6B5E57">(${lc.Event || 13})</text>
+                      <circle cx="84" cy="168" r="24" fill="#C7EED8" stroke="#4BA475" stroke-width="2" />
+                      <text x="84" y="165" text-anchor="middle" font-size="10" font-weight="700" fill="#3B332F">Place</text>
+                      <text x="84" y="178" text-anchor="middle" font-size="10" fill="#6B5E57">(${lc.Place || 9})</text>
+                      <circle cx="336" cy="168" r="24" fill="#E2D6FC" stroke="#8465C9" stroke-width="2" />
+                      <text x="336" y="165" text-anchor="middle" font-size="9.5" font-weight="700" fill="#3B332F">Cultural</text>
+                      <text x="336" y="178" text-anchor="middle" font-size="10" fill="#6B5E57">(${lc.CulturalElement || 8})</text>
+                      <circle cx="210" cy="190" r="22" fill="#CBE4FA" stroke="#508EC7" stroke-width="2" />
+                      <text x="210" y="187" text-anchor="middle" font-size="10" font-weight="700" fill="#3B332F">Object</text>
+                      <text x="210" y="199" text-anchor="middle" font-size="10" fill="#6B5E57">(${lc.Object || 10})</text>
+                    </svg>
+                    `
+                    : `
+                    <ul class="info-list">
+                      ${proj.insights.map((ins) => `<li>${escapeHtml(ins)}</li>`).join('')}
+                    </ul>
+                    `
+                }
+              </div>
+            </div>
+
+            ${
+              proj.hasDataExplorerLink
+                ? `
+                <div class="detail-card" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px">
+                  <div style="flex:1; min-width:240px">
+                    <h3 style="margin-bottom:8px">주요 인사이트 &amp; 기여</h3>
+                    <ul class="info-list">
+                      ${proj.insights.map((ins) => `<li>${escapeHtml(ins)}</li>`).join('')}
+                    </ul>
+                  </div>
+                  <button type="button" class="btn-primary" id="jumpToExplorerBtn">
+                    데이터 탐색 탭에서 그래프 탐색하기 →
+                  </button>
+                </div>
+                `
+                : ''
+            }
+          `;
+
+          document.getElementById('backToProjectsBtn').addEventListener('click', () => {
+            state.selectedProjectId = null;
+            detailEl.style.display = 'none';
+            document.getElementById('projectsListView').style.display = 'block';
+          });
+
+          const jumpBtn = document.getElementById('jumpToExplorerBtn');
+          if (jumpBtn) {
+            jumpBtn.addEventListener('click', () => switchView('explorer'));
+          }
+        }
+
+        // -------------------------------------------------------------------
+        // Data Explorer: Filters, SVG Graph Rendering & Inspector
+        // -------------------------------------------------------------------
+        function loadGraphIntoState(rawInput, sourceLabel) {
+          const parsed = parseNeo4jData(rawInput);
+          const g = state.graph;
+          g.nodes = parsed.nodes;
+          g.edges = parsed.edges;
+          g.nodeMap = parsed.nodeMap;
+          g.labelCounts = parsed.labelCounts;
+          g.relCounts = parsed.relCounts;
+          g.activeLabels = new Set(Object.keys(parsed.labelCounts));
+          g.activeRels = new Set(Object.keys(parsed.relCounts));
+          g.searchQuery = '';
+          g.selectedNodeId = null;
+          g.hoveredNodeId = null;
+          g.zoom = 1;
+          g.panX = 0;
+          g.panY = 0;
+          g.customSourceName = sourceLabel || '';
+          g.posMap = computeLayout(g.nodes, g.edges);
+
+          const searchEl = document.getElementById('graphSearchInput');
+          if (searchEl) searchEl.value = '';
+          renderExplorerControls();
+          renderGraphCanvas();
+          renderInspector();
+        }
+
+        function getFilteredGraph() {
+          const g = state.graph;
+          const q = g.searchQuery.trim().toLowerCase();
+          const visibleNodes = g.nodes.filter((n) => {
+            if (!g.activeLabels.has(n.primaryLabel)) return false;
+            if (!q) return true;
+            const hay = [
+              n.name,
+              n.properties.name_kor,
+              n.properties.id,
+              n.properties.type,
+              n.properties.personality,
+              n.properties.skills,
+              n.primaryLabel
+            ]
+              .filter(Boolean)
+              .join(' ')
+              .toLowerCase();
+            return hay.includes(q);
+          });
+          const visSet = new Set(visibleNodes.map((n) => n.id));
+          const visibleEdges = g.edges.filter(
+            (e) => g.activeRels.has(e.label) && visSet.has(e.source) && visSet.has(e.target)
+          );
+          return { visibleNodes, visibleEdges };
+        }
+
+        function renderExplorerControls() {
+          const g = state.graph;
+          const labelOrder = ['Character', 'Event', 'Place', 'Object', 'CulturalElement', 'Unknown'];
+          const labels = Object.keys(g.labelCounts).sort(
+            (a, b) => (labelOrder.indexOf(a) === -1 ? 99 : labelOrder.indexOf(a)) - (labelOrder.indexOf(b) === -1 ? 99 : labelOrder.indexOf(b))
+          );
+
+          document.getElementById('labelFilterList').innerHTML = labels
+            .map((lbl) => {
+              const meta = LABEL_META[lbl] || LABEL_META.Unknown;
+              const checked = g.activeLabels.has(lbl) ? 'checked' : '';
+              return `
+                <label class="check-row">
+                  <span class="check-left">
+                    <input type="checkbox" data-filter-label="${escapeAttr(lbl)}" ${checked} />
+                    <span class="swatch-dot" style="background:${meta.fill}; border-color:${meta.stroke}"></span>
+                    <span class="check-label-text">${escapeHtml(lbl)} (${escapeHtml(meta.ko)})</span>
+                  </span>
+                  <span class="check-count tabular-nums">${g.labelCounts[lbl]}</span>
+                </label>
+              `;
+            })
+            .join('');
+
+          const rels = Object.keys(g.relCounts).sort((a, b) => g.relCounts[b] - g.relCounts[a]);
+          document.getElementById('relFilterList').innerHTML = rels
+            .map((rel) => {
+              const checked = g.activeRels.has(rel) ? 'checked' : '';
+              return `
+                <label class="check-row">
+                  <span class="check-left">
+                    <input type="checkbox" data-filter-rel="${escapeAttr(rel)}" ${checked} />
+                    <span class="check-label-text" style="font-family:var(--font-mono); font-size:0.75rem">${escapeHtml(rel)}</span>
+                  </span>
+                  <span class="check-count tabular-nums">${g.relCounts[rel]}</span>
+                </label>
+              `;
+            })
+            .join('');
+
+          document.querySelectorAll('[data-filter-label]').forEach((cb) => {
+            cb.addEventListener('change', () => {
+              const lbl = cb.getAttribute('data-filter-label');
+              if (cb.checked) g.activeLabels.add(lbl);
+              else g.activeLabels.delete(lbl);
+              renderGraphCanvas();
+              renderInspector();
+            });
+          });
+
+          document.querySelectorAll('[data-filter-rel]').forEach((cb) => {
+            cb.addEventListener('change', () => {
+              const rel = cb.getAttribute('data-filter-rel');
+              if (cb.checked) g.activeRels.add(rel);
+              else g.activeRels.delete(rel);
+              renderGraphCanvas();
+              renderInspector();
+            });
+          });
+        }
+
+        function updateGraphTransform() {
+          const vp = document.getElementById('graphViewport');
+          const g = state.graph;
+          vp.setAttribute('transform', `translate(${g.panX}, ${g.panY}) scale(${g.zoom})`);
+        }
+
+        function renderGraphCanvas() {
+          const g = state.graph;
+          const { visibleNodes, visibleEdges } = getFilteredGraph();
+          const edgesLayer = document.getElementById('edgesLayer');
+          const nodesLayer = document.getElementById('nodesLayer');
+
+          const selectedId = g.selectedNodeId;
+          const connectedNeighbors = new Set();
+          if (selectedId) {
+            connectedNeighbors.add(selectedId);
+            visibleEdges.forEach((e) => {
+              if (e.source === selectedId) connectedNeighbors.add(e.target);
+              if (e.target === selectedId) connectedNeighbors.add(e.source);
+            });
+          }
+
+          if (visibleNodes.length === 0) {
+            edgesLayer.innerHTML = '';
+            nodesLayer.innerHTML = `
+              <text x="450" y="320" text-anchor="middle" fill="#8C7E76" font-size="14" font-weight="600">
+                조건에 맞는 노드가 없습니다. 필터나 검색어를 초기화해 주세요.
+              </text>
+            `;
+            document.getElementById('graphStatusBar').textContent = '표시 중인 노드 0 · 관계 0';
+            updateGraphTransform();
+            return;
+          }
+
+          // Render edges
+          edgesLayer.innerHTML = visibleEdges
+            .map((e) => {
+              const p1 = g.posMap.get(e.source);
+              const p2 = g.posMap.get(e.target);
+              if (!p1 || !p2) return '';
+              const isFocus = selectedId && (e.source === selectedId || e.target === selectedId);
+              const opacity = selectedId ? (isFocus ? 0.95 : 0.12) : 0.52;
+              const stroke = isFocus ? '#D45B6C' : '#C9BCA6';
+              const strokeWidth = isFocus ? 2.2 : 1.3;
+              const marker = isFocus ? 'url(#arrowActive)' : 'url(#arrowDefault)';
+              const mx = (p1.x + p2.x) / 2;
+              const my = (p1.y + p2.y) / 2;
+              return `
+                <g opacity="${opacity}">
+                  <line x1="${p1.x.toFixed(1)}" y1="${p1.y.toFixed(1)}" x2="${p2.x.toFixed(1)}" y2="${p2.y.toFixed(1)}"
+                    stroke="${stroke}" stroke-width="${strokeWidth}" marker-end="${marker}" />
+                  ${
+                    isFocus
+                      ? `<rect x="${(mx - 38).toFixed(1)}" y="${(my - 9).toFixed(1)}" width="76" height="16" rx="5" fill="#FFFDF7" stroke="#E8B8C0" stroke-width="0.8" />
+                         <text x="${mx.toFixed(1)}" y="${(my + 2.5).toFixed(1)}" text-anchor="middle" font-size="8.5" font-weight="700" fill="#B84A5B" font-family="JetBrains Mono, monospace">${escapeHtml(e.label)}</text>`
+                      : ''
+                  }
+                </g>
+              `;
+            })
+            .join('');
+
+          // Render nodes
+          nodesLayer.innerHTML = visibleNodes
+            .map((n) => {
+              const p = g.posMap.get(n.id);
+              if (!p) return '';
+              const meta = LABEL_META[n.primaryLabel] || LABEL_META.Unknown;
+              const isSelected = selectedId === n.id;
+              const isNeighbor = connectedNeighbors.has(n.id);
+              const opacity = selectedId ? (isNeighbor ? 1 : 0.22) : 1;
+              const radius = isSelected ? 22 : Math.min(21, 13 + Math.sqrt(n.degree) * 1.9);
+              const strokeColor = isSelected ? '#B84A5B' : meta.stroke;
+              const strokeWidth = isSelected ? 3.2 : 2;
+              const shortLabel = n.name.length > 8 ? n.name.slice(0, 7) + '…' : n.name;
+
+              return `
+                <g class="graph-node" data-node-id="${escapeAttr(n.id)}" transform="translate(${p.x.toFixed(1)}, ${p.y.toFixed(1)})" opacity="${opacity}" style="cursor:pointer">
+                  ${isSelected ? `<circle r="${radius + 5}" fill="none" stroke="#F4A8B4" stroke-width="2.5" />` : ''}
+                  <circle r="${radius}" fill="${meta.fill}" stroke="${strokeColor}" stroke-width="${strokeWidth}" />
+                  <text y="3.5" text-anchor="middle" font-size="9.5" font-weight="700" fill="#3B332F" pointer-events="none">${escapeHtml(n.properties.id || n.primaryLabel.slice(0, 2))}</text>
+                  <text y="${radius + 13}" text-anchor="middle" font-size="10.5" font-weight="${isSelected || isNeighbor ? '700' : '600'}" fill="#3B332F" paint-order="stroke" stroke="#FFFDF7" stroke-width="3" pointer-events="none">${escapeHtml(shortLabel)}</text>
+                </g>
+              `;
+            })
+            .join('');
+
+          updateGraphTransform();
+          const selectedText = selectedId && g.nodeMap.get(selectedId) ? ` · 선택: ${g.nodeMap.get(selectedId).name}` : ' (노드를 클릭하면 연결 관계가 강조됩니다)';
+          document.getElementById('graphStatusBar').textContent =
+            `표시 노드 ${visibleNodes.length}/${g.nodes.length} · 표시 관계 ${visibleEdges.length}/${g.edges.length}${selectedText}`;
+        }
+
+        function focusNode(nodeId) {
+          const g = state.graph;
+          g.selectedNodeId = nodeId;
+          g.inspectorTab = 'node';
+          const p = g.posMap.get(nodeId);
+          if (p) {
+            g.panX = 450 - p.x * g.zoom;
+            g.panY = 325 - p.y * g.zoom;
+          }
+          renderGraphCanvas();
+          renderInspector();
+        }
+
+        function renderInspector() {
+          const g = state.graph;
+          document.querySelectorAll('[data-inspector]').forEach((tab) => {
+            tab.classList.toggle('active', tab.getAttribute('data-inspector') === g.inspectorTab);
+          });
+
+          const body = document.getElementById('inspectorBody');
+          const { visibleNodes, visibleEdges } = getFilteredGraph();
+          const isolatedCount = g.nodes.filter((n) => n.degree === 0).length;
+
+          if (g.inspectorTab === 'overview') {
+            const labelOrder = ['Character', 'Event', 'Place', 'Object', 'CulturalElement'];
+            const maxLabelCount = Math.max(1, ...Object.values(g.labelCounts));
+            const topRels = Object.entries(g.relCounts)
+              .sort((a, b) => b[1] - a[1])
+              .slice(0, 6);
+            const maxRelCount = Math.max(1, ...topRels.map((r) => r[1]));
+
+            body.innerHTML = `
+              <div class="kpi-row">
+                <div class="kpi-box" style="background:#FDEFEF">
+                  <div class="kpi-label">전체 노드 수</div>
+                  <div class="kpi-value tabular-nums" style="color:#B84A5B">${g.nodes.length}</div>
+                </div>
+                <div class="kpi-box" style="background:#EEF6FD">
+                  <div class="kpi-label">전체 관계 수</div>
+                  <div class="kpi-value tabular-nums" style="color:#3B7BB8">${g.edges.length}</div>
+                </div>
+                <div class="kpi-box" style="background:#EFF9F2">
+                  <div class="kpi-label">고립 노드</div>
+                  <div class="kpi-value tabular-nums" style="color:#2F855A">${isolatedCount}</div>
+                </div>
+              </div>
+
+              <div class="bar-chart-block">
+                <h4 class="bar-chart-title">클래스별 노드 수</h4>
+                ${labelOrder
+                  .filter((l) => g.labelCounts[l])
+                  .map((l) => {
+                    const cnt = g.labelCounts[l] || 0;
+                    const pct = Math.round((cnt / maxLabelCount) * 100);
+                    const meta = LABEL_META[l] || LABEL_META.Unknown;
+                    return `
+                      <div class="bar-row">
+                        <span class="bar-name">${escapeHtml(l)}</span>
+                        <div class="bar-track"><div class="bar-fill" style="width:${pct}%; background:${meta.bar}"></div></div>
+                        <span class="bar-num tabular-nums">${cnt}</span>
+                      </div>
+                    `;
+                  })
+                  .join('')}
+              </div>
+
+              <div class="bar-chart-block">
+                <h4 class="bar-chart-title">관계 유형별 개수 (상위)</h4>
+                ${topRels
+                  .map(([rel, cnt]) => {
+                    const pct = Math.round((cnt / maxRelCount) * 100);
+                    return `
+                      <div class="bar-row">
+                        <span class="bar-name" style="font-family:var(--font-mono); font-size:0.7rem">${escapeHtml(rel)}</span>
+                        <div class="bar-track"><div class="bar-fill" style="width:${pct}%; background:#B5A4E6"></div></div>
+                        <span class="bar-num tabular-nums">${cnt}</span>
+                      </div>
+                    `;
+                  })
+                  .join('')}
+              </div>
+
+              <div class="bar-chart-block" style="background:#FFF8E9; margin-bottom:0">
+                <h4 class="bar-chart-title">인문학적 해석 요약</h4>
+                <p style="margin:0; font-size:0.83rem; color:var(--ink-secondary)">
+                  현재 필터 기준 <strong>${visibleNodes.length}개 노드</strong>와 <strong>${visibleEdges.length}개 관계</strong>가 표시됩니다.
+                  치이카와(19연결)와 세이렌(13연결)을 중심으로 사건의 인과(CAUSES)와 일본 설화·음식 문화(REFLECTS)가 긴밀히 교차합니다.
+                </p>
+              </div>
+            `;
+            return;
+          }
+
+          if (g.inspectorTab === 'node') {
+            const node = g.selectedNodeId ? g.nodeMap.get(g.selectedNodeId) : null;
+            if (!node) {
+              body.innerHTML = `
+                <div class="bar-chart-block" style="text-align:center; padding:28px 16px">
+                  <p style="margin:0 0 12px; color:var(--ink-secondary); font-size:0.88rem">
+                    그래프에서 노드를 클릭하면 세부 속성(Properties)과 연결된 관계를 확인할 수 있습니다.
+                  </p>
+                  <button type="button" class="btn-secondary" id="selectChiikawaSampleBtn" style="font-size:0.84rem; min-height:38px">
+                    ‘치이카와’ 노드 살펴보기
+                  </button>
+                </div>
+              `;
+              const sampleBtn = document.getElementById('selectChiikawaSampleBtn');
+              if (sampleBtn) {
+                sampleBtn.addEventListener('click', () => {
+                  const target = g.nodes.find((n) => n.name === '치이카와') || g.nodes[0];
+                  if (target) focusNode(target.id);
+                });
+              }
+              return;
+            }
+
+            const meta = LABEL_META[node.primaryLabel] || LABEL_META.Unknown;
+            const outEdges = g.edges.filter((e) => e.source === node.id);
+            const inEdges = g.edges.filter((e) => e.target === node.id);
+            const propEntries = Object.entries(node.properties || {});
+
+            body.innerHTML = `
+              <div class="bar-chart-block" style="background:${meta.fill}33">
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:4px">
+                  <span style="font-size:0.75rem; font-weight:700; color:${meta.stroke}">${escapeHtml(node.primaryLabel)} · ${escapeHtml(meta.ko)}</span>
+                  <button type="button" class="mini-link-btn" id="clearSelectedNodeBtn">선택 해제</button>
+                </div>
+                <h4 style="margin:0 0 2px; font-family:var(--font-display); font-size:1.2rem; font-weight:800">
+                  ${escapeHtml(node.name)}
+                </h4>
+                <div style="font-size:0.78rem; color:var(--ink-muted)">
+                  Neo4j ID: ${escapeHtml(node.id)} · 총 연결 수: ${node.degree}
+                </div>
+              </div>
+
+              <h4 class="bar-chart-title">속성 (Properties)</h4>
+              <table class="prop-table">
+                <tbody>
+                  ${
+                    propEntries.length
+                      ? propEntries
+                          .map(
+                            ([k, v]) => `
+                          <tr>
+                            <th>${escapeHtml(k)}</th>
+                            <td>${escapeHtml(typeof v === 'boolean' ? (v ? '예 (true)' : '아니오 (false)') : String(v))}</td>
+                          </tr>
+                        `
+                          )
+                          .join('')
+                      : '<tr><td colspan="2" style="color:var(--ink-muted)">등록된 속성이 없습니다.</td></tr>'
+                  }
+                </tbody>
+              </table>
+
+              <h4 class="bar-chart-title">연결된 관계 (${outEdges.length + inEdges.length})</h4>
+              <div class="edge-chip-list">
+                ${outEdges
+                  .map((e) => {
+                    const target = g.nodeMap.get(e.target);
+                    if (!target) return '';
+                    return `
+                      <button type="button" class="edge-chip-btn" data-jump-node="${escapeAttr(target.id)}">
+                        <span>→ <strong>${escapeHtml(target.name)}</strong></span>
+                        <span class="edge-rel-tag">${escapeHtml(e.label)}</span>
+                      </button>
+                    `;
+                  })
+                  .join('')}
+                ${inEdges
+                  .map((e) => {
+                    const src = g.nodeMap.get(e.source);
+                    if (!src) return '';
+                    return `
+                      <button type="button" class="edge-chip-btn" data-jump-node="${escapeAttr(src.id)}">
+                        <span>← <strong>${escapeHtml(src.name)}</strong></span>
+                        <span class="edge-rel-tag">${escapeHtml(e.label)}</span>
+                      </button>
+                    `;
+                  })
+                  .join('')}
+              </div>
+            `;
+
+            document.getElementById('clearSelectedNodeBtn').addEventListener('click', () => {
+              g.selectedNodeId = null;
+              renderGraphCanvas();
+              renderInspector();
+            });
+
+            body.querySelectorAll('[data-jump-node]').forEach((btn) => {
+              btn.addEventListener('click', () => {
+                const nid = btn.getAttribute('data-jump-node');
+                const targetNode = g.nodeMap.get(nid);
+                if (targetNode) g.activeLabels.add(targetNode.primaryLabel);
+                renderExplorerControls();
+                focusNode(nid);
+              });
+            });
+            return;
+          }
+
+          if (g.inspectorTab === 'hubs') {
+            const topHubs = [...g.nodes].sort((a, b) => b.degree - a.degree).slice(0, 12);
+            body.innerHTML = `
+              <p style="margin:0 0 10px; font-size:0.82rem; color:var(--ink-secondary)">
+                연결 중심성(Degree) 기준 상위 노드입니다. 클릭하면 그래프에서 해당 노드의 관계망으로 이동합니다.
+              </p>
+              <div class="edge-chip-list" style="max-height:460px">
+                ${topHubs
+                  .map((n, i) => {
+                    const meta = LABEL_META[n.primaryLabel] || LABEL_META.Unknown;
+                    return `
+                      <button type="button" class="edge-chip-btn" data-hub-node="${escapeAttr(n.id)}">
+                        <span>
+                          <span class="tabular-nums" style="color:var(--ink-muted); margin-right:6px">${i + 1}.</span>
+                          <strong>${escapeHtml(n.name)}</strong>
+                          <span style="font-size:0.74rem; color:${meta.stroke}; margin-left:4px">${escapeHtml(n.primaryLabel)}</span>
+                        </span>
+                        <span class="edge-rel-tag tabular-nums">${n.degree} 연결</span>
+                      </button>
+                    `;
+                  })
+                  .join('')}
+              </div>
+            `;
+            body.querySelectorAll('[data-hub-node]').forEach((btn) => {
+              btn.addEventListener('click', () => {
+                const nid = btn.getAttribute('data-hub-node');
+                const target = g.nodeMap.get(nid);
+                if (target) g.activeLabels.add(target.primaryLabel);
+                renderExplorerControls();
+                focusNode(nid);
+              });
+            });
+            return;
+          }
+
+          // research tab
+          body.innerHTML = `
+            <p style="margin:0 0 12px; font-size:0.82rem; color:var(--ink-secondary)">
+              핵심 연구 질문에 맞춰 관련 클래스와 관계 유형만 필터링해 그래프를 탐색합니다.
+            </p>
+            <button type="button" class="preset-btn" data-preset="narrative">
+              <strong>1. 서사적 인과 연쇄 (사건 · 장소)</strong>
+              <span>Event와 Place 중심의 CAUSES · OCCURS_AT 흐름 보기</span>
+            </button>
+            <button type="button" class="preset-btn" data-preset="cultural">
+              <strong>2. 문화적 요소 연결망 (설화 · 음식 · 방언)</strong>
+              <span>CulturalElement와 REFLECTS · ASSOCIATED_WITH · REVEALS 보기</span>
+            </button>
+            <button type="button" class="preset-btn" data-preset="character">
+              <strong>3. 캐릭터 관계망 (우정 · 갈등 · 구조)</strong>
+              <span>Character 간 FRIENDS_OF · RIVAL_OF · ATTACKS · RESCUES · KIDNAPS</span>
+            </button>
+            <button type="button" class="preset-btn" data-preset="all">
+              <strong>전체 그래프 복원 (55 노드 · 114 관계)</strong>
+              <span>모든 클래스와 관계 유형을 다시 표시합니다</span>
+            </button>
+          `;
+
+          body.querySelectorAll('[data-preset]').forEach((btn) => {
+            btn.addEventListener('click', () => applyResearchPreset(btn.getAttribute('data-preset')));
+          });
+        }
+
+        function applyResearchPreset(preset) {
+          const g = state.graph;
+          g.selectedNodeId = null;
+          g.searchQuery = '';
+          document.getElementById('graphSearchInput').value = '';
+
+          if (preset === 'narrative') {
+            g.activeLabels = new Set(['Event', 'Place', 'Object']);
+            g.activeRels = new Set(['CAUSES', 'OCCURS_AT', 'REVEALS']);
+          } else if (preset === 'cultural') {
+            g.activeLabels = new Set(['CulturalElement', 'Event', 'Object', 'Character']);
+            g.activeRels = new Set(['REFLECTS', 'ASSOCIATED_WITH', 'REVEALS']);
+          } else if (preset === 'character') {
+            g.activeLabels = new Set(['Character']);
+            g.activeRels = new Set(['FRIENDS_OF', 'RIVAL_OF', 'ATTACKS', 'RESCUES', 'KIDNAPS', 'KILLS']);
+          } else {
+            g.activeLabels = new Set(Object.keys(g.labelCounts));
+            g.activeRels = new Set(Object.keys(g.relCounts));
+          }
+          g.zoom = 1;
+          g.panX = 0;
+          g.panY = 0;
+          renderExplorerControls();
+          renderGraphCanvas();
+          renderInspector();
+        }
+
+        // -------------------------------------------------------------------
+        // Graph SVG Dragging, Panning, Zooming & Tooltip Interactions
+        // -------------------------------------------------------------------
+        function bindGraphInteractions() {
+          const svg = document.getElementById('graphSvg');
+          const tooltip = document.getElementById('graphTooltip');
+          const g = state.graph;
+
+          let draggingNodeId = null;
+          let isPanning = false;
+          let startClientX = 0;
+          let startClientY = 0;
+          let startPanX = 0;
+          let startPanY = 0;
+          let movedDistance = 0;
+
+          function clientToSvg(clientX, clientY) {
+            const rect = svg.getBoundingClientRect();
+            const scaleX = 900 / rect.width;
+            const scaleY = 650 / rect.height;
+            return {
+              x: (clientX - rect.left) * scaleX,
+              y: (clientY - rect.top) * scaleY
+            };
+          }
+
+          svg.addEventListener('pointerdown', (ev) => {
+            const nodeGroup = ev.target.closest('.graph-node');
+            startClientX = ev.clientX;
+            startClientY = ev.clientY;
+            movedDistance = 0;
+
+            if (nodeGroup) {
+              draggingNodeId = nodeGroup.getAttribute('data-node-id');
+              svg.setPointerCapture(ev.pointerId);
+            } else {
+              isPanning = true;
+              startPanX = g.panX;
+              startPanY = g.panY;
+              svg.setPointerCapture(ev.pointerId);
+            }
+          });
+
+          svg.addEventListener('pointermove', (ev) => {
+            const rect = svg.getBoundingClientRect();
+            const dxClient = ev.clientX - startClientX;
+            const dyClient = ev.clientY - startClientY;
+            movedDistance = Math.hypot(dxClient, dyClient);
+
+            if (draggingNodeId) {
+              const pt = clientToSvg(ev.clientX, ev.clientY);
+              const worldX = (pt.x - g.panX) / g.zoom;
+              const worldY = (pt.y - g.panY) / g.zoom;
+              const p = g.posMap.get(draggingNodeId);
+              if (p) {
+                p.x = worldX;
+                p.y = worldY;
+                renderGraphCanvas();
+              }
+              return;
+            }
+
+            if (isPanning) {
+              const scaleX = 900 / rect.width;
+              const scaleY = 650 / rect.height;
+              g.panX = startPanX + dxClient * scaleX;
+              g.panY = startPanY + dyClient * scaleY;
+              updateGraphTransform();
+              return;
+            }
+
+            const nodeGroup = ev.target.closest('.graph-node');
+            if (nodeGroup) {
+              const nid = nodeGroup.getAttribute('data-node-id');
+              const node = g.nodeMap.get(nid);
+              if (node) {
+                const stageRect = document.getElementById('graphStage').getBoundingClientRect();
+                tooltip.style.display = 'block';
+                tooltip.style.left = Math.min(stageRect.width - 210, ev.clientX - stageRect.left + 14) + 'px';
+                tooltip.style.top = Math.max(10, ev.clientY - stageRect.top - 12) + 'px';
+                const sub = node.properties.name_kor ? ` (${node.properties.name_kor})` : '';
+                tooltip.innerHTML = `<strong>${escapeHtml(node.name + sub)}</strong><br/>${escapeHtml(node.primaryLabel)} · 연결 ${node.degree}개`;
+              }
+            } else {
+              tooltip.style.display = 'none';
+            }
+          });
+
+          svg.addEventListener('pointerup', (ev) => {
+            if (draggingNodeId) {
+              if (movedDistance < 5) {
+                g.selectedNodeId = draggingNodeId;
+                g.inspectorTab = 'node';
+                renderGraphCanvas();
+                renderInspector();
+              }
+              draggingNodeId = null;
+            } else if (isPanning) {
+              if (movedDistance < 5 && ev.target === svg) {
+                g.selectedNodeId = null;
+                renderGraphCanvas();
+                renderInspector();
+              }
+              isPanning = false;
+            }
+          });
+
+          svg.addEventListener('pointerleave', () => {
+            tooltip.style.display = 'none';
+          });
+
+          svg.addEventListener(
+            'wheel',
+            (ev) => {
+              ev.preventDefault();
+              const factor = ev.deltaY < 0 ? 1.12 : 0.89;
+              const nextZoom = Math.max(0.45, Math.min(2.6, g.zoom * factor));
+              const pt = clientToSvg(ev.clientX, ev.clientY);
+              g.panX = pt.x - ((pt.x - g.panX) / g.zoom) * nextZoom;
+              g.panY = pt.y - ((pt.y - g.panY) / g.zoom) * nextZoom;
+              g.zoom = nextZoom;
+              updateGraphTransform();
+            },
+            { passive: false }
+          );
+
+          document.getElementById('zoomInBtn').addEventListener('click', () => {
+            const next = Math.min(2.6, g.zoom * 1.18);
+            g.panX = 450 - ((450 - g.panX) / g.zoom) * next;
+            g.panY = 325 - ((325 - g.panY) / g.zoom) * next;
+            g.zoom = next;
+            updateGraphTransform();
+          });
+
+          document.getElementById('zoomOutBtn').addEventListener('click', () => {
+            const next = Math.max(0.45, g.zoom * 0.84);
+            g.panX = 450 - ((450 - g.panX) / g.zoom) * next;
+            g.panY = 325 - ((325 - g.panY) / g.zoom) * next;
+            g.zoom = next;
+            updateGraphTransform();
+          });
+
+          document.getElementById('zoomFitBtn').addEventListener('click', () => {
+            g.zoom = 1;
+            g.panX = 0;
+            g.panY = 0;
+            updateGraphTransform();
+          });
+        }
+
+        // -------------------------------------------------------------------
+        // Escaping Helpers
+        // -------------------------------------------------------------------
+        function escapeHtml(str) {
+          return String(str ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+        }
+
+        function escapeAttr(str) {
+          return escapeHtml(str);
+        }
+
+        // -------------------------------------------------------------------
+        // App Initialization
+        // -------------------------------------------------------------------
+        function init() {
+          // Navigation listeners
+          document.getElementById('homeBtn').addEventListener('click', () => switchView('about'));
+          document.querySelectorAll('[data-nav]').forEach((btn) => {
+            btn.addEventListener('click', () => switchView(btn.getAttribute('data-nav')));
+          });
+          document.getElementById('heroProjectsBtn').addEventListener('click', () => switchView('projects'));
+          document.getElementById('heroExplorerBtn').addEventListener('click', () => switchView('explorer'));
+
+          // Explorer control listeners
+          document.getElementById('graphSearchInput').addEventListener('input', (ev) => {
+            state.graph.searchQuery = ev.target.value;
+            renderGraphCanvas();
+          });
+
+          document.getElementById('toggleAllLabelsBtn').addEventListener('click', () => {
+            const g = state.graph;
+            const allKeys = Object.keys(g.labelCounts);
+            if (g.activeLabels.size === allKeys.length) g.activeLabels.clear();
+            else g.activeLabels = new Set(allKeys);
+            renderExplorerControls();
+            renderGraphCanvas();
+            renderInspector();
+          });
+
+          document.getElementById('toggleAllRelsBtn').addEventListener('click', () => {
+            const g = state.graph;
+            const allKeys = Object.keys(g.relCounts);
+            if (g.activeRels.size === allKeys.length) g.activeRels.clear();
+            else g.activeRels = new Set(allKeys);
+            renderExplorerControls();
+            renderGraphCanvas();
+            renderInspector();
+          });
+
+          document.getElementById('resetGraphBtn').addEventListener('click', () => applyResearchPreset('all'));
+
+          document.getElementById('relayoutGraphBtn').addEventListener('click', () => {
+            state.graph.posMap = computeLayout(state.graph.nodes, state.graph.edges);
+            state.graph.zoom = 1;
+            state.graph.panX = 0;
+            state.graph.panY = 0;
+            renderGraphCanvas();
+          });
+
+          document.querySelectorAll('[data-inspector]').forEach((tab) => {
+            tab.addEventListener('click', () => {
+              state.graph.inspectorTab = tab.getAttribute('data-inspector');
+              renderInspector();
+            });
+          });
+
+          document.getElementById('neo4jFileInput').addEventListener('change', (ev) => {
+            const file = ev.target.files && ev.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              loadGraphIntoState(e.target.result, file.name);
+            };
+            reader.readAsText(file, 'utf-8');
+          });
+
+          // Initial load
+          loadGraphIntoState(NEO4J_RAW_DATA);
+          renderAbout();
+          renderProjects();
+          bindGraphInteractions();
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+      })();
+    </script>
+  </body>
+</html>
